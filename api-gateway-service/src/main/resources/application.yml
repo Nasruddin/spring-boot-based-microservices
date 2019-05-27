@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: api-gateway-service
+
+server:
+  port: 8762
+
+eureka:
+  client:
+    server-url:
+      default-zone: http://localhost:8761/eureka/
+
+# Disable accessing services using service name (i.e. gallery-service).
+# They should be only accessed through the path defined below.
+zuul:
+  ignored-services: '*'
+# Map paths to services
+  routes:
+    course-service:
+      path: /course/**
+      service-id: COURSE-SERVICE
+
+    #student-service:
+     # path: /student/**
+      #service-id: STUDENT-SERVICE
+# Map path to auth service
+    auth-service:
+      path: /auth/**
+      service-id: AUTH-SERVICE
+
+# By default, all requests to gallery service for example will start with: "/gallery/"
+# What will be sent to the gallery service is what comes after the path defined,
+# So, if request is "/gallery/view/1", gallery service will get "/view/1".
+# In case of auth, we need to pass the "/auth/" in the path to auth service. So, set strip-prefix to false
+      strip-prefix: false
+
+# Exclude authorization from sensitive headers
+      sensitive-headers: Cookie,Set-Cookie
+      ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
+
+ribbon:
+  ReadTimeout: 60000
+
