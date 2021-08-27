@@ -1,4 +1,4 @@
-package com.assignment.commonservice;
+package com.javatab.commonservice;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

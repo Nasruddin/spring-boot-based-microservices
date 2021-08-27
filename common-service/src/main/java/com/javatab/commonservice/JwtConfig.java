@@ -1,4 +1,4 @@
-package com.assignment.commonservice;
+package com.javatab.commonservice;
 
 import lombok.Getter;
 import lombok.Setter;

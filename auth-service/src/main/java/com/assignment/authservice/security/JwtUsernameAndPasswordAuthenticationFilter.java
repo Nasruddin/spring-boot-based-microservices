@@ -1,7 +1,7 @@
 package com.assignment.authservice.security;
 
 import com.assignment.authservice.model.LoggedInUserDetails;
-import com.assignment.commonservice.JwtConfig;
+import com.javatab.commonservice.JwtConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import io.jsonwebtoken.Jwts;
