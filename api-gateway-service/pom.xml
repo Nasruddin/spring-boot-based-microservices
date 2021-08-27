@@ -10,7 +10,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.assignment</groupId>
+	<groupId>com.javatab</groupId>
 	<artifactId>api-gateway-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>api-gateway-service</name>
@@ -49,7 +49,7 @@
 			<version>0.9.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.assignment</groupId>
+			<groupId>com.javatab</groupId>
 			<artifactId>common-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>

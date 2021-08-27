@@ -10,7 +10,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.assignment</groupId>
+	<groupId>com.javatab</groupId>
 	<artifactId>auth-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>auth-service</name>
@@ -70,6 +70,12 @@
 			<groupId>com.assignment</groupId>
 			<artifactId>common-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.javatab</groupId>
+			<artifactId>common-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 

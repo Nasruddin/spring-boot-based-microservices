@@ -1,12 +1,10 @@
-package com.javatab.commonservice;
-
+package com.javatab.authservice;
 
 import org.junit.jupiter.api.Disabled;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
-public class CommonServiceApplicationTests {
+public class AuthServiceApplicationTests {
 
 	@Disabled
 	public void contextLoads() {

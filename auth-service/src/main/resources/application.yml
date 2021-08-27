@@ -1,7 +1,11 @@
 spring:
   application:
     name: auth-service
-
+  config:
+    import: optional:config-server/
+    cloud:
+      bootstrap:
+        enabled: true
 server:
   port: 9100
 

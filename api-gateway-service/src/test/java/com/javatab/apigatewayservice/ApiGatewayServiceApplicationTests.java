@@ -1,12 +1,10 @@
-package com.javatab.commonservice;
-
+package com.javatab.apigatewayservice;
 
 import org.junit.jupiter.api.Disabled;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
-public class CommonServiceApplicationTests {
+public class ApiGatewayServiceApplicationTests {
 
 	@Disabled
 	public void contextLoads() {

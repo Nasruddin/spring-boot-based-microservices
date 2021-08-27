@@ -10,7 +10,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.assignment</groupId>
+	<groupId>com.javatab</groupId>
 	<artifactId>discovery-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>discovery-service</name>
