@@ -1,26 +1,11 @@
 spring:
   application:
     name: course-service
-
-  h2:
-    console:
+  config:
+    import: optional:config-server/
+  cloud:
+    bootstrap:
       enabled: true
-  datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
-
-  jpa:
-    hibernate:
-      ddl-auto: none
-
-server:
-  port: 8200
-
-eureka:
-  client:
-    service-url.default-zone: http://localhost:8761/eureka
 
 
 logging:

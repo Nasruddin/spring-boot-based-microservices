@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.5.RELEASE</version>
+		<version>2.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.assignment</groupId>
+	<groupId>com.javatab</groupId>
 	<artifactId>common-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>common-service</name>
@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<spring-cloud.version>Greenwich.SR1</spring-cloud.version>
+		<spring-cloud.version>2020.0.3</spring-cloud.version>
 	</properties>
 
 	<dependencies>

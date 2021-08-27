@@ -1,6 +1,11 @@
 spring:
   application:
     name: common-service
+  config:
+    import: optional:config-server/
+    cloud:
+      bootstrap:
+        enabled: true
 
 server:
   port: 9200

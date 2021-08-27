@@ -1,39 +1,11 @@
 spring:
   application:
     name: api-gateway-service
-
+  config:
+    import: optional:config-server/
+    cloud:
+      bootstrap:
+        enabled: true
 server:
   port: 8762
-
-eureka:
-  client:
-    server-url:
-      default-zone: http://localhost:8761/eureka/
-
-# Disable accessing services using service name (i.e. students-service).
-# They should be only accessed through the path defined below.
-zuul:
-  ignored-services: '*'
-# Map paths to services
-  routes:
-    course-service:
-      path: /course/**
-      service-id: COURSE-SERVICE
-
-    #student-service:
-     # path: /student/**
-      #service-id: STUDENT-SERVICE
-# Map path to auth service
-    auth-service:
-      path: /auth/**
-      service-id: AUTH-SERVICE
-
-      strip-prefix: false
-
-# Exclude authorization from sensitive headers
-      sensitive-headers: Cookie,Set-Cookie
-      ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
-
-ribbon:
-  ReadTimeout: 60000
 

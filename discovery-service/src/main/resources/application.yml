@@ -1,6 +1,11 @@
 spring:
   application:
     name: eureka-server
+  config:
+    import: optional:config-server/
+  cloud:
+    bootstrap:
+      enabled: true
 
 server:
   port: 8761
