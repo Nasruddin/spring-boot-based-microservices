@@ -10,7 +10,7 @@ eureka:
     server-url:
       default-zone: http://localhost:8761/eureka/
 
-# Disable accessing services using service name (i.e. gallery-service).
+# Disable accessing services using service name (i.e. students-service).
 # They should be only accessed through the path defined below.
 zuul:
   ignored-services: '*'
@@ -28,10 +28,6 @@ zuul:
       path: /auth/**
       service-id: AUTH-SERVICE
 
-# By default, all requests to gallery service for example will start with: "/gallery/"
-# What will be sent to the gallery service is what comes after the path defined,
-# So, if request is "/gallery/view/1", gallery service will get "/view/1".
-# In case of auth, we need to pass the "/auth/" in the path to auth service. So, set strip-prefix to false
       strip-prefix: false
 
 # Exclude authorization from sensitive headers
