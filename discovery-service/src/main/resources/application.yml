@@ -1,16 +1,23 @@
 spring:
   application:
-    name: eureka-server
-  config:
-    import: optional:config-server/
-  cloud:
-    bootstrap:
-      enabled: true
-
+    name: discovery-service
 server:
   port: 8761
 
 eureka:
+  instance:
+    hostname: discoveryservice
+    prefer-ip-address: true
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    waitTimeInMsWhenSyncEmpty: 5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

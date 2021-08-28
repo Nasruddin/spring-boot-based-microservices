@@ -2,14 +2,9 @@ spring:
   application:
     name: course-service
   config:
-    import: optional:config-server/
+    import: optional:configserver:config-server
   cloud:
-    bootstrap:
-      enabled: true
-
-
-logging:
-  level:
-    com.netflix: WARN
-    org.springframework.web: WARN
-    com.assignment: DEBUG
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server

@@ -1,6 +1,5 @@
 package com.javatab.apigatewayservice.security;
 
-import com.javatab.commonservice.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,27 +17,21 @@ import java.util.stream.Collectors;
 
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtConfig jwtConfig;
-
-    public JwtTokenAuthenticationFilter(JwtConfig jwtConfig) {
-        this.jwtConfig = jwtConfig;
-    }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        String header = request.getHeader(jwtConfig.getHeader());
+        String header = request.getHeader("Authorization");
 
-        if(header == null || !header.startsWith(jwtConfig.getPrefix())) {
+        if(header == null || !header.startsWith("Bearer")) {
             chain.doFilter(request, response);  		// If not valid, go to the next filter.
             return;
         }
-        String token = header.replace(jwtConfig.getPrefix(), "");
+        String token = header.replace("Bearer", "");
 
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey(jwtConfig.getSecret().getBytes())
+                    .setSigningKey("JwtSecretKey".getBytes())
                     .parseClaimsJws(token)
                     .getBody();
 

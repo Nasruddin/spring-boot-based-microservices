@@ -10,9 +10,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.assignment</groupId>
+	<groupId>com.javatab</groupId>
 	<artifactId>course-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>course-service</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -107,7 +107,6 @@
 						<phase>install</phase>
 						<goals>
 							<goal>build</goal>
-							<goal>push</goal>
 						</goals>
 					</execution>
 				</executions>

@@ -12,7 +12,7 @@
 
 	<groupId>com.javatab</groupId>
 	<artifactId>auth-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>auth-service</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -43,11 +43,6 @@
 			<version>0.9.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.assignment</groupId>
-			<artifactId>common-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.8.2</version>
@@ -68,15 +63,8 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.assignment</groupId>
-			<artifactId>common-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.javatab</groupId>
-			<artifactId>common-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>compile</scope>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -116,7 +104,6 @@
 						<phase>install</phase>
 						<goals>
 							<goal>build</goal>
-							<goal>push</goal>
 						</goals>
 					</execution>
 				</executions>

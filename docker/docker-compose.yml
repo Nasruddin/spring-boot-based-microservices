@@ -1,0 +1,70 @@
+version: '2.1'
+services:
+  discoveryservice:
+    image: javatab/discovery-service:1.0.0
+    container_name: discoveryService
+    ports:
+      - "8761:8761"
+    networks:
+      backend:
+        aliases:
+          - "discoveryservice"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://discoveryservice:8761/eureka/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  configserver:
+    image: javatab/config-server:1.0.0
+    container_name: configServer
+    ports:
+      - "8071:8071"
+    networks:
+      backend:
+        aliases:
+          - "configserver"
+    depends_on:
+      discoveryservice:
+        condition: service_healthy
+  auth-service:
+    image: javatab/auth-service:1.0.0
+    container_name: authService
+    ports:
+      - "9100:9100"
+    networks:
+      backend:
+        aliases:
+          - "authservice"
+    depends_on:
+      discoveryservice:
+        condition: service_healthy
+      configserver:
+        condition: service_started
+  apigatewayservice:
+    image: javatab/api-gateway-service:1.0.0
+    container_name: apiGatewayService
+    ports:
+      - "8762:8762"
+    depends_on:
+      discoveryservice:
+        condition: service_healthy
+      configserver:
+        condition: service_started
+  courseservice:
+    image: javatab/course-service:1.0.0
+    container_name: courseService
+    ports:
+      - "8200:8200"
+    networks:
+      backend:
+        aliases:
+          - "course-service"
+    depends_on:
+      discoveryservice:
+        condition: service_healthy
+      configserver:
+        condition: service_started
+
+networks:
+  backend:
+    driver: bridge
