@@ -1,7 +1,6 @@
 package com.javatab.authservice.security;
 
 import com.javatab.authservice.model.LoggedInUserDetails;
-import com.javatab.commonservice.JwtConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import io.jsonwebtoken.Jwts;

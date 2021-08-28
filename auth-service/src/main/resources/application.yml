@@ -2,16 +2,9 @@ spring:
   application:
     name: auth-service
   config:
-    import: optional:config-server/
-    cloud:
-      bootstrap:
+    import: optional:configserver:config-server
+  cloud:
+    config:
+      discovery:
         enabled: true
-server:
-  port: 9100
-
-eureka:
-  client:
-    service-url:
-      default-zone: http://localhost:8761/eureka
-
-
+        service-id: config-server

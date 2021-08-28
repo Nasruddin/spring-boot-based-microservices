@@ -1,6 +1,5 @@
 package com.javatab.authservice.security;
 
-import com.javatab.commonservice.JwtConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;

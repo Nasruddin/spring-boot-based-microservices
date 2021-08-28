@@ -9,6 +9,9 @@ spring:
       server:
         git:
           uri: https://github.com/nasruddin/config.git
+      discovery:
+        enabled: true
+        #service-id: config-server
 
 server:
   port: 8071
@@ -19,3 +22,8 @@ management:
     web:
       exposure:
         include: "*"
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://discoveryservice:8761/eureka/

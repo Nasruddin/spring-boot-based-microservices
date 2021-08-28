@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface StudentCourseRepository extends JpaRepository<StudentCourse, Long> {
-    @Query("SELECT new com.assignment.courseservice.dto.StudentCourseDto(c.courseId, c.courseName, c.description, sc.status) "
+    @Query("SELECT new com.javatab.courseservice.dto.StudentCourseDto(c.courseId, c.courseName, c.description, sc.status) "
             + "FROM Course c INNER JOIN StudentCourse sc "
             + "ON c.courseId = sc.courseId "
             + "WHERE sc.username = :username")
