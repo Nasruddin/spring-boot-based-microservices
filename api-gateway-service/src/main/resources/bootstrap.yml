@@ -1,9 +1,0 @@
-spring:
-  application:
-    name: api-gateway-service
-  cloud:
-    config:
-      uri: http://config-server:8071 # using old spring config, upgrade!
-      discovery:
-        service-id: config-server
-        enabled: true

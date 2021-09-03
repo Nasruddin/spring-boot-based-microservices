@@ -1,0 +1,18 @@
+version: '3.8' # Migrate to version 3
+services:
+  keycloak:
+    image: jboss/keycloak
+    restart: always
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    networks:
+      backend:
+        aliases:
+           - "keycloak"
+
+networks:
+  backend:
+    driver: bridge
