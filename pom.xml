@@ -25,6 +25,4 @@
         <module>api-gateway-service</module>
         <module>auth-service</module>
     </modules>
-
-    
 </project>

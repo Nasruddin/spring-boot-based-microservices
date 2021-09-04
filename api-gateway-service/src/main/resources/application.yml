@@ -1,0 +1,63 @@
+server:
+  port: 8072
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      default-zone: http://discoveryservice:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+
+spring:
+  config:
+    import: optional:configserver:config-server
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+    loadbalancer:
+      ribbon:
+        enabled: false
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+      - id: course-service
+        uri: lb://course-service
+        predicates:
+        - Path=/course/**
+        filters:
+        - RewritePath=/course/(?<path>.*), /$\{path}
+        - RemoveRequestHeader= Cookie,Set-Cookie
+
+      - id: auth-service
+        uri: lb://auth-service
+        predicates:
+          - Path=/auth/**
+        filters:
+        - RewritePath=/auth/(?<path>.*), /$\{path}
+        - RemoveRequestHeader= Cookie,Set-Cookie
+
+  application:
+    name: gateway-servlice
+
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.javatab: DEBUG
+
+
+jwt:
+  secret: BvPHGM8C0ia4uOuxxqPD5DTbWC9F9TWvPStp3pb7ARo0oK2mJ3pd3YG4lxA9i8bj6OTbadwezxgeEByY
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

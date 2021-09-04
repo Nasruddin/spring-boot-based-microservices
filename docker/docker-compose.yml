@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3.8' # Migrate to version 3
 services:
   discoveryservice:
     image: javatab/discovery-service:1.0.0
@@ -9,12 +9,14 @@ services:
       backend:
         aliases:
           - "discoveryservice"
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://discoveryservice:8761/eureka/" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+    #healthcheck:
+     # test: [ "CMD", "curl", "-f", "http://discoveryservice:8761/eureka/" ]
+     # interval: 30s
+     # timeout: 10s
+     # retries: 5
   configserver:
+    depends_on:
+      - discoveryservice
     image: javatab/config-server:1.0.0
     container_name: configServer
     ports:
@@ -23,10 +25,10 @@ services:
       backend:
         aliases:
           - "configserver"
-    depends_on:
-      discoveryservice:
-        condition: service_healthy
   auth-service:
+    depends_on:
+      - discoveryservice
+      - configserver
     image: javatab/auth-service:1.0.0
     container_name: authService
     ports:
@@ -35,22 +37,18 @@ services:
       backend:
         aliases:
           - "authservice"
-    depends_on:
-      discoveryservice:
-        condition: service_healthy
-      configserver:
-        condition: service_started
   apigatewayservice:
+    depends_on:
+      - discoveryservice
+      - configserver
     image: javatab/api-gateway-service:1.0.0
     container_name: apiGatewayService
     ports:
       - "8762:8762"
-    depends_on:
-      discoveryservice:
-        condition: service_healthy
-      configserver:
-        condition: service_started
   courseservice:
+    depends_on:
+      - discoveryservice
+      - configserver
     image: javatab/course-service:1.0.0
     container_name: courseService
     ports:
@@ -59,11 +57,6 @@ services:
       backend:
         aliases:
           - "course-service"
-    depends_on:
-      discoveryservice:
-        condition: service_healthy
-      configserver:
-        condition: service_started
 
 networks:
   backend:
