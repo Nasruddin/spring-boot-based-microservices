@@ -9,6 +9,22 @@ spring:
         enabled: true
         service-id: config-server
 
+    #function:
+     # defination: userCreatedOutput
+    stream:
+      #kafka:
+       # binder:
+        #  brokers: 192.168.1.8
+         # defaultBrokerPort: 9092
+      bindings:
+        userCreatedOutput-out-0:
+          destination: userCreatedOutput
+          #binder: kafka
+          #group: group
+          #consumer:
+          #  concurrency: 10
+          #  max-attempts: 3
+
   datasource:
     url: jdbc:postgresql://localhost:5432/testdb
     username: postgres

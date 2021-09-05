@@ -1,4 +1,4 @@
-version: '3.8' # Migrate to version 3
+version: '3.8'
 services:
   discoveryservice:
     image: javatab/discovery-service:1.0.0
