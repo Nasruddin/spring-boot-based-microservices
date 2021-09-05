@@ -6,6 +6,9 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 @SpringBootApplication
 public class StudentServiceApplication {
 
