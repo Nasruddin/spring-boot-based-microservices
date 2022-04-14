@@ -24,6 +24,10 @@ management:
         include: "*"
 
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
     service-url:
-      default-zone: http://discoveryservice:8761/eureka/
+      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}
+    fetch-registry: true
+    register-with-eureka: true

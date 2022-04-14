@@ -5,35 +5,22 @@ services:
     ports:
       - "2181:2181"
     networks:
-      backend:
-        aliases:
-          - "zookeeper"
+      - backend
   kafkaserver:
     image: wurstmeister/kafka:latest
     ports:
       - "9092:9092"
     environment:
-      - KAFKA_ADVERTISED_HOST_NAME=192.168.1.8
+      - KAFKA_ADVERTISED_HOST_NAME=kafka
       - KAFKA_ADVERTISED_PORT=9092
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_CREATE_TOPICS=users:1:1,students:1:1,userCreatedOutput:1:1
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     depends_on:
       - zookeeper
     networks:
-      backend:
-        aliases:
-          - "kafka"
+      - backend
 
 networks:
   backend:
     driver: bridge
-   # redisserver:
-    #  image: redis:alpine
-     # ports:
-      #  - 6379:6379
-    #  networks:
-     #   backend:
-      #    aliases:
-       #     - "redis"

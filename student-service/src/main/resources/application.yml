@@ -10,9 +10,9 @@ spring:
         service-id: config-server
 
     stream:
-     # kafka:
-      #  binder:
-       #   brokers: 192.168.1.8
+      kafka:
+        binder:
+          brokers: kafka
       #function:
        # defination: getNewlyCreatedUser
       bindings:
@@ -20,6 +20,8 @@ spring:
           destination: userCreatedOutput
           #binder: kafka
           group: mygroup
+        studentCreatedOutput-out-0:
+          destination: studentCreatedOutput
   data:
     mongodb:
       host: localhost

@@ -24,5 +24,7 @@
         <module>course-service</module>
         <module>api-gateway-service</module>
         <module>auth-service</module>
+        <module>student-service</module>
+        <module>search-engine</module>
     </modules>
 </project>
