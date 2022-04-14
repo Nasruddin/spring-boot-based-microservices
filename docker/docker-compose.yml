@@ -6,9 +6,7 @@ services:
     ports:
       - "8761:8761"
     networks:
-      backend:
-        aliases:
-          - "discoveryservice"
+      - backend
     #healthcheck:
      # test: [ "CMD", "curl", "-f", "http://discoveryservice:8761/eureka/" ]
      # interval: 30s
@@ -22,9 +20,10 @@ services:
     ports:
       - "8071:8071"
     networks:
-      backend:
-        aliases:
-          - "configserver"
+      - backend
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://discoveryservice:8761/eureka
   auth-service:
     depends_on:
       - discoveryservice
@@ -34,9 +33,7 @@ services:
     ports:
       - "9100:9100"
     networks:
-      backend:
-        aliases:
-          - "authservice"
+      - backend
   apigatewayservice:
     depends_on:
       - discoveryservice
@@ -54,10 +51,7 @@ services:
     ports:
       - "8200:8200"
     networks:
-      backend:
-        aliases:
-          - "course-service"
-
+      - backend
 networks:
   backend:
     driver: bridge

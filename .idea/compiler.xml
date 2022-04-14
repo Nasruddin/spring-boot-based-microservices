@@ -9,9 +9,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="course-service" />
         <module name="config-server" />
-        <module name="student-service" />
         <module name="auth-service" />
         <module name="api-gateway-service" />
+        <module name="search-engine" />
+        <module name="student-service" />
         <module name="discovery-service" />
       </profile>
     </annotationProcessing>
@@ -27,6 +28,7 @@
       <module name="config-server" options="-parameters" />
       <module name="course-service" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
+      <module name="search-engine" options="-parameters" />
       <module name="student-service" options="-parameters" />
     </option>
   </component>

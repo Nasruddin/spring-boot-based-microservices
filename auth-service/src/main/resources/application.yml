@@ -26,9 +26,10 @@ spring:
           #  max-attempts: 3
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/testdb
+    url: jdbc:postgresql://postgres_container1:5432/testdb
     username: postgres
     password: 123
+    driver-class-name: org.postgresql.Driver
   jpa:
     properties:
       hibernate:

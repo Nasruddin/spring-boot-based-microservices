@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.javatab</groupId>
 	<artifactId>api-gateway-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>api-gateway-service</name>
 	<description>Gateway Service using spring cloud gateway</description>
 	<properties>
