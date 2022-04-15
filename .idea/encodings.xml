@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/api-gateway-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/api-gateway-service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/auth-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/config-server/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/course-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/discovery-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/search-engine/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/search-engine/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices/course-composite-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices/course-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices/search-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices/student-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices/vote-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/student-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/student-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/util/src/main/java" charset="UTF-8" />
   </component>
 </project>
