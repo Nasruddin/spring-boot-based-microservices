@@ -1,0 +1,7 @@
+server:
+  port: 8012
+
+logging:
+  level:
+    root: INFO
+    io.javatab.microservices: DEBUG

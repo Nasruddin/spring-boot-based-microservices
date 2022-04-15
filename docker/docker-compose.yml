@@ -1,0 +1,44 @@
+version: '2.1'
+
+services:
+  course:
+    build: ../microservices/course-service
+    image: javatab/course_service:v1
+    container_name: course_service_v1
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  search:
+    build: ../microservices/search-service
+    image: javatab/search_service:v1
+    container_name: search_service_v1
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  student:
+    build: ../microservices/student-service
+    image: javatab/student_service:v1
+    container_name: student_service_v1
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  vote:
+    build: ../microservices/vote-service
+    image: javatab/vote_service:v1
+    container_name: vote_service_v1
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  course-composite:
+    build: ../microservices/course-composite-service
+    image: javatab/course_composite_service:v1
+    container_name: course_composite_service_v1
+    mem_limit: 512m
+    ports:
+      - "8080:8080" # Only this service will be exposed to outside containers so no port binding for above images
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
