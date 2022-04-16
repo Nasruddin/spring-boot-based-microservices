@@ -73,10 +73,10 @@ server.port: 8080
 app:
   course-service:
     host: course
-    port: 8012
+    port: 8080
   student-service:
     host: student
-    port: 8013
+    port: 8080
   vote-service:
     host: vote
-    port: 8014
+    port: 8080

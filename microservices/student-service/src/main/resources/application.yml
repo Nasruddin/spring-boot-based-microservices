@@ -1,5 +1,4 @@
-server:
-  port: 8013
+server.port: 8013
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -12,5 +11,5 @@ spring:
       ddl-auto: update
 ---
 spring.config.activate.on-profile: docker
-spring.datasource.url: jdbc:postgresql://postgres:5432/test
 server.port: 8080
+spring.datasource.url: jdbc:postgresql://postgres:5432/test

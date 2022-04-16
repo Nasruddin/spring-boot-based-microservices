@@ -1,5 +1,4 @@
-server:
-  port: 8012
+server.port: 8012
 
 logging:
   level:
