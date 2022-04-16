@@ -1,13 +1,10 @@
 package io.javatab.microservices.core.course;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class CourseServiceImplApplicationTests {
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
-	@Test
-	void contextLoads() {
-	}
+@SpringBootTest(webEnvironment = RANDOM_PORT)
+class CourseServiceImplApplicationTests extends MongoDbTestBase {
 
 }

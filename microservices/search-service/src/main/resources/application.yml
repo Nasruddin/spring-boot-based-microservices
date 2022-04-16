@@ -1,2 +1,8 @@
 server:
   port: 8015
+
+
+---
+spring.config.activate.on-profile: docker
+spring.elasticsearch:
+  uris: http://elasticsearch:9200

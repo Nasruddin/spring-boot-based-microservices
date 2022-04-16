@@ -8,6 +8,9 @@ services:
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      mongodb:
+        condition: service_healthy
 
   search:
     build: ../microservices/search-service
@@ -16,6 +19,9 @@ services:
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
 
   student:
     build: ../microservices/student-service
@@ -24,6 +30,9 @@ services:
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   vote:
     build: ../microservices/vote-service
@@ -32,6 +41,9 @@ services:
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      redis:
+        condition: service_healthy
 
   course-composite:
     build: ../microservices/course-composite-service
@@ -42,3 +54,62 @@ services:
       - "8080:8080" # Only this service will be exposed to outside containers so no port binding for above images
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+
+  mongodb:
+    image: mongo:4.4.2
+    mem_limit: 512m
+    ports:
+      - "27017:27017"
+    command: mongod
+    healthcheck:
+      test: "mongo --eval 'db.stats().ok'"
+      interval: 5s
+      timeout: 2s
+      retries: 60
+
+  postgres:
+    image: postgres:alpine3.15
+    mem_limit: 512m
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DATABASE=test
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pwd
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U user" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:6.2.6-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      interval: 5s
+      timeout: 2s
+      retries: 60
+
+  elasticsearch:
+    image: elasticsearch:7.12.1
+    ports:
+      - "9300:9300"
+      - "9200:9200"
+    environment:
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 60

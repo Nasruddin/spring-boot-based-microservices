@@ -2,6 +2,7 @@ package io.javatab.microservices.core.course;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
@@ -9,7 +10,9 @@ import org.springframework.context.annotation.ComponentScan;
 public class CourseServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CourseServiceApplication.class, args);
+		ConfigurableApplicationContext ctx = SpringApplication.run(CourseServiceApplication.class, args);
+		String mongoUri = ctx.getEnvironment().getProperty("spring.data.mongodb.host");
+		System.out.println("Connected to Mongo: " + mongoUri);
 	}
 
 }

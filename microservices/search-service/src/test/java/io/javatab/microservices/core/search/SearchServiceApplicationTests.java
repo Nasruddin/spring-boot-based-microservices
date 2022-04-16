@@ -1,13 +1,10 @@
 package io.javatab.microservices.core.search;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class SearchServiceApplicationTests {
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
-	@Test
-	void contextLoads() {
-	}
+@SpringBootTest(webEnvironment = RANDOM_PORT)
+class SearchServiceApplicationTests extends ElasticsearchTestBase {
 
 }
