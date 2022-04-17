@@ -1,13 +1,27 @@
 server.port: 8014
-
 spring.redis:
     host: localhost
     port: 6379
     client-type: lettuce
 
+app.eureka-server: localhost
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${app.eureka-server}:8761/eureka/
+    initialInstanceInfoReplicationIntervalSeconds: 5
+    registryFetchIntervalSeconds: 5
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 5
+spring:
+  application:
+    name: vote
 ---
 spring.config.activate.on-profile: docker
 server.port: 8080
+eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
 spring.redis:
   host: redis
   port: 6379

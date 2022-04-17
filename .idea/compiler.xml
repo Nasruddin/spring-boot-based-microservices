@@ -14,6 +14,7 @@
         <module name="vote-service" />
         <module name="course-composite-service" />
         <module name="api" />
+        <module name="eureka-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -35,6 +36,7 @@
       <module name="course-composite-service" options="-parameters" />
       <module name="course-service" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
       <module name="search-engine" options="-parameters" />
       <module name="search-service" options="-parameters" />
       <module name="student-service" options="-parameters" />

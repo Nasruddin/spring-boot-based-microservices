@@ -26,5 +26,6 @@
         <module>microservices/search-service</module>
         <module>microservices/student-service</module>
         <module>microservices/vote-service</module>
+        <module>spring-cloud/eureka-server</module>
     </modules>
 </project>
