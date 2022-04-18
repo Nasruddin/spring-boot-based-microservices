@@ -23,9 +23,9 @@ public class CourseCompositeServiceImpl implements CourseCompositeService {
     @Override
     public Mono<CourseAggregate> getCourse(int courseId) {
         // Call integration apis
-        integration.getCourse(1);
-        integration.getStudent("name");
-        integration.getVote(1);
+        integration.getCourse(1).subscribe(course -> System.out.println("Course " + course));
+        integration.getStudent("name").subscribe(course -> System.out.println("student " + course));
+        integration.getVote(1).subscribe(course -> System.out.println("vote " + course));
         return Mono.just(new CourseAggregate(1, 1, 3, 3,
                 List.of(new Student(1, "Student Name", "email", "password"))));
     }

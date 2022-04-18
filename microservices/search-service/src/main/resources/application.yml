@@ -1,4 +1,5 @@
 server.port: 8015
+spring.application.name: search
 app.eureka-server: localhost
 
 eureka:
@@ -10,12 +11,10 @@ eureka:
   instance:
     leaseRenewalIntervalInSeconds: 5
     leaseExpirationDurationInSeconds: 5
-spring:
-  application:
-    name: search
+
 ---
 spring.config.activate.on-profile: docker
 server.port: 8080
-eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
+app.eureka-server: eureka
 spring.elasticsearch:
   uris: http://elasticsearch:9200

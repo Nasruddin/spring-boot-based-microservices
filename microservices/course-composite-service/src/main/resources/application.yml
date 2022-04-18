@@ -1,15 +1,11 @@
 server.port: 8016
 spring.application.name: course-composite
-app:
-  course-service:
-    host: localhost
-    port: 8012
-  student-service:
-    host: localhost
-    port: 8013
-  vote-service:
-    host: localhost
-    port: 8014
+
+springdoc:
+  swagger-ui.path: /openapi/swagger-ui.html
+  api-docs.path: /openapi/v3/api-docs
+  packagesToScan: io.javatab.microservices.composite.course
+  pathsToMatch: /**
 
 open-api:
   version: 1.0.0
@@ -58,13 +54,6 @@ open-api:
         422 - An **Unprocessable Entity** error will be returned
 
 
-
-springdoc:
-  swagger-ui.path: /openapi/swagger-ui.html
-  api-docs.path: /openapi/v3/api-docs
-  packagesToScan: io.javatab.microservices.composite.course
-  pathsToMatch: /**
-
 app.eureka-server: localhost
 
 eureka:
@@ -78,18 +67,5 @@ eureka:
     leaseExpirationDurationInSeconds: 5
 ---
 spring.config.activate.on-profile: docker
-
 server.port: 8080
-
-eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
-
-app:
-  course-service:
-    host: course
-    port: 8080
-  student-service:
-    host: student
-    port: 8080
-  vote-service:
-    host: vote
-    port: 8080
+app.eureka-server: eureka
