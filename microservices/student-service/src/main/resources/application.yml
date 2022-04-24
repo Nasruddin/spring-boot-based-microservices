@@ -1,0 +1,19 @@
+spring.config.import: "configserver:"
+
+spring:
+  application.name: student
+  cloud.config:
+    failFast: true
+    retry:
+      initialInterval: 3000
+      multiplier: 1.3
+      maxInterval: 10000
+      maxAttempts: 20
+    uri: http://localhost:8888
+    username: ${CONFIG_SERVER_USR}
+    password: ${CONFIG_SERVER_PWD}
+
+---
+spring.config.activate.on-profile: docker
+
+spring.cloud.config.uri: http://config-server:8888

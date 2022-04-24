@@ -1,57 +1,163 @@
-version: '3.8'
+version: '2.1'
+
 services:
-  discoveryservice:
-    image: javatab/discovery-service:1.0.0
-    container_name: discoveryService
-    ports:
-      - "8761:8761"
-    networks:
-      - backend
-    #healthcheck:
-     # test: [ "CMD", "curl", "-f", "http://discoveryservice:8761/eureka/" ]
-     # interval: 30s
-     # timeout: 10s
-     # retries: 5
-  configserver:
-    depends_on:
-      - discoveryservice
-    image: javatab/config-server:1.0.0
-    container_name: configServer
-    ports:
-      - "8071:8071"
-    networks:
-      - backend
+  course:
+    build: ../microservices/course-service
+    image: javatab/course_service:v1
+    mem_limit: 512m
     environment:
-      - JAVA_OPTS=
-        -DEUREKA_SERVER=http://discoveryservice:8761/eureka
-  auth-service:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
     depends_on:
-      - discoveryservice
-      - configserver
-    image: javatab/auth-service:1.0.0
-    container_name: authService
-    ports:
-      - "9100:9100"
-    networks:
-      - backend
-  apigatewayservice:
+      mongodb:
+        condition: service_healthy
+
+  search:
+    build: ../microservices/search-service
+    image: javatab/search_service:v1
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
     depends_on:
-      - discoveryservice
-      - configserver
-    image: javatab/api-gateway-service:1.0.0
-    container_name: apiGatewayService
-    ports:
-      - "8762:8762"
-  courseservice:
+      elasticsearch:
+        condition: service_healthy
+
+  student:
+    build: ../microservices/student-service
+    image: javatab/student_service:v1
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
     depends_on:
-      - discoveryservice
-      - configserver
-    image: javatab/course-service:1.0.0
-    container_name: courseService
+      postgres:
+        condition: service_healthy
+
+  vote:
+    build: ../microservices/vote-service
+    image: javatab/vote_service:v1
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  course-composite:
+    build: ../microservices/course-composite-service
+    image: javatab/course_composite_service:v1
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+
+  mongodb:
+    image: mongo:4.4.2
+    mem_limit: 512m
     ports:
-      - "8200:8200"
-    networks:
-      - backend
-networks:
-  backend:
-    driver: bridge
+      - "27017:27017"
+    command: mongod
+    healthcheck:
+      test: "mongo --eval 'db.stats().ok'"
+      interval: 5s
+      timeout: 2s
+      retries: 60
+
+  postgres:
+    image: postgres:alpine3.15
+    mem_limit: 512m
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DATABASE=test
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pwd
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U user" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:6.2.6-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      interval: 5s
+      timeout: 2s
+      retries: 60
+
+  elasticsearch:
+    image: elasticsearch:7.12.1
+    ports:
+      - "9300:9300"
+      - "9200:9200"
+    environment:
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 60
+
+  eureka:
+    build: ../spring-cloud/eureka-server
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+
+  gateway:
+    build: ../spring-cloud/gateway
+    mem_limit: 512m
+    ports:
+      - "8443:8443"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+    #depends_on:
+    #  auth-server:
+    #    condition: service_healthy
+
+  auth-server:
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+    build: ../spring-cloud/authorization-server
+    mem_limit: 512m
+    #healthcheck:
+    #  test: "curl --fail --silent http://localhost:9999/actuator/health | grep UP || exit 1"
+    #  interval: 5s
+    #  timeout: 2s
+    #  retries: 60
+
+  config-server:
+    build: ../spring-cloud/config-server
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker,native
+      #- ENCRYPT_KEY=${CONFIG_SERVER_ENCRYPT_KEY}
+      - SPRING_SECURITY_USER_NAME=${CONFIG_SERVER_USR}
+      - SPRING_SECURITY_USER_PASSWORD=${CONFIG_SERVER_PWD}
+    volumes:
+      - $PWD/../config-repo:/config-repo
