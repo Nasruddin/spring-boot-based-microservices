@@ -7,6 +7,8 @@
     <file url="file://$PROJECT_DIR$/microservices/search-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservices/student-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservices/vote-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-cloud/authorization-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-cloud/config-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-cloud/eureka-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-cloud/gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />

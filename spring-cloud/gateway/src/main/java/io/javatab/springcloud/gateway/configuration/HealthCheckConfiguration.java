@@ -22,7 +22,7 @@ public class HealthCheckConfiguration {
 
     private static final Logger LOG = LoggerFactory.getLogger(HealthCheckConfiguration.class);
 
-    private WebClient webClient;
+    private final WebClient webClient;
 
     @Autowired
     public HealthCheckConfiguration(WebClient.Builder webClientBuilder) {

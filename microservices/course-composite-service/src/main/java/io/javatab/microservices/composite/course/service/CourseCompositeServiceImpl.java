@@ -21,6 +21,11 @@ public class CourseCompositeServiceImpl implements CourseCompositeService {
     }
 
     @Override
+    public Mono<String> createProduct(CourseAggregate body) {
+        return Mono.just("CREATED");
+    }
+
+    @Override
     public Mono<CourseAggregate> getCourse(int courseId) {
         // Call integration apis
         integration.getCourse(1).subscribe(course -> System.out.println("Course " + course));
@@ -28,5 +33,10 @@ public class CourseCompositeServiceImpl implements CourseCompositeService {
         integration.getVote(1).subscribe(course -> System.out.println("vote " + course));
         return Mono.just(new CourseAggregate(1, 1, 3, 3,
                 List.of(new Student(1, "Student Name", "email", "password"))));
+    }
+
+    @Override
+    public Mono<String> deleteCourse(int courseId) {
+        return Mono.just("DELETED");
     }
 }

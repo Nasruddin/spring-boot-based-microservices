@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED;
 
-// @Transactional(propagation = NOT_SUPPORTED)
+@Transactional(propagation = NOT_SUPPORTED)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@DataJpaTest
+@DataJpaTest(properties = {"spring.jpa.hibernate.ddl-auto=update", "spring.cloud.config.enabled=false"})
 public class PersistenceTests extends PostgresTestBase {
 
     @Autowired

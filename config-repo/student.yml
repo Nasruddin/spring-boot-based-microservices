@@ -1,0 +1,20 @@
+server.port: 8013
+spring:
+  application:
+    name: student
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: user
+    password: pwd
+    url: jdbc:postgresql://localhost:5432/test
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+
+
+---
+spring.config.activate.on-profile: docker
+server.port: 8080
+app.eureka-server: eureka
+spring.datasource.url: jdbc:postgresql://postgres:5432/test

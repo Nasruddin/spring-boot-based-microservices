@@ -8,7 +8,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="course-service" />
+        <module name="config-server" />
         <module name="util" />
+        <module name="authorization-server" />
         <module name="search-service" />
         <module name="student-service" />
         <module name="vote-service" />
@@ -22,7 +24,6 @@
       <module name="api-gateway-service" target="11" />
       <module name="auth-service" target="11" />
       <module name="common-service" target="1.8" />
-      <module name="config-server" target="11" />
       <module name="discovery-service" target="11" />
       <module name="search-engine" target="11" />
     </bytecodeTargetLevel>
@@ -32,6 +33,7 @@
       <module name="api" options="-parameters" />
       <module name="api-gateway-service" options="-parameters" />
       <module name="auth-service" options="-parameters" />
+      <module name="authorization-server" options="-parameters" />
       <module name="common-service" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="course-composite-service" options="-parameters" />
