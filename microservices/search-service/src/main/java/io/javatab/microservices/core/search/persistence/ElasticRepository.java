@@ -1,13 +1,10 @@
 package io.javatab.microservices.core.search.persistence;
 
 
+import co.elastic.clients.elasticsearch.core.DeleteResponse;
+import co.elastic.clients.elasticsearch.core.IndexResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.javatab.microservices.api.core.course.Course;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.springframework.data.elasticsearch.client.reactive.ReactiveElasticsearchClient;
+import org.springframework.data.elasticsearch.client.elc.ReactiveElasticsearchClient;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
@@ -30,7 +27,8 @@ public class ElasticRepository {
         String id = UUID.randomUUID().toString();
         Map documentMapper = objectMapper.convertValue(course,
                 Map.class);
-        return client.index(indexRequest -> indexRequest.index(COURSE_INDEX).id(id).source(documentMapper));
+        // return client.index(indexRequest -> indexRequest.index(COURSE_INDEX).id(id).source(documentMapper));
+        return client.index(indexRequest -> indexRequest.index(COURSE_INDEX).id(id).document(documentMapper));
     }
 
     public Mono<DeleteResponse> deleteCourse() {

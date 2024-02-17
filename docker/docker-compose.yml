@@ -3,7 +3,7 @@ version: '2.1'
 services:
   course:
     build: ../microservices/course-service
-    image: javatab/course_service:v1
+    image: javatab/course_service:v2
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -15,7 +15,7 @@ services:
 
   search:
     build: ../microservices/search-service
-    image: javatab/search_service:v1
+    image: javatab/search_service:v2
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -27,7 +27,7 @@ services:
 
   student:
     build: ../microservices/student-service
-    image: javatab/student_service:v1
+    image: javatab/student_service:v2
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -39,7 +39,7 @@ services:
 
   vote:
     build: ../microservices/vote-service
-    image: javatab/vote_service:v1
+    image: javatab/vote_service:v2
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -51,7 +51,7 @@ services:
 
   course-composite:
     build: ../microservices/course-composite-service
-    image: javatab/course_composite_service:v1
+    image: javatab/course_composite_service:v2
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -71,7 +71,7 @@ services:
       retries: 60
 
   postgres:
-    image: postgres:alpine3.15
+    image: postgres:13.7-alpine3.16
     mem_limit: 512m
     ports:
       - "5432:5432"
@@ -119,6 +119,7 @@ services:
 
   eureka:
     build: ../spring-cloud/eureka-server
+    image: javatab/eureka:v2
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -127,6 +128,7 @@ services:
 
   gateway:
     build: ../spring-cloud/gateway
+    image: javatab/gateway:v2
     mem_limit: 512m
     ports:
       - "8443:8443"
@@ -144,6 +146,7 @@ services:
       - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
       - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
     build: ../spring-cloud/authorization-server
+    image: javatab/auth-server:v2
     mem_limit: 512m
     #healthcheck:
     #  test: "curl --fail --silent http://localhost:9999/actuator/health | grep UP || exit 1"
@@ -153,6 +156,7 @@ services:
 
   config-server:
     build: ../spring-cloud/config-server
+    image: javatab/config-server:v2
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker,native

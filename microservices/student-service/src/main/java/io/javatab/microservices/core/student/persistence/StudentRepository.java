@@ -1,7 +1,9 @@
 package io.javatab.microservices.core.student.persistence;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface StudentRepository extends PagingAndSortingRepository<StudentEntity, Integer> {
+@Repository
+public interface StudentRepository extends JpaRepository<StudentEntity, Integer> {
 
 }
