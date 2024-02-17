@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
                         scopes = {
                                 @OAuthScope(name = "course:read", description =
                                         "read scope"),
-                                @OAuthScope(name = "write:write", description =
+                                @OAuthScope(name = "course:write", description =
                                         "write scope")
                         }
                 )))

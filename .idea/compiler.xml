@@ -12,8 +12,8 @@
         <module name="util" />
         <module name="authorization-server" />
         <module name="search-service" />
-        <module name="student-service" />
         <module name="vote-service" />
+        <module name="student-service" />
         <module name="course-composite-service" />
         <module name="api" />
         <module name="eureka-server" />

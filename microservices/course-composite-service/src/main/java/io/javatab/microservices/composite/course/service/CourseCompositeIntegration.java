@@ -12,6 +12,7 @@ import io.javatab.microservices.api.exceptions.NotFoundException;
 import io.javatab.microservices.util.http.HttpErrorInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -20,6 +21,8 @@ import reactor.core.publisher.Mono;
 import java.io.IOException;
 
 import static java.util.logging.Level.FINE;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Component
 public class CourseCompositeIntegration implements CourseService, StudentService, VoteService {
@@ -50,26 +53,20 @@ public class CourseCompositeIntegration implements CourseService, StudentService
 
     private Throwable handleException(Throwable ex) {
 
-        if (!(ex instanceof WebClientResponseException)) {
+        if (!(ex instanceof WebClientResponseException webClientResponseException)) {
             LOG.warn("Got a unexpected error: {}, will rethrow it", ex.toString());
             return ex;
         }
 
-        WebClientResponseException wcre = (WebClientResponseException)ex;
-
-        switch (wcre.getStatusCode()) {
-
-            case NOT_FOUND:
-                return new NotFoundException(getErrorMessage(wcre));
-
-            case UNPROCESSABLE_ENTITY :
-                return new InvalidInputException(getErrorMessage(wcre));
-
-            default:
-                LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", wcre.getStatusCode());
-                LOG.warn("Error body: {}", wcre.getResponseBodyAsString());
-                return ex;
+        HttpStatusCode statusCode = webClientResponseException.getStatusCode();
+        if (NOT_FOUND.equals(statusCode)) {
+            return new NotFoundException(getErrorMessage(webClientResponseException));
+        } else if (UNPROCESSABLE_ENTITY.equals(statusCode)) {
+            return new InvalidInputException(getErrorMessage(webClientResponseException));
         }
+        LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", webClientResponseException.getStatusCode());
+        LOG.warn("Error body: {}", webClientResponseException.getResponseBodyAsString());
+        return ex;
     }
     @Override
     public Mono<Course> getCourse(int courseId) {

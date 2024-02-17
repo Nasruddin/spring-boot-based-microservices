@@ -6,13 +6,11 @@ import io.javatab.microservices.core.course.persistence.CourseRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataMongoTest(
-        excludeAutoConfiguration = EmbeddedMongoAutoConfiguration.class,
         properties = {"spring.cloud.config.enabled=false"}
 )
 public class PersistenceTests extends MongoDbTestBase {
