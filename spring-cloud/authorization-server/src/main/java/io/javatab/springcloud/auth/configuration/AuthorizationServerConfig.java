@@ -115,8 +115,8 @@ public class AuthorizationServerConfig {
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-                .redirectUri("https://my.redirect.uri")
-                .redirectUri("https://localhost:8443/openapi/webjars/swagger-ui/oauth2-redirect.html")
+                .redirectUri("http://my.redirect.uri")
+                .redirectUri("http://localhost:8443/openapi/webjars/swagger-ui/oauth2-redirect.html")
                 .scope(OidcScopes.OPENID)
                 .scope("course:read")
                 .scope("course:write")
@@ -131,8 +131,8 @@ public class AuthorizationServerConfig {
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-                .redirectUri("https://my.redirect.uri")
-                .redirectUri("https://localhost:8443/openapi/webjars/swagger-ui/oauth2-redirect.html")
+                .redirectUri("http://my.redirect.uri")
+                .redirectUri("http://localhost:8443/openapi/webjars/swagger-ui/oauth2-redirect.html")
                 .scope(OidcScopes.OPENID)
                 .scope("course:read")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
@@ -157,7 +157,7 @@ public class AuthorizationServerConfig {
 
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
-        return AuthorizationServerSettings.builder().issuer("http://auth-server").build();
+        return AuthorizationServerSettings.builder().issuer("http://auth-server:9999").build();
     }
 
     private Consumer<List<AuthenticationProvider>> configureAuthenticationValidator() {
