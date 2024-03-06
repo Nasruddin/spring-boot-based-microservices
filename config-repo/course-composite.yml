@@ -9,14 +9,14 @@ springdoc:
   cache:
     disabled: true
   swagger-ui:
-    oauth2-redirect-url: https://localhost:8443/webjars/swagger-ui/oauth2-redirect.html
+    oauth2-redirect-url: http://localhost:8443/webjars/swagger-ui/oauth2-redirect.html
     oauth:
       clientId: writer
       clientSecret: secret
       useBasicAuthenticationWithAccessCodeGrant: true
   oAuthFlow:
-    authorizationUrl: https://localhost:8443/oauth2/authorize
-    tokenUrl: https://localhost:8443/oauth2/token
+    authorizationUrl: http://localhost:8443/oauth2/authorize
+    tokenUrl: http://localhost:8443/oauth2/token
 
 server.forward-headers-strategy: framework
 
