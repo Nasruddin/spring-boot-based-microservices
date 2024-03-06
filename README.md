@@ -49,4 +49,4 @@ curl -k http://writer:secret-writer@localhost:8443/oauth2/token -d grant_type=cl
 ![Swagger OpenApi Specs](https://github.com/Nasruddin/spring-boot-based-microservices/blob/master/images/jwt-io.png?raw=true)
 
 ## Note : Currently this project uses Spring Authorization server. Keep in mind, I'm planning to enhance the whole OAuth flow because it's in shaky state right now and, you may some face issues. We may also move to keycloak. 
-## These instructions are basic starting point and, the project does lot of other stuff like elastic and mongo configuration etc. Please feel free to play around.
+## These instructions are basic starting point and, the project does lot of other stuff like elastic and mongo configuration etc. Please feel free to play around. I really want to maintain this and keep up-to-date, however my current role doesn't give me enough spare time. Therefore, contributors and their contributions are welcome :)
