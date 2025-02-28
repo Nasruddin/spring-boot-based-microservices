@@ -16,7 +16,7 @@ Basic skeleton for Spring Boot Microservices. It includes spring security for ba
 
 - Locate the docker directory from the root directory and run docker compose to startup the containers
 ```
-    cd docker && docker-compose up --build
+    cd docker && docker compose up --build
 ```
 ![Docker Compose Build](https://github.com/Nasruddin/spring-boot-based-microservices/blob/master/images/docker-compose.png?raw=true)
 

@@ -1,22 +1,23 @@
 # stage 1
 # Start with a base image containing Java runtime
-# TODO :: Upgrade to slim jre version for 17 once available
-FROM openjdk:17-alpine as builder
+FROM eclipse-temurin:17-jre-alpine as builder
 WORKDIR application
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} application.jar
 RUN java -Djarmode=layertools -jar application.jar extract
 
 # the second stage of our build will copy the extracted layers
-FROM openjdk:17-alpine
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR application
 # We install install curl for health check
 RUN apk --no-cache add curl
+# Copy extracted layers into the correct locations
 COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
 COPY --from=builder application/snapshot-dependencies/ ./
 COPY --from=builder application/application/ ./
 
+
 EXPOSE 9999
 
-ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
