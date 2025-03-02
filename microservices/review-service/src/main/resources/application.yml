@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: review-service
+  # Strongly recommend to set this property to "none" in a production environment!
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: jdbc:mysql://localhost/review-db
+    username: user
+    password: pwd
+    hikari:
+      initializationFailTimeout: 60000  
+server:
+  port: 7003
+
+logging:
+  level:
+    root: INFO
+    se.magnus: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  datasource:
+    url: jdbc:mysql://mysql/review-db
+
+server:
+  port: 8080

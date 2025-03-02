@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: recommendation-service
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: recommendation-db
+
+
+server.port: 7002
+logging:
+  level:
+    root: INFO
+    com.example.microservices: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  data:
+    mongodb:
+      host: mongodb
+server:
+  port: 8080

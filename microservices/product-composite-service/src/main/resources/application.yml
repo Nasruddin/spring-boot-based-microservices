@@ -1,0 +1,130 @@
+spring:
+  application:
+    name: product-composite-service
+
+server:
+  port: 7000
+  error:
+    include-message: always
+
+app:
+  product-service:
+    host: localhost
+    port: 7001
+  recommendation-service:
+    host: localhost
+    port: 7002
+  review-service:
+    host: localhost
+    port: 7003
+
+springdoc:
+  swagger-ui.path: /openapi/swagger-ui.html
+  api-docs.path: /openapi/v3/api-docs
+  packagesToScan: com.example.microservices.composite.product
+  pathsToMatch: /**
+  show-actuator: true
+
+
+api:
+  common:
+    version: 1.0.0
+    title: Sample API
+    description: Description of the API...
+    termsOfService: MY TERMS OF SERVICE
+    license: MY LICENSE
+    licenseUrl: MY LICENSE URL
+
+    externalDocDesc: MY WIKI PAGE
+    externalDocUrl: MY WIKI URL
+    contact:
+      name: NAME OF CONTACT
+      url: URL TO CONTACT
+      email: contact@mail.com
+
+  responseCodes:
+    ok:
+      description: OK
+    badRequest:
+      description: Bad Request, invalid format of the request. See response message for more information
+    notFound:
+      description: Not found, the specified id does not exist
+    unprocessableEntity:
+      description: Unprocessable entity, input parameters caused the processing to fail. See response message for more information
+
+  product-composite:
+    get-composite-product:
+      description: Returns a composite view of the specified product id
+      notes: |
+        # Normal response
+        If the requested product id is found the method will return information regarding:
+        1. Base product information
+        1. Reviews
+        1. Recommendations
+        1. Service Addresses\n(technical information regarding the addresses of the microservices that created the response)
+
+        # Expected partial and error responses
+        In the following cases, only a partial response be created (used to simplify testing of error conditions)
+
+        ## Product id 113
+        200 - Ok, but no recommendations will be returned
+
+        ## Product id 213
+        200 - Ok, but no reviews will be returned
+
+        ## Non numerical product id
+        400 - A **Bad Request** error will be returned
+
+        ## Product id 13
+        404 - A **Not Found** error will be returned
+
+        ## Negative product ids
+        422 - An **Unprocessable Entity** error will be returned
+
+
+  create-composite-product:
+    description: Creates a composite product
+    notes: |
+      # Normal response
+      The composite product information posted to the API will be 
+      split up and stored as separate product-info, recommendation 
+      and review entities.
+
+      # Expected error responses
+      1. If a product with the same productId as specified in the 
+      posted information already exists, an **422 - Unprocessable 
+      Entity** error with a "duplicate key" error message will be 
+      Returned
+
+  delete-composite-product:
+    description: Deletes a product composite
+    notes: |
+      # Normal response
+      Entities for product information, recommendations and reviews 
+      related to the specified productId will be deleted.
+      The implementation of the delete method is idempotent, that is, 
+      it can be called several times with the same response.
+      This means that a delete request of a non-existing product will 
+      return **200 Ok**.
+
+logging:
+  level:
+    root: INFO
+    se.magnus: DEBUG
+---
+spring:
+  config:
+    activate:
+      on-profile: docker 
+server:
+  port: 8080
+app:
+  product-service:
+    host: product
+    port: 8080
+  recommendation-service:
+    host: recommendation
+    port: 8080
+  review-service:
+    host: review
+    port: 8080
