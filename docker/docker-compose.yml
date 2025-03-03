@@ -1,5 +1,3 @@
-version: '2.1'
-
 services:
   course:
     build: ../microservices/course-service

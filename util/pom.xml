@@ -5,12 +5,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.6</version>
+		<version>3.4.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>io.javatab.microservices.util</groupId>
 	<artifactId>util</artifactId>
 	<version>1.0.0</version>
+	<packaging>jar</packaging>
 	<name>util</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -40,7 +41,7 @@
 		</dependency>
 	</dependencies>
 
-	<build>
+	<!-- <build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -48,6 +49,24 @@
 				<configuration>
 					<classifier>exec</classifier>
 				</configuration>
+			</plugin>
+		</plugins>
+	</build> -->
+	<build>
+		<plugins>
+			<plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+			<version>3.4.3</version>  <!-- Match your Spring Boot version -->
+			<executions>
+				<execution>
+				<id>repackage</id>
+            	<phase>none</phase>
+				<goals>
+					<goal>repackage</goal>
+				</goals>
+				</execution>
+			</executions>
 			</plugin>
 		</plugins>
 	</build>

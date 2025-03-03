@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-mkdir microservices
-cd microservices
+mkdir spring-boot-based-microservices
+cd spring-boot-based-microservices 
 
 spring init \
---boot-version=2.5.2 \
+--boot-version=3.4.3 \
 --build=maven \
 --java-version=17 \
 --packaging=jar \
@@ -16,7 +16,7 @@ spring init \
 student-service
 
 spring init \
---boot-version=2.5.2 \
+--boot-version=3.4.3 \
 --build=maven \
 --java-version=17 \
 --packaging=jar \
@@ -28,7 +28,7 @@ spring init \
 course-service
 
 spring init \
---boot-version=2.5.2 \
+--boot-version=3.4.3 \
 --build=maven \
 --java-version=17 \
 --packaging=jar \
@@ -40,7 +40,7 @@ spring init \
 vote-service
 
 spring init \
---boot-version=2.5.2 \
+--boot-version=3.4.3 \
 --build=maven \
 --java-version=17 \
 --packaging=jar \
@@ -52,7 +52,7 @@ spring init \
 search-service
 
 spring init \
---boot-version=2.5.2 \
+--boot-version=3.4.3 \
 --build=maven \
 --java-version=17 \
 --packaging=jar \
