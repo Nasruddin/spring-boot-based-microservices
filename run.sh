@@ -16,6 +16,7 @@ mvn clean package -DskipTests
 # Function to find and run the latest JAR file in a given service directory
 run_service() {
   kill_service_on_port 5000
+  kill_service_on_port 9000
   kill_service_on_port 9001
   kill_service_on_port 9002
   local service_dir=$1
@@ -32,6 +33,8 @@ run_service() {
 
 # Check if the first argument is 'docker'
 if [[ "$1" == "docker" ]]; then
+  echo "CD to docker dir..."
+  cd docker
   echo "Stopping services using Docker Compose..."
   docker compose -f docker-compose-base.yml down -v
   echo "Starting services using Docker Compose..."

@@ -20,6 +20,11 @@ public class CourseService {
                 .orElseThrow(() -> new CourseNotFoundException(title));
     }
 
+    public Course viewCourseDetailsById(Long id) {
+        return courseRepository.findById(id)
+                .orElseThrow(() -> new CourseNotFoundException(String.valueOf(id)));
+    }
+
     public Course addCourse(Course course) {
         if (courseRepository.existsByTitle(course.getTitle())) {
             throw new CourseAlreadyExitsException(course.getTitle());

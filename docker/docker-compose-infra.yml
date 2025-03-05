@@ -26,6 +26,8 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+    volumes:
+      - ./postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - shared-network
 networks:

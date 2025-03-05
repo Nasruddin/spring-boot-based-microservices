@@ -8,7 +8,7 @@ spring:
     name: review-service
   data:
     mongodb:
-      uri: mongodb://localhost:27016/review-db
+      uri: mongodb://localhost:27017/review-db
       #host: localhost
       #port: 27017
       #database: review-db
@@ -18,6 +18,15 @@ logging:
     com.javatab: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
 ---
 spring:
   config:

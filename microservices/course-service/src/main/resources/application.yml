@@ -19,17 +19,27 @@ spring:
  # flyway: # Only in dev env. Never have them in prod
  #   validate-on-migrate: false
  #   outOfOrder: true
+logging:
+  level:
+    org.springframework: INFO
+    com.javatab: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
 ---
 spring:
   config:
     activate:
       on-profile: docker
   datasource:
-    username: user
-    password: pwd
     url: jdbc:postgresql://postgres:5432/course_db
-    hikari:
-      connection-timeout: 2000
-      maximum-pool-size: 5 #https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing
 server:
   port: 8080

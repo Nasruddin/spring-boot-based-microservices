@@ -23,5 +23,6 @@
         <module>microservices/course-composite-service</module>
         <module>microservices/course-service</module>
         <module>microservices/review-service</module>
+        <module>spring-cloud/gateway-service</module>
     </modules>
 </project>

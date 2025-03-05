@@ -4,12 +4,16 @@ import io.javatab.microservices.core.course.domain.Course;
 import io.javatab.microservices.core.course.domain.CourseService;
 import io.javatab.util.http.NetworkUtility;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
 @RequestMapping("/api/courses")
 public class CourseController {
+
+    private final Logger logger = LoggerFactory.getLogger(CourseController.class);
 
     private final NetworkUtility utility;
     private CourseService courseService;
@@ -21,6 +25,7 @@ public class CourseController {
 
     @GetMapping
     public Iterable<Course> get() {
+        logger.info("Fetching courses");
         return courseService.viewCourses();
     }
 
@@ -28,9 +33,14 @@ public class CourseController {
     * Make sure application is running in localhost mode to test and not in docker
     * http GET ':9001/api/courses/Microservices with Spring Boot'
     * */
-    @GetMapping("/{title}")
+    @GetMapping("/title/{title}")
     public Course getByTitle(@PathVariable String title) {
         return courseService.viewCourseDetails(title);
+    }
+
+    @GetMapping("/{id}")
+    public Course getById(@PathVariable Long id) {
+        return courseService.viewCourseDetailsById(id);
     }
 
     /*

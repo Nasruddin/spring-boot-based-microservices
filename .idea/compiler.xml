@@ -11,6 +11,7 @@
         <module name="course-composite-service" />
         <module name="util" />
         <module name="review-service" />
+        <module name="gateway-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -18,6 +19,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="course-composite-service" options="-parameters" />
       <module name="course-service" options="-parameters" />
+      <module name="gateway-service" options="-parameters" />
       <module name="review-service" options="-parameters" />
       <module name="util" options="-parameters" />
     </option>

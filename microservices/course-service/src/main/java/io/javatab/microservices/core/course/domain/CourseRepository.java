@@ -8,7 +8,9 @@ import java.util.Optional;
 public interface CourseRepository extends CrudRepository<Course,Long> {
 
     Optional<Course> findByTitle(String title);
+    Optional<Course> findById(Long id);
     boolean existsByTitle(String title);
+
 
     @Transactional
     void deleteById(Long id);

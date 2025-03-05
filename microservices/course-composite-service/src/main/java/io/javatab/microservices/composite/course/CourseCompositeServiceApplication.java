@@ -10,11 +10,6 @@ import org.springframework.web.client.RestTemplate;
 @ComponentScan({"io.javatab"})
 public class CourseCompositeServiceApplication {
 
-	@Bean
-	RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(CourseCompositeServiceApplication.class, args);
 	}
