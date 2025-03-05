@@ -1,0 +1,12 @@
+# Build the container image using Docker
+docker_build(
+    ref = "review-service",
+    context = ".",
+    dockerfile = "Dockerfile"
+)
+
+# Deploy Kubernetes resources
+k8s_yaml(["kubernetes/deployment.yml", "kubernetes/service.yml"])
+
+# Manage and enable port forwarding
+k8s_resource("review-service", port_forwards=["9002"])

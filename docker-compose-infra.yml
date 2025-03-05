@@ -1,0 +1,33 @@
+services:
+  mongodb:
+    image: mongo:6.0.4
+    container_name: "mongodb"
+    mem_limit: 512m
+    ports:
+      - "27017:27017"
+    command: mongod
+    healthcheck:
+      test: "mongostat -n 1"
+    networks:
+      - shared-network
+
+  postgres:
+    image: "postgres:17.4"
+    container_name: "postgres"
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pwd
+      - POSTGRES_DB=course_db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - shared-network
+networks:
+  shared-network:
+    name: shared-network

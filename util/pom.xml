@@ -8,12 +8,24 @@
 		<version>3.4.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>io.javatab.microservices.util</groupId>
+	<groupId>io.javatab.util</groupId>
 	<artifactId>util</artifactId>
 	<version>1.0.0</version>
-	<packaging>jar</packaging>
 	<name>util</name>
 	<description>Demo project for Spring Boot</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -28,45 +40,23 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>io.projectreactor</groupId>
-			<artifactId>reactor-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.javatab.microservices.api</groupId>
-			<artifactId>api</artifactId>
-			<version>1.0.0</version>
-			<scope>compile</scope>
-		</dependency>
 	</dependencies>
 
-	<!-- <build>
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<classifier>exec</classifier>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build> -->
-	<build>
-		<plugins>
-			<plugin>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-maven-plugin</artifactId>
-			<version>3.4.3</version>  <!-- Match your Spring Boot version -->
-			<executions>
-				<execution>
-				<id>repackage</id>
-            	<phase>none</phase>
-				<goals>
-					<goal>repackage</goal>
-				</goals>
-				</execution>
-			</executions>
+				<version>3.4.3</version>  <!-- Match your Spring Boot version -->
+				<executions>
+					<execution>
+						<id>repackage</id>
+						<phase>none</phase>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

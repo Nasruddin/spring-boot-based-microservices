@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.javatab.microservices</groupId>
-    <artifactId>student-course-system</artifactId>
+    <artifactId>course-management-system</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
-    <name>student-course-system</name>
-    <description>Parent Pom for the student course registration system project</description>
+    <name>course-management-system</name>
+    <description>Parent Pom for the course management system project</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -19,16 +19,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <modules>
-        <module>api</module>
         <module>util</module>
         <module>microservices/course-composite-service</module>
         <module>microservices/course-service</module>
-        <module>microservices/search-service</module>
-        <module>microservices/student-service</module>
-        <module>microservices/vote-service</module>
-        <module>spring-cloud/eureka-server</module>
-        <module>spring-cloud/gateway</module>
-        <module>spring-cloud/authorization-server</module>
-        <module>spring-cloud/config-server</module>
+        <module>microservices/review-service</module>
     </modules>
 </project>

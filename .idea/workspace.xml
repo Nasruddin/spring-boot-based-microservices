@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="82def982-1f77-496a-a21a-a6ccc7bf68be" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/jpa.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tiltfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose-base.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose-infra.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kubernetes/infra/mongodb/deployment.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kubernetes/infra/mongodb/service.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kubernetes/infra/postgres/deployment.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kubernetes/infra/postgres/service.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseAggregate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseCompositeIntegration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/HomeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/Review.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/Vote.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-service/Tiltfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-service/kubernetes/deployment.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-service/kubernetes/service.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/config/DatabaseConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/domain/Course.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/domain/CourseAlreadyExitsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/domain/CourseNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/domain/CourseRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/domain/CourseService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/web/CourseController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/web/CourseControllerAdvice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-service/src/main/resources/db/migration/V1__Initial_schema.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/review-service/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/review-service/Tiltfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/review-service/kubernetes/deployment.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/review-service/kubernetes/service.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/domain/Review.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/domain/ReviewNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/domain/ReviewRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/domain/ReviewService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/web/ReviewController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/web/ReviewControllerAdvice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/web/ReviewDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/web/ReviewResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/io/javatab/microservices/api/ApiApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/io/javatab/microservices/api/composite/course/CourseAggregate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/io/javatab/microservices/api/composite/course/CourseCompositeService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/io/javatab/microservices/api/core/course/Course.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/io/javatab/microservices/api/core/course/CourseService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/io/javatab/microservices/api/core/search/SearchRecord.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/io/javatab/microservices/api/core/search/SearchService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/io/javatab/microservices/api/core/student/Student.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/io/javatab/microservices/api/core/student/StudentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/io/javatab/microservices/api/core/vote/Vote.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/io/javatab/microservices/api/core/vote/VoteService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/io/javatab/microservices/api/exceptions/InvalidInputException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/io/javatab/microservices/api/exceptions/NotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/test/java/io/javatab/microservices/api/ApiApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-repo/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-repo/auth-server.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-repo/course-composite.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-repo/course.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-repo/eureka-server.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-repo/gateway.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-repo/search.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-repo/student.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-repo/vote.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/create-project.bash" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/build.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/docker-compose.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/docker-ps.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/eureka.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/gateway-routes.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/jwt-io.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/oauth-endpoint.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/swagger-openapi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/CourseCompositeServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/CourseCompositeServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/configuration/OpenApi.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/configuration/OpenApiConfigProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/configuration/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/configuration/WebClients.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/service/CourseCompositeIntegration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/service/CourseCompositeServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/test/java/io/javatab/microservices/composite/course/CourseCompositeServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/test/java/io/javatab/microservices/composite/course/CourseCompositeServiceApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/test/java/io/javatab/microservices/composite/course/TestSecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/CourseServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/CourseServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/persistence/CourseEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/persistence/CourseRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/service/CourseServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/test/java/io/javatab/microservices/core/course/CourseServiceImplApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/test/java/io/javatab/microservices/core/course/MongoDbTestBase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/test/java/io/javatab/microservices/core/course/PersistenceTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/test/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/test/resources/logback-test.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/search-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/search-service/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/search-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/search-service/src/main/java/io/javatab/microservices/core/search/SearchServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/search-service/src/main/java/io/javatab/microservices/core/search/persistence/ElasticRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/search-service/src/main/java/io/javatab/microservices/core/search/persistence/SearchEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/search-service/src/main/java/io/javatab/microservices/core/search/service/SearchServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/search-service/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/search-service/src/test/java/io/javatab/microservices/core/search/ElasticsearchTestBase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/search-service/src/test/java/io/javatab/microservices/core/search/PersistenceTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/search-service/src/test/java/io/javatab/microservices/core/search/SearchServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/search-service/src/test/resource/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/student-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/student-service/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/student-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/student-service/src/main/java/io/javatab/microservices/core/student/StudentServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/student-service/src/main/java/io/javatab/microservices/core/student/persistence/StudentEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/student-service/src/main/java/io/javatab/microservices/core/student/persistence/StudentRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/student-service/src/main/java/io/javatab/microservices/core/student/service/StudentServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/student-service/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/student-service/src/test/java/io/javatab/microservices/core/student/PersistenceTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/student-service/src/test/java/io/javatab/microservices/core/student/PostgresTestBase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/student-service/src/test/java/io/javatab/microservices/core/student/StudentServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/student-service/src/test/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/vote-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/vote-service/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/vote-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/vote-service/src/main/java/io/javatab/microservices/core/vote/VoteServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/vote-service/src/main/java/io/javatab/microservices/core/vote/configuration/RedisConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/vote-service/src/main/java/io/javatab/microservices/core/vote/persistence/RedisRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/vote-service/src/main/java/io/javatab/microservices/core/vote/persistence/VoteEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/vote-service/src/main/java/io/javatab/microservices/core/vote/service/VoteServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/vote-service/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/vote-service/src/test/java/io/javatab/microservices/core/vote/PersistenceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/vote-service/src/test/java/io/javatab/microservices/core/vote/RedisTestBase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/vote-service/src/test/java/io/javatab/microservices/core/vote/VoteServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/vote-service/src/test/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/authorization-server/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/authorization-server/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/authorization-server/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/authorization-server/src/main/java/io/javatab/springcloud/auth/AuthorizationServerApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/authorization-server/src/main/java/io/javatab/springcloud/auth/configuration/AuthorizationServerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/authorization-server/src/main/java/io/javatab/springcloud/auth/configuration/DefaultSecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/authorization-server/src/main/java/io/javatab/springcloud/auth/jose/Jwks.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/authorization-server/src/main/java/io/javatab/springcloud/auth/jose/KeyGeneratorUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/authorization-server/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/config-server/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/config-server/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/config-server/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/config-server/src/main/java/io/javatab/springcloud/configserver/ConfigServerApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/config-server/src/main/java/io/javatab/springcloud/configserver/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/config-server/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/config-server/src/test/java/io/javatab/springcloud/configserver/ConfigServerApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/eureka-server/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/eureka-server/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/eureka-server/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/eureka-server/src/main/java/io/javatab/springcloud/eurekaserver/EurekaServerApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/eureka-server/src/main/java/io/javatab/springcloud/eurekaserver/configuration/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/eureka-server/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/eureka-server/src/test/java/io/javatab/springcloud/eurekaserver/EurekaServerApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/eureka-server/src/test/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/gateway/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/gateway/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/gateway/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/gateway/src/main/java/io/javatab/springcloud/gateway/GatewayApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/gateway/src/main/java/io/javatab/springcloud/gateway/configuration/HealthCheckConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/gateway/src/main/java/io/javatab/springcloud/gateway/configuration/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/gateway/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/gateway/src/test/java/io/javatab/springcloud/gateway/GatewayApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/gateway/src/test/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-course-registration-system.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/util/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/main/java/io/javatab/microservices/util/UtilApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/main/java/io/javatab/microservices/util/http/GlobalControllerExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/main/java/io/javatab/microservices/util/http/HttpErrorInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/main/java/io/javatab/microservices/util/http/ServiceUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/test/java/io/javatab/microservices/util/UtilApplicationTests.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2tnCpyw1wRyzdhNBRltyDZF7L97" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.CourseCompositeServiceApplication.executor": "Run",
+    "Application.CourseServiceApplication.executor": "Run",
+    "Application.ReviewServiceApplication.executor": "Run",
+    "Maven.course-service [compile].executor": "Run",
+    "Maven.course-service [package].executor": "Run",
+    "Maven.util [install].executor": "Run",
+    "Maven.util [package].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "revamp",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/maersk-mtc-79/Nasir/Personal/Codebase/microservices-example/spring-boot-update/spring-boot-based-microservices/microservices/review-service",
+    "settings.editor.selected.configurable": "terminal"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="io.javatab.microservices.core.course.domain" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/microservices/review-service" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/microservices/course-service" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.ReviewServiceApplication">
+    <configuration name="CourseServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="io.javatab.microservices.core.course.CourseServiceApplication" />
+      <module name="course-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.javatab.microservices.core.course.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReviewServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="io.javatab.microservices.core.review.ReviewServiceApplication" />
+      <module name="review-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.javatab.microservices.core.review.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="spring-boot-based-microservices" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="spring-boot-based-microservices" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="spring-boot-based-microservices" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="spring-boot-based-microservices" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ReviewServiceApplication" />
+        <item itemvalue="Application.CourseServiceApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="82def982-1f77-496a-a21a-a6ccc7bf68be" name="Changes" comment="" />
+      <created>1740978637962</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740978637962</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="Dockerfile" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/web/ReviewController.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

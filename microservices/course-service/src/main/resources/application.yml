@@ -1,19 +1,35 @@
-spring.config.import: "configserver:"
-
+server:
+  port: 9001
 spring:
-  application.name: course
-  cloud.config:
-    failFast: true
-    retry:
-      initialInterval: 3000
-      multiplier: 1.3
-      maxInterval: 10000
-      maxAttempts: 20
-    uri: http://localhost:8888
-    username: ${CONFIG_SERVER_USR}
-    password: ${CONFIG_SERVER_PWD}
-
+  application:
+    name: course-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: user
+    password: pwd
+    url: jdbc:postgresql://localhost:5432/course_db
+    hikari:
+      connection-timeout: 2000
+      maximum-pool-size: 5 #https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      mode: always
+ # flyway: # Only in dev env. Never have them in prod
+ #   validate-on-migrate: false
+ #   outOfOrder: true
 ---
-spring.config.activate.on-profile: docker
-
-spring.cloud.config.uri: http://config-server:8888
+spring:
+  config:
+    activate:
+      on-profile: docker
+  datasource:
+    username: user
+    password: pwd
+    url: jdbc:postgresql://postgres:5432/course_db
+    hikari:
+      connection-timeout: 2000
+      maximum-pool-size: 5 #https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing
+server:
+  port: 8080

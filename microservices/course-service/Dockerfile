@@ -1,22 +1,25 @@
-# stage 1
-# Start with a base image containing Java runtime
-# TODO :: Upgrade to slim jre version for 17 once available
-FROM eclipse-temurin:17-jre-alpine AS builder
+FROM eclipse-temurin:17.0.5_8-jre-focal as builder
+WORKDIR extracted
+
+ADD ./target/*.jar app.jar
+
+RUN java -Djarmode=layertools -jar app.jar extract
+
+FROM eclipse-temurin:17.0.5_8-jre-focal
 WORKDIR application
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} application.jar
-RUN java -Djarmode=layertools -jar application.jar extract
 
-# the second stage of our build will copy the extracted layers
-FROM eclipse-temurin:17-jre-alpine
-WORKDIR application
-# Copy extracted layers into the correct locations
-COPY --from=builder application/dependencies/ ./
-COPY --from=builder application/spring-boot-loader/ ./
-COPY --from=builder application/snapshot-dependencies/ ./
-COPY --from=builder application/application/ ./
+# Copy the dependencies layer from the builder stage
+COPY --from=builder extracted/dependencies/ ./
+# Copy the Spring Boot loader layer from the builder stage
+COPY --from=builder extracted/spring-boot-loader/ ./
+# Copy the snapshot dependencies layer from the builder stage
+COPY --from=builder extracted/snapshot-dependencies/ ./
+# Copy the application layer from the builder stage
+COPY --from=builder extracted/application/ ./
 
-
+# Expose port 8080
 EXPOSE 8080
 
+# Set the entry point to launch the application
 ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
+

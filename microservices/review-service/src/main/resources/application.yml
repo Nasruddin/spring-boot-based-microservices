@@ -1,0 +1,30 @@
+server:
+  port: 9002
+  error:
+    include-message: always
+    include-binding-errors: always
+spring:
+  application:
+    name: review-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27016/review-db
+      #host: localhost
+      #port: 27017
+      #database: review-db
+logging:
+  level:
+    org.springframework: INFO
+    com.javatab: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  data:
+    mongodb:
+      uri: mongodb://mongodb:27017/review-db
+server:
+  port: 8080
