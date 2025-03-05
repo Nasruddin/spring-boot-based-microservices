@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: course-composite-service
+  labels:
+    app: course-composite-service
+spec:
+  type: ClusterIP
+  selector:
+    app: course-composite-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000

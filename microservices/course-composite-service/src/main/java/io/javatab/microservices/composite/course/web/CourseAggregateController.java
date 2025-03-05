@@ -1,6 +1,5 @@
 package io.javatab.microservices.composite.course.web;
 
-import io.javatab.util.http.NetworkUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +19,10 @@ public class CourseAggregateController {
 
 
     private final CourseCompositeIntegration integration;
-    private final NetworkUtility utility;
+    //private final NetworkUtility utility;
 
-    public CourseAggregateController(CourseCompositeIntegration integration, NetworkUtility utility) {
+    public CourseAggregateController(CourseCompositeIntegration integration) {
         this.integration = integration;
-        this.utility = utility;
     }
 
     @GetMapping("/{id}/with-details")
