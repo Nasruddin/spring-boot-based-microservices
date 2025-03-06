@@ -4,15 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82def982-1f77-496a-a21a-a6ccc7bf68be" name="Changes" comment="Kubernetes and Spring cloud gateway added">
-      <change afterPath="$PROJECT_DIR$/microservices/course-composite-service/kubernetes/deployment.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/course-composite-service/kubernetes/service.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spring-cloud/gateway-service/kubernetes/deployment.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spring-cloud/gateway-service/kubernetes/ingress.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spring-cloud/gateway-service/kubernetes/service.yml" afterDir="false" />
+    <list default="true" id="82def982-1f77-496a-a21a-a6ccc7bf68be" name="Changes" comment="Added ingress support">
+      <change afterPath="$PROJECT_DIR$/build-images.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tiltfile" beforeDir="false" afterPath="$PROJECT_DIR$/Tiltfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseAggregateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseAggregateController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/kubernetes/deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/kubernetes/deployment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseCompositeIntegration.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseCompositeIntegration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/kubernetes/deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/kubernetes/deployment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/web/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/web/CourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/review-service/kubernetes/deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/review-service/kubernetes/deployment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/gateway-service/kubernetes/deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/spring-cloud/gateway-service/kubernetes/deployment.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,7 +208,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741156956411</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added ingress support">
+      <option name="closed" value="true" />
+      <created>1741173754129</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1741173754129</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -226,7 +235,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Kubernetes and Spring cloud gateway added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Kubernetes and Spring cloud gateway added" />
+    <MESSAGE value="Added ingress support" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added ingress support" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

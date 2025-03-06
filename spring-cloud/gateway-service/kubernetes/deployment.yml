@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: gateway-service
-          image: spring-boot-based-spring-cloud-gateway-service
+          image: gateway-service
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:

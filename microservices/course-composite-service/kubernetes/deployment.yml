@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: course-composite-service
-          image: spring-boot-based-microservices-course-composite-service # Please rename these while building docker image
+          image: course-composite-service # Please rename these while building docker image
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:
@@ -25,5 +25,7 @@ spec:
           ports:
             - containerPort: 5000
           env:
-          #  - name: SPRING_DATASOURCE_URL
-          #    value: jdbc:postgresql://course-postgres/course_db
+            - name: COURSE_SERVICE_URL
+              value: http://course-service
+            - name: REVIEW_SERVICE_URL
+              value: http://review-service

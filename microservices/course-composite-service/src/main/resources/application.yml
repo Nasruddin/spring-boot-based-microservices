@@ -1,10 +1,10 @@
 app:
+
   course-service:
-    host: localhost
-    port: 9001
+    uri: ${COURSE_SERVICE_URL:http://localhost:9001}
+
   review-service:
-    host: localhost
-    port: 9002
+    uri: ${REVIEW_SERVICE_URL:http://localhost:9002}
 spring:
   application:
     name: course-composite-service
@@ -23,8 +23,6 @@ server:
   port: 8080
 app:
   course-service:
-    host: course
-    port: 8080
+    uri: http://course:8080
   review-service:
-    host: review
-    port: 8080
+    uri: http://review:8080

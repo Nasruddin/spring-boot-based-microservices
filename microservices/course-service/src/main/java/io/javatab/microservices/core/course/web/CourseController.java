@@ -44,7 +44,8 @@ public class CourseController {
     }
 
     /*
-    * http POST :9001/api/courses title="Microservices with Spring Boot" author="John Doe" price:=29.79 publisher="Manning"
+    * http POST :9001/api/courses title="Microservices with Spring Boot" author="John Doe" price:=29.79 publisher="GitHub"
+    * http POST :9001/api/courses title="Spring Boot in Action" author="John Doe" price:=69.45 publisher="GitHub"
     * */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
