@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: course-composite-service
+  labels:
+    app: course-composite-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: course-composite-service
+  template:
+    metadata:
+      labels:
+        app: course-composite-service
+    spec:
+      containers:
+        - name: course-composite-service
+          image: course-composite-service # Please rename these while building docker image
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "sh", "-c", "sleep 5" ]
+          ports:
+            - containerPort: 5000
+          env:
+            - name: COURSE_SERVICE_URL
+              value: http://course-service
+            - name: REVIEW_SERVICE_URL
+              value: http://review-service
+            - name: APP_KEYCLOAK_JWK_SET_URI
+              value: http://keycloak:8080/realms/course-management-realm/protocol/openid-connect/certs
+            - name: KEYCLOAK_ISSUER_URI
+              value: http://keycloak:8080/realms/course-management-realm
+            - name: KEYCLOAK_JWK_SET_URI
+              value: http://keycloak:8080/realms/course-management-realm/protocol/openid-connect/certs

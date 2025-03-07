@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: course-postgres
+  labels:
+    db: course-postgres
+spec:
+  selector:
+    matchLabels:
+      db: course-postgres
+  template:
+    metadata:
+      labels:
+        db: course-postgres
+    spec:
+      containers:
+        - name: course-postgres
+          image: postgres:17.4
+          env:
+            - name: POSTGRES_USER
+              value: user
+            - name: POSTGRES_PASSWORD
+              value: pwd
+            - name: POSTGRES_DB
+              value: course_db
+          resources:
+            requests:
+              cpu: 100m
+              memory: 60Mi
+            limits:
+              cpu: 200m
+              memory: 120Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: course-postgres
+  labels:
+    db: course-postgres
+spec:
+  type: ClusterIP
+  selector:
+    db: course-postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

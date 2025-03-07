@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-service
+  labels:
+    app: gateway-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-service
+  template:
+    metadata:
+      labels:
+        app: gateway-service
+    spec:
+      containers:
+        - name: gateway-service
+          image: gateway-service
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "sh", "-c", "sleep 5" ]
+          ports:
+            - containerPort: 9000
+          env:
+            - name: COURSE_SERVICE_URL
+              value: http://course-service
+            - name: REVIEW_SERVICE_URL
+              value: http://review-service
+            - name: COURSE_AGGREGATE_SERVICE_URL
+              value: http://course-composite-service #there are service names in kubectl get svc
+            - name: APP_KEYCLOAK_JWK_SET_URI
+              value: http://keycloak:8080/realms/course-management-realm/protocol/openid-connect/certs
+            - name: KEYCLOAK_ISSUER_URI
+              value: http://keycloak:8080/realms/course-management-realm
+            - name: KEYCLOAK_JWK_SET_URI
+              value: http://keycloak:8080/realms/course-management-realm/protocol/openid-connect/certs

@@ -1,0 +1,55 @@
+app:
+  jwk-set-uri: ${APP_KEYCLOAK_JWK_SET_URI:http://localhost:8081/realms/course-management-realm/protocol/openid-connect/certs}
+server:
+  port: 9002
+  error:
+    include-message: always
+    include-binding-errors: always
+spring:
+  application:
+    name: review-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/review-db
+      #host: localhost
+      #port: 27017
+      #database: review-db
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8081/realms/course-management-realm}
+          jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:http://localhost:8081/realms/course-management-realm/protocol/openid-connect/certs}
+logging:
+  level:
+    org.springframework: INFO
+    com.javatab: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+---
+app:
+  jwk-set-uri: http://keycloak:8080/realms/course-management-realm/protocol/openid-connect/certs
+spring:
+  config:
+    activate:
+      on-profile: docker
+  data:
+    mongodb:
+      uri: mongodb://mongodb:27017/review-db
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/course-management-realm
+          jwk-set-uri: http://keycloak:8080/realms/course-management-realm/protocol/openid-connect/certs
+server:
+  port: 8080

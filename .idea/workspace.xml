@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="82def982-1f77-496a-a21a-a6ccc7bf68be" name="Changes" comment="Added security for local running applications">
+      <change afterPath="$PROJECT_DIR$/kubernetes/infra/keycloak/course-management-realm.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kubernetes/infra/keycloak/keycloak.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kubernetes/infra/mongodb/mongo.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kubernetes/infra/postgres/postgres.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes/infra/mongodb/deployment.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes/infra/mongodb/service.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes/infra/postgres/deployment.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes/infra/postgres/service.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/kubernetes/deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/kubernetes/deployment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/config/ResourceController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseAggregateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseAggregateController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseCompositeIntegration.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseCompositeIntegration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/kubernetes/deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/kubernetes/deployment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/review-service/kubernetes/deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/review-service/kubernetes/deployment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/review-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/review-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/gateway-service/kubernetes/deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/spring-cloud/gateway-service/kubernetes/deployment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud/gateway-service/src/main/java/com/example/springcloud/gateway/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring-cloud/gateway-service/src/main/java/com/example/springcloud/gateway/config/SecurityConfig.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2tnCpyw1wRyzdhNBRltyDZF7L97" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.CourseCompositeServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CourseServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GatewayServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ReviewServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.course-service [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.course-service [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.util [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.util [package].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;revamp&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/maersk-mtc-79/Nasir/Personal/Codebase/microservices-example/spring-boot-update/spring-boot-based-microservices/microservices/review-service&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="io.javatab.microservices.core.course.domain" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/microservices/review-service" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docker" />
+      <recent name="$PROJECT_DIR$/microservices/course-service" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.ReviewServiceApplication">
+    <configuration name="CourseCompositeServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="io.javatab.microservices.composite.course.CourseCompositeServiceApplication" />
+      <module name="course-composite-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.javatab.microservices.composite.course.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CourseServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="io.javatab.microservices.core.course.CourseServiceApplication" />
+      <module name="course-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.javatab.microservices.core.course.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatewayServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.springcloud.gateway.GatewayServiceApplication" />
+      <module name="gateway-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.springcloud.gateway.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReviewServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="io.javatab.microservices.core.review.ReviewServiceApplication" />
+      <module name="review-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.javatab.microservices.core.review.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="spring-boot-based-microservices" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="spring-boot-based-microservices" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="spring-boot-based-microservices" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="spring-boot-based-microservices" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.CourseServiceApplication" />
+        <item itemvalue="Application.ReviewServiceApplication" />
+        <item itemvalue="Application.GatewayServiceApplication" />
+        <item itemvalue="Application.CourseCompositeServiceApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="82def982-1f77-496a-a21a-a6ccc7bf68be" name="Changes" comment="" />
+      <created>1740978637962</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740978637962</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Kubernetes and Spring cloud gateway added">
+      <option name="closed" value="true" />
+      <created>1741156956411</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1741156956411</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added ingress support">
+      <option name="closed" value="true" />
+      <created>1741173754129</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1741173754129</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fix for aggregate course">
+      <option name="closed" value="true" />
+      <created>1741240420942</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1741240420942</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added security for local running applications">
+      <option name="closed" value="true" />
+      <created>1741325074203</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1741325074203</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="Dockerfile" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Kubernetes and Spring cloud gateway added" />
+    <MESSAGE value="Added ingress support" />
+    <MESSAGE value="Fix for aggregate course" />
+    <MESSAGE value="Added security for local running applications" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added security for local running applications" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/web/ReviewController.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

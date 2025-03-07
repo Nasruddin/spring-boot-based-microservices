@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: review-mongodb
+  labels:
+    app: review-mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: review-mongodb
+  template:
+    metadata:
+      labels:
+        app: review-mongodb
+    spec:
+      containers:
+        - name: review-mongodb
+          image: mongo:6.0.4  # Latest stable MongoDB version
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongodb-storage
+              mountPath: /data/db
+      volumes:
+        - name: mongodb-storage
+          emptyDir: {}  # Use PersistentVolumeClaim for production
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: review-mongodb
+spec:
+  selector:
+    app: review-mongodb
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
+  type: ClusterIP  # Change to LoadBalancer or NodePort if needed
