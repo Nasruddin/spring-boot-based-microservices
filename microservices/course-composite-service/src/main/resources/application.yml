@@ -14,6 +14,15 @@ logging:
   level:
     root: INFO
     io.javatab.microservices.composite.course: DEBUG
+
+# Security related properties
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/course-management-realm
+          jwk-set-uri: http://localhost:8081/realms/course-management-realm/protocol/openid-connect/certs
+
 ---
 spring:
   config:

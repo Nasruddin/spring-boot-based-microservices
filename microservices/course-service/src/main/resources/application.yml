@@ -19,6 +19,12 @@ spring:
  # flyway: # Only in dev env. Never have them in prod
  #   validate-on-migrate: false
  #   outOfOrder: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/course-management-realm
+          jwk-set-uri: http://localhost:8081/realms/course-management-realm/protocol/openid-connect/certs
 logging:
   level:
     org.springframework: INFO

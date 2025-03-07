@@ -4,16 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82def982-1f77-496a-a21a-a6ccc7bf68be" name="Changes" comment="Added ingress support">
-      <change afterPath="$PROJECT_DIR$/build-images.sh" afterDir="false" />
+    <list default="true" id="82def982-1f77-496a-a21a-a6ccc7bf68be" name="Changes" comment="Fix for aggregate course">
+      <change afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/config/ResourceController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-cloud/gateway-service/src/main/java/com/example/springcloud/gateway/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/kubernetes/deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/kubernetes/deployment.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseCompositeIntegration.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseCompositeIntegration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/docker-compose-infra.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose-infra.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-service/kubernetes/deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/kubernetes/deployment.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/web/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/web/CourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/review-service/kubernetes/deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/review-service/kubernetes/deployment.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spring-cloud/gateway-service/kubernetes/deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/spring-cloud/gateway-service/kubernetes/deployment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/review-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/review-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/review-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/review-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +44,9 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
@@ -55,10 +62,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.CourseCompositeServiceApplication.executor": "Debug",
-    "Application.CourseServiceApplication.executor": "Debug",
-    "Application.GatewayServiceApplication.executor": "Debug",
-    "Application.ReviewServiceApplication.executor": "Debug",
+    "Application.CourseCompositeServiceApplication.executor": "Run",
+    "Application.CourseServiceApplication.executor": "Run",
+    "Application.GatewayServiceApplication.executor": "Run",
+    "Application.ReviewServiceApplication.executor": "Run",
     "Maven.course-service [compile].executor": "Run",
     "Maven.course-service [package].executor": "Run",
     "Maven.util [install].executor": "Run",
@@ -84,7 +91,7 @@
       <recent name="$PROJECT_DIR$/microservices/course-service" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GatewayServiceApplication">
+  <component name="RunManager" selected="Application.ReviewServiceApplication">
     <configuration name="CourseCompositeServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="io.javatab.microservices.composite.course.CourseCompositeServiceApplication" />
       <module name="course-composite-service" />
@@ -184,9 +191,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GatewayServiceApplication" />
-        <item itemvalue="Application.ReviewServiceApplication" />
         <item itemvalue="Application.CourseServiceApplication" />
+        <item itemvalue="Application.ReviewServiceApplication" />
+        <item itemvalue="Application.GatewayServiceApplication" />
         <item itemvalue="Application.CourseCompositeServiceApplication" />
       </list>
     </recent_temporary>
@@ -216,7 +223,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741173754129</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Fix for aggregate course">
+      <option name="closed" value="true" />
+      <created>1741240420942</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1741240420942</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -236,7 +251,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Kubernetes and Spring cloud gateway added" />
     <MESSAGE value="Added ingress support" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added ingress support" />
+    <MESSAGE value="Fix for aggregate course" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix for aggregate course" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -245,6 +261,11 @@
           <url>file://$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/web/ReviewController.java</url>
           <line>67</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/config/ResourceController.java</url>
+          <line>20</line>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
