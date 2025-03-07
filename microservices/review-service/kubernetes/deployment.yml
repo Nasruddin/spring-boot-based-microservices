@@ -27,3 +27,9 @@ spec:
           env:
             - name: SPRING_DATA_MONGODB_URI
               value: mongodb://review-mongodb:27017/review-db
+            - name: APP_KEYCLOAK_JWK_SET_URI
+              value: http://keycloak:8080/realms/course-management-realm/protocol/openid-connect/certs
+            - name: KEYCLOAK_ISSUER_URI
+              value: http://keycloak:8080/realms/course-management-realm
+            - name: KEYCLOAK_JWK_SET_URI
+              value: http://keycloak:8080/realms/course-management-realm/protocol/openid-connect/certs

@@ -1,5 +1,5 @@
 app:
-
+  jwk-set-uri: ${APP_KEYCLOAK_JWK_SET_URI:http://localhost:8081/realms/course-management-realm/protocol/openid-connect/certs}
   course-service:
     uri: ${COURSE_SERVICE_URL:http://localhost:9001}
 
@@ -20,17 +20,25 @@ logging:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8081/realms/course-management-realm
-          jwk-set-uri: http://localhost:8081/realms/course-management-realm/protocol/openid-connect/certs
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8081/realms/course-management-realm}
+          jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:http://localhost:8081/realms/course-management-realm/protocol/openid-connect/certs}
 
 ---
+
 spring:
   config:
     activate:
       on-profile: docker
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/course-management-realm
+          jwk-set-uri: http://keycloak:8080/realms/course-management-realm/protocol/openid-connect/certs
 server:
   port: 8080
 app:
+  jwk-set-uri: http://keycloak:8080/realms/course-management-realm/protocol/openid-connect/certs
   course-service:
     uri: http://course:8080
   review-service:

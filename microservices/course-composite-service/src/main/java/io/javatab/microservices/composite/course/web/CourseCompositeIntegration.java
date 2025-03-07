@@ -3,6 +3,8 @@ package io.javatab.microservices.composite.course.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -28,18 +30,21 @@ public class CourseCompositeIntegration {
         this.reviewServiceUrl = reviewServiceUrl;
     }
 
-    public Mono<CourseAggregate> getCourseDetails(Long id) {
+    public Mono<CourseAggregate> getCourseDetails(Long id, Jwt jwt) {
+        logger.info("JWT ===> {}", jwt.getTokenValue());
         String courseUrl = courseServiceUrl + "/api/courses/" + id;
         String reviewUrl = reviewServiceUrl + "/api/reviews?course=" + id;
         logger.info("Course URL ===> {}", courseUrl);
         logger.info("Review URL ===> {}", reviewUrl);
         Mono<Course> courseMono = webClient.get()
                 .uri(courseUrl)
+                .header("Authorization", "Bearer " + jwt.getTokenValue())
                 .retrieve()
                 .bodyToMono(Course.class);
 
         Mono<List<Review>> reviewsMono = webClient.get()
                 .uri(reviewUrl)
+                .header("Authorization", "Bearer " + jwt.getTokenValue())
                 .retrieve()
                 .bodyToFlux(Review.class)
                 .collectList();

@@ -30,3 +30,18 @@ spec:
             limits:
               cpu: 200m
               memory: 120Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: course-postgres
+  labels:
+    db: course-postgres
+spec:
+  type: ClusterIP
+  selector:
+    db: course-postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

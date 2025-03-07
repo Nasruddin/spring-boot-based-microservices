@@ -29,3 +29,9 @@ spec:
               value: http://course-service
             - name: REVIEW_SERVICE_URL
               value: http://review-service
+            - name: APP_KEYCLOAK_JWK_SET_URI
+              value: http://keycloak:8080/realms/course-management-realm/protocol/openid-connect/certs
+            - name: KEYCLOAK_ISSUER_URI
+              value: http://keycloak:8080/realms/course-management-realm
+            - name: KEYCLOAK_JWK_SET_URI
+              value: http://keycloak:8080/realms/course-management-realm/protocol/openid-connect/certs

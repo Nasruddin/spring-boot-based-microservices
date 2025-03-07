@@ -1,5 +1,6 @@
 package com.example.springcloud.gateway.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -25,6 +26,11 @@ import java.util.Map;
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
+    private String jwkSetUri;
+    public SecurityConfig(@Value("${app.jwk-set-uri}") String jwkSetUri) {
+        this.jwkSetUri = jwkSetUri;
+    }
+
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
@@ -41,7 +47,8 @@ public class SecurityConfig {
 
     @Bean
     public ReactiveJwtDecoder jwtDecoder() {
-        return NimbusReactiveJwtDecoder.withJwkSetUri("http://localhost:8081/realms/course-management-realm/protocol/openid-connect/certs").build();
+        System.out.println("======== " + jwkSetUri);
+        return NimbusReactiveJwtDecoder.withJwkSetUri(jwkSetUri).build();
     }
 
     @Bean
@@ -59,18 +66,6 @@ public class SecurityConfig {
                             .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
                             .toList());
                 }
-
-                // Extract client roles (replace "my-resource-server" with your client ID)
-                /*Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
-                if (resourceAccess != null) {
-                    Map<String, Object> clientRoles = (Map<String, Object>) resourceAccess.get("my-resource-server");
-                    if (clientRoles != null && clientRoles.containsKey("roles")) {
-                        List<String> roles = (List<String>) clientRoles.get("roles");
-                        authorities.addAll(roles.stream()
-                                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
-                                .toList());
-                    }
-                }*/
 
                 Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
                 if (resourceAccess != null) {

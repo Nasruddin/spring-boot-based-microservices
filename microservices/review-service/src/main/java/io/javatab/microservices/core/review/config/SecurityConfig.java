@@ -2,6 +2,7 @@ package io.javatab.microservices.core.review.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -29,6 +30,12 @@ public class SecurityConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
+    private String jwkSetUri;
+
+    public SecurityConfig(@Value("${app.jwk-set-uri}") String jwkSetUri) {
+        this.jwkSetUri = jwkSetUri;
+    }
+
     @Bean
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
         http
@@ -49,7 +56,7 @@ public class SecurityConfig {
 
     @Bean
     public ReactiveJwtDecoder jwtDecoder() {
-        return NimbusReactiveJwtDecoder.withJwkSetUri("http://localhost:8081/realms/course-management-realm/protocol/openid-connect/certs").build();
+        return NimbusReactiveJwtDecoder.withJwkSetUri(jwkSetUri).build();
     }
 
     @Bean
@@ -68,17 +75,6 @@ public class SecurityConfig {
                             .toList());
                 }
 
-                // Extract client roles (replace "my-resource-server" with your client ID)
-                /*Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
-                if (resourceAccess != null) {
-                    Map<String, Object> clientRoles = (Map<String, Object>) resourceAccess.get("my-resource-server");
-                    if (clientRoles != null && clientRoles.containsKey("roles")) {
-                        List<String> roles = (List<String>) clientRoles.get("roles");
-                        authorities.addAll(roles.stream()
-                                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
-                                .toList());
-                    }
-                }*/
                 Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
                 if (resourceAccess != null) {
                     resourceAccess.forEach((resource, access) -> {
