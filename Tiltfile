@@ -1,11 +1,23 @@
+# Define and build infrastructure services
+k8s_yaml([
+    "kubernetes/infrastructure/keycloak/keycloak.yml",
+    "kubernetes/infrastructure/postgres/postgres.yml",
+    "kubernetes/infrastructure/mongodb/mongodb.yml"
+])
+
+# Define infrastructure resources
+k8s_resource("keycloak", labels=["infra"], auto_init=True)
+k8s_resource("course-postgres", labels=["infra"], auto_init=True)
+k8s_resource("review-mongodb", labels=["infra"], auto_init=True)
+
 # Define and build course-service
 docker_build(
     "course-service",
     context="./microservices/course-service",
     dockerfile="./microservices/course-service/Dockerfile",
     live_update=[
-        sync("./microservices/course-service/src", "/application/src"),  # Sync only Java files
-        run("mvn package -DskipTests", trigger=["/application/src"]),    # Rebuild JAR when code changes
+        sync("./microservices/course-service/src", "/application/src"),
+        run("mvn package -DskipTests", trigger=["/application/src"]),
     ]
 )
 k8s_yaml([
@@ -14,8 +26,8 @@ k8s_yaml([
 ])
 k8s_resource(
     "course-service",
-    port_forwards="9001:9001",  # Maps host port 9001 to container port 9001
-    labels=["services"]         # Optional: Group in Tilt UI
+    port_forwards="9001:9001",
+    labels=["services"]
 )
 
 # Define and build review-service
@@ -24,8 +36,8 @@ docker_build(
     context="./microservices/review-service",
     dockerfile="./microservices/review-service/Dockerfile",
     live_update=[
-        sync("./microservices/review-service/src", "/application/src"),  # Sync only Java files
-        run("mvn package -DskipTests", trigger=["/application/src"]),    # Rebuild JAR when code changes
+        sync("./microservices/review-service/src", "/application/src"),
+        run("mvn package -DskipTests", trigger=["/application/src"]),
     ]
 )
 k8s_yaml([
@@ -38,14 +50,14 @@ k8s_resource(
     labels=["services"]
 )
 
-# Define and build course-aggregate-service
+# Define and build course-composite-service
 docker_build(
     "course-composite-service",
     context="./microservices/course-composite-service",
     dockerfile="./microservices/course-composite-service/Dockerfile",
     live_update=[
-        sync("./microservices/course-composite-service/src", "/application/src"),  # Sync only Java files
-        run("mvn package -DskipTests", trigger=["/application/src"]),    # Rebuild JAR when code changes
+        sync("./microservices/course-composite-service/src", "/application/src"),
+        run("mvn package -DskipTests", trigger=["/application/src"]),
     ]
 )
 k8s_yaml([
@@ -58,15 +70,14 @@ k8s_resource(
     labels=["services"]
 )
 
-
 # Define and build gateway-service
 docker_build(
     "gateway-service",
     context="./spring-cloud/gateway-service",
     dockerfile="./spring-cloud/gateway-service/Dockerfile",
     live_update=[
-        sync("./spring-cloud/gateway-service/src", "/application/src"),  # Sync only Java files
-        run("mvn package -DskipTests", trigger=["/application/src"]),    # Rebuild JAR when code changes
+        sync("./spring-cloud/gateway-service/src", "/application/src"),
+        run("mvn package -DskipTests", trigger=["/application/src"]),
     ]
 )
 k8s_yaml([
@@ -74,9 +85,7 @@ k8s_yaml([
     "spring-cloud/gateway-service/kubernetes/service.yml",
     "spring-cloud/gateway-service/kubernetes/ingress.yml"
 ])
-
 k8s_resource(
     "gateway-service",
-#    port_forwards="9000:9000",  # Maps host port 9000 to container port 9000
-     labels=["services"]         # Optional: Group in Tilt UI
+    labels=["services"]
 )
