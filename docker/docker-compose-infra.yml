@@ -42,7 +42,6 @@ services:
     command: [ "start-dev" ]
     networks:
       - shared-network
-
 networks:
   shared-network:
     name: shared-network
