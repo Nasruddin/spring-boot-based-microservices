@@ -23,6 +23,24 @@ logging:
           issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8081/realms/course-management-realm}
           jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:http://localhost:8081/realms/course-management-realm/protocol/openid-connect/certs}
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,metrics,prometheus"
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+    endpoint:
+      metrics:
+        enabled: true
+      prometheus:
+        enabled: true
+      health:
+        show-details: always
 ---
 
 spring:

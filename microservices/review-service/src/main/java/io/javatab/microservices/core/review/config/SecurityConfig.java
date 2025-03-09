@@ -40,6 +40,7 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange(exchanges -> exchanges
+                        .pathMatchers("/actuator/**").permitAll()
                         .pathMatchers("/api/reviews/**").hasAnyRole("REVIEW-READ", "REVIEW-WRITE")
                         .anyExchange().authenticated()
                 )
