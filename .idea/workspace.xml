@@ -4,24 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82def982-1f77-496a-a21a-a6ccc7bf68be" name="Changes" comment="Tilt config to run all manifest in one go">
-      <change afterPath="$PROJECT_DIR$/docker/dashboard-1.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker/prometheus/prometheus.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/MetricsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/config/MetricsConfig.java" afterDir="false" />
+    <list default="true" id="82def982-1f77-496a-a21a-a6ccc7bf68be" name="Changes" comment="Prometheus integration">
+      <change afterPath="$PROJECT_DIR$/kubernetes/infrastructure/grafana/grafana.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kubernetes/infrastructure/prometheus/prometheus.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/docker-compose-base.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose-base.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/docker-compose-infra.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose-infra.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/review-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/review-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/review-service/src/main/java/io/javatab/microservices/core/review/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/review-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/review-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spring-cloud/gateway-service/src/main/java/com/example/springcloud/gateway/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/spring-cloud/gateway-service/src/main/java/com/example/springcloud/gateway/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tiltfile" beforeDir="false" afterPath="$PROJECT_DIR$/Tiltfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -262,7 +249,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741398732439</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Prometheus integration">
+      <option name="closed" value="true" />
+      <created>1741496590754</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1741496590754</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -286,7 +281,8 @@
     <MESSAGE value="Added security for local running applications" />
     <MESSAGE value="Added oAuth with keycloak" />
     <MESSAGE value="Tilt config to run all manifest in one go" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tilt config to run all manifest in one go" />
+    <MESSAGE value="Prometheus integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Prometheus integration" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
