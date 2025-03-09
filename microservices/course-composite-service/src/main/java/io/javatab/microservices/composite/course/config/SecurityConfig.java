@@ -41,6 +41,7 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange(exchanges -> exchanges
+                        .pathMatchers("/actuator/**", "/api/metrics/**").permitAll()
                         .pathMatchers("/api/course-aggregate/**").hasAnyRole("COURSE-READ", "REVIEW-READ")
                         .anyExchange().authenticated()
                 )
