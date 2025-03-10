@@ -29,7 +29,7 @@ public class CourseAggregateController {
 
     @GetMapping("/{id}/with-details")
     public Mono<CourseAggregate> getCourses(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
-        logger.info("Fetching course and review details for course id : {}", id);
+        logger.info("Fetching course and review details for course id ===> {}", id);
         return integration.getCourseDetails(id, jwt);
     }
 }

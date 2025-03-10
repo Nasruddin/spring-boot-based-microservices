@@ -48,10 +48,11 @@ services:
     networks:
       - shared-network
   tempo:
-    image: grafana/tempo:1.5.0
+    image: grafana/tempo:latest
     command: -config.file /etc/tempo-config.yml
     ports:
-      - "4317:4317"
+      - "4317:4317" # OTLP gRPC
+      - "4318:4318" # OTLP HTTP
     volumes:
       - ./tempo/tempo.yml:/etc/tempo-config.yml
 

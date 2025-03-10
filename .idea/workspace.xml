@@ -4,23 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82def982-1f77-496a-a21a-a6ccc7bf68be" name="Changes" comment="Prometheus integration for kubernetes">
-      <change afterPath="$PROJECT_DIR$/docker/docker-compose-observability.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker/fluent-bit/fluent-bit.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker/fluent-bit/parsers.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker/loki/loki-config.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/logback-spring.xml" afterDir="false" />
+    <list default="true" id="82def982-1f77-496a-a21a-a6ccc7bf68be" name="Changes" comment="Fluentbit integration for docker">
+      <change afterPath="$PROJECT_DIR$/docker/tempo/tempo.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/docker-compose-base.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose-base.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/docker-compose-infra.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose-infra.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/docker-compose-observability.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose-observability.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/fluent-bit/parsers.conf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/MetricsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/MetricsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseCompositeIntegration.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseCompositeIntegration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/domain/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/domain/CourseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/web/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/src/main/java/io/javatab/microservices/core/course/web/CourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/review-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/review-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseAggregateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseAggregateController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/review-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/review-service/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -277,7 +270,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741502933986</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Fluentbit integration for docker">
+      <option name="closed" value="true" />
+      <created>1741573714727</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1741573714727</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -303,7 +304,8 @@
     <MESSAGE value="Tilt config to run all manifest in one go" />
     <MESSAGE value="Prometheus integration" />
     <MESSAGE value="Prometheus integration for kubernetes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Prometheus integration for kubernetes" />
+    <MESSAGE value="Fluentbit integration for docker" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fluentbit integration for docker" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
