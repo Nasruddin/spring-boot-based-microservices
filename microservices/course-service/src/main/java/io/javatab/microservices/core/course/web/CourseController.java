@@ -50,7 +50,14 @@ public class CourseController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Course post(@Valid @RequestBody Course course) {
-        return courseService.addCourse(course);
+        logger.info("Received request to create course: {}", course.getTitle());
+        Course savedCourse = courseService.addCourse(course);
+        if (savedCourse.getId() == null) {
+            logger.error("Course was not saved correctly! ID is null.");
+            throw new IllegalStateException("Failed to save course, ID is null!");
+        }
+        logger.info("Course created successfully with ID: {}", savedCourse.getId());
+        return savedCourse;
     }
 
     @DeleteMapping("/{id}")

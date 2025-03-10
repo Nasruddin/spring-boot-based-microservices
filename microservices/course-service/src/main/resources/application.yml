@@ -29,10 +29,11 @@ spring:
           jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:http://localhost:8081/realms/course-management-realm/protocol/openid-connect/certs}
 logging:
   level:
-    org.springframework: INFO
-    com.javatab: DEBUG
+    root: INFO
+    io.javatab.microservices.core.course: DEBUG
   pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{traceId:-N/A}] [%X{spanId:-N/A}] %-5level %logger{36} - %msg%n"
+
 management:
   endpoints:
     web:

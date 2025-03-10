@@ -31,11 +31,11 @@ public class CourseCompositeIntegration {
     }
 
     public Mono<CourseAggregate> getCourseDetails(Long id, Jwt jwt) {
-        logger.info("JWT ===> {}", jwt.getTokenValue());
+        logger.debug("JWT ===> {}", jwt.getTokenValue());
         String courseUrl = courseServiceUrl + "/api/courses/" + id;
         String reviewUrl = reviewServiceUrl + "/api/reviews?course=" + id;
-        logger.info("Course URL ===> {}", courseUrl);
-        logger.info("Review URL ===> {}", reviewUrl);
+        logger.debug("Course URL ===> {}", courseUrl);
+        logger.debug("Review URL ===> {}", reviewUrl);
         Mono<Course> courseMono = webClient.get()
                 .uri(courseUrl)
                 .header("Authorization", "Bearer " + jwt.getTokenValue())
