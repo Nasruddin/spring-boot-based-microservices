@@ -1,0 +1,107 @@
+app:
+  jwk-set-uri: ${APP_KEYCLOAK_JWK_SET_URI:http://localhost:8081/realms/course-management-realm/protocol/openid-connect/certs}
+server:
+  port: 9000
+  netty:
+    connection-timeouts: 2s
+    idle-timeouts: 15s
+  shutdown: graceful
+spring:
+  application:
+    name: gateway-service
+  lifecycle:
+    timeout-per-shutdown-phase: 15s
+
+  cloud:
+    gateway:
+      routes:
+        - id: course-service-route
+          uri: ${COURSE_SERVICE_URL:http://localhost:9001}
+          predicates:
+            - Path=/courses/**
+          filters:
+            - RewritePath=/courses(?<segment>/.*|), /api/courses\${segment}
+
+        - id: review-service-route
+          uri: ${REVIEW_SERVICE_URL:http://localhost:9002}
+          predicates:
+            - Path=/reviews/**
+          filters:
+            - RewritePath=/reviews(?<segment>/.*|), /api/reviews\${segment}
+
+        - id: course-aggregate-route
+          uri: ${COURSE_AGGREGATE_SERVICE_URL:http://localhost:5000}
+          predicates:
+            - Path=/course-aggregate/**
+          filters:
+            - RewritePath=/course-aggregate(?<segment>/.*|), /api/course-aggregate\${segment}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,metrics,prometheus"
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+    endpoint:
+      gateway:
+        enabled: true
+      metrics:
+        enabled: true
+      prometheus:
+        enabled: true
+      health:
+        show-details: always
+
+
+# Security
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8081/realms/course-management-realm}
+          jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:http://localhost:8081/realms/course-management-realm/protocol/openid-connect/certs}
+logging:
+  level:
+    root: INFO
+    io.example.springcloud.gateway: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{trace_id:-N/A}] [%X{span_id:-N/A}] %-5level %logger{36} - %msg%n"
+---
+app:
+  jwk-set-uri: http://keycloak:8080/realms/course-management-realm/protocol/openid-connect/certs
+spring:
+  config:
+    activate:
+      on-profile: docker
+  cloud:
+    gateway:
+      routes:
+        - id: course-service-route
+          uri: http://course:8080
+          predicates:
+            - Path=/courses/**
+          filters:
+            - RewritePath=/courses(?<segment>/.*|), /api/courses\${segment}
+        - id: review-service-route
+          uri: http://review:8080
+          predicates:
+            - Path=/reviews/**
+          filters:
+            - RewritePath=/reviews(?<segment>/.*|), /api/reviews\${segment}
+        - id: course-aggregate-route
+          uri: http://course-composite:8080
+          predicates:
+            - Path=/course-aggregate/**
+          filters:
+            - RewritePath=/course-aggregate(?<segment>/.*|), /api/course-aggregate\${segment}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/course-management-realm
+          jwk-set-uri: http://keycloak:8080/realms/course-management-realm/protocol/openid-connect/certs
