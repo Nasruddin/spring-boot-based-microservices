@@ -4,6 +4,10 @@ services:
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:24224
     networks:
       - shared-network
     #depends_on:
@@ -15,6 +19,10 @@ services:
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:24224
     networks:
       - shared-network
     #depends_on:
@@ -28,6 +36,10 @@ services:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:24224
     networks:
       - shared-network
 
@@ -38,6 +50,10 @@ services:
       - "9000:9000"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:24224
     networks:
       - shared-network
 

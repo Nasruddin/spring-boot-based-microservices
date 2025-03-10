@@ -14,8 +14,11 @@ logging:
   level:
     root: INFO
     io.javatab.microservices.composite.course: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{traceId:-N/A}] [%X{spanId:-N/A}] %-5level %logger{36} - %msg%n"
 
-# Security related properties
+
+  # Security related properties
   security:
     oauth2:
       resourceserver:

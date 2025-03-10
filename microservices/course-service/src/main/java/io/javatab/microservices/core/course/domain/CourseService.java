@@ -1,9 +1,13 @@
 package io.javatab.microservices.core.course.domain;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CourseService {
+
+    private final Logger logger = LoggerFactory.getLogger(CourseService.class);
 
     private final CourseRepository courseRepository;
 
@@ -26,10 +30,18 @@ public class CourseService {
     }
 
     public Course addCourse(Course course) {
+
+        logger.info("Checking if course '{}' already exists...", course.getTitle());
+
         if (courseRepository.existsByTitle(course.getTitle())) {
+            logger.warn("Course '{}' already exists! Throwing exception.", course.getTitle());
             throw new CourseAlreadyExitsException(course.getTitle());
         }
-        return courseRepository.save(course);
+
+        Course savedCourse = courseRepository.save(course);
+        logger.info("Course '{}' saved successfully with ID: {}", savedCourse.getTitle(), savedCourse.getId());
+
+        return savedCourse;
     }
 
     public void removeCourse(Long id) {

@@ -4,17 +4,25 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
 import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 
 import java.util.Random;
 
+
+/*
+* Just for manual test for metrics and errors which doesn't sit under security
+* */
 @RestController
 @RequestMapping("/api/metrics")
 public class MetricsController {
-
+    private final Logger logger = LoggerFactory.getLogger(MetricsController.class);
     private final MeterRegistry meterRegistry;
     private Counter requestCounter;
     private Timer requestTimer;
@@ -41,6 +49,8 @@ public class MetricsController {
 
     @GetMapping("/hello")
     public String hello() {
+        logger.info("Hello endpoint called");
+        logger.warn("This is a warning log");
         // Record request count
         requestCounter.increment();
 
@@ -55,5 +65,16 @@ public class MetricsController {
                 return "Error occurred";
             }
         });
+    }
+
+    @GetMapping("/runtime-error")
+    public String error() {
+        logger.error("An error occurred", new RuntimeException("Test exception"));
+        return "Error logged";
+    }
+
+    @GetMapping("/error")
+    public String triggerError() {
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong!");
     }
 }
