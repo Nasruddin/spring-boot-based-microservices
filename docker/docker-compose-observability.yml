@@ -53,8 +53,11 @@ services:
     ports:
       - "4317:4317" # OTLP gRPC
       - "4318:4318" # OTLP HTTP
+      - "3200:3200" # Tempo HTTP server (for querying)
     volumes:
       - ./tempo/tempo.yml:/etc/tempo-config.yml
+    networks:
+      - shared-network
 
 networks:
   shared-network:

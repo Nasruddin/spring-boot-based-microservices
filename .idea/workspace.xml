@@ -4,16 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82def982-1f77-496a-a21a-a6ccc7bf68be" name="Changes" comment="Fluentbit integration for docker">
-      <change afterPath="$PROJECT_DIR$/docker/tempo/tempo.yml" afterDir="false" />
+    <list default="true" id="82def982-1f77-496a-a21a-a6ccc7bf68be" name="Changes" comment="Tempo integration for docker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/docker-compose-base.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose-base.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/docker-compose-observability.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose-observability.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/fluent-bit/parsers.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseAggregateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/java/io/javatab/microservices/composite/course/web/CourseAggregateController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/course-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/review-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/review-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/tempo/tempo.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/tempo/tempo.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-composite-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/course-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/course-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/review-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/review-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -278,7 +276,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741573714727</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Tempo integration for docker">
+      <option name="closed" value="true" />
+      <created>1741585635326</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1741585635326</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -305,7 +311,8 @@
     <MESSAGE value="Prometheus integration" />
     <MESSAGE value="Prometheus integration for kubernetes" />
     <MESSAGE value="Fluentbit integration for docker" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fluentbit integration for docker" />
+    <MESSAGE value="Tempo integration for docker" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tempo integration for docker" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

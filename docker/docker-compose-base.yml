@@ -5,10 +5,11 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - JAVA_TOOL_OPTIONS="-javaagent:/application/BOOT-INF/lib/opentelemetry-javaagent-2.13.3.jar" #maven will place jar in BOOT-INF as per dep mentioned in pom. This will instruct the JVM to run the OpenTelemetry Java agent from the path.
-      - OTEL_TRACES_EXPORTER=logging
+      - OTEL_TRACES_EXPORTER=otlp
       - OTEL_METRICS_EXPORTER=none
       - OTEL_LOGS_EXPORTER=none
       - OTEL_METRIC_EXPORT_INTERVAL=15000
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4318
     logging:
       driver: fluentd
       options:
@@ -25,10 +26,11 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - JAVA_TOOL_OPTIONS="-javaagent:/application/BOOT-INF/lib/opentelemetry-javaagent-2.13.3.jar" #maven will place jar in BOOT-INF as per dep mentioned in pom. This will instruct the JVM to run the OpenTelemetry Java agent from the path.
-      - OTEL_TRACES_EXPORTER=logging
+      - OTEL_TRACES_EXPORTER=otlp
       - OTEL_METRICS_EXPORTER=none
       - OTEL_LOGS_EXPORTER=none
       - OTEL_METRIC_EXPORT_INTERVAL=15000
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4318
     logging:
       driver: fluentd
       options:
@@ -47,10 +49,13 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - JAVA_TOOL_OPTIONS="-javaagent:/application/BOOT-INF/lib/opentelemetry-javaagent-2.13.3.jar" #maven will place jar in BOOT-INF as per dep mentioned in pom. This will instruct the JVM to run the OpenTelemetry Java agent from the path.
-      - OTEL_TRACES_EXPORTER=logging
+      - OTEL_TRACES_EXPORTER=otlp
       - OTEL_METRICS_EXPORTER=none
       - OTEL_LOGS_EXPORTER=none
       - OTEL_METRIC_EXPORT_INTERVAL=15000
+      - OTEL_INSTRUMENTATION_SPRING_WEB_EXCLUDE_PATTERNS=/actuator/prometheus
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4318
+
     logging:
       driver: fluentd
       options:
@@ -66,10 +71,11 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - JAVA_TOOL_OPTIONS="-javaagent:/application/BOOT-INF/lib/opentelemetry-javaagent-2.13.3.jar" #maven will place jar in BOOT-INF as per dep mentioned in pom. This will instruct the JVM to run the OpenTelemetry Java agent from the path.
-      - OTEL_TRACES_EXPORTER=logging
+      - OTEL_TRACES_EXPORTER=otlp
       - OTEL_METRICS_EXPORTER=none
       - OTEL_LOGS_EXPORTER=none
       - OTEL_METRIC_EXPORT_INTERVAL=15000
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4318
     logging:
       driver: fluentd
       options:
