@@ -1,0 +1,20 @@
+meta {
+  name: AccessToken
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8081/realms/course-management-realm/protocol/openid-connect/token
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  grant_type: password
+  client_id: course-app
+  client_secret: v1sCIPjANbvyJ87RsTkYeI9xHonDqZh7
+  username: nasruddin
+  password: password
+  scope: openid roles
+}
