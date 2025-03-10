@@ -32,7 +32,7 @@ logging:
     root: INFO
     io.javatab.microservices.core.course: DEBUG
   pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{traceId:-N/A}] [%X{spanId:-N/A}] %-5level %logger{36} - %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{trace_id:-N/A}] [%X{span_id:-N/A}] %-5level %logger{36} - %msg%n"
 
 management:
   endpoints:
