@@ -3,7 +3,7 @@
 - [Architecture](#architecture)
 - [Prerequisites](#prerequisites)
 - [Run the application](#run-the-application)
-- [Test the endpoints](#test-the-endpoints)
+- [ endpoints](#test-the-endpoints)
 - [Keycloak](#keycloak)
 - [Observability](#Observability)
 
@@ -333,11 +333,23 @@ ingress.networking.k8s.io/prometheus-ingress   nginx   prometheus.local   192.16
 
 # Test the endpoints
 > [!NOTE]
+> On macOS and Windows, the Minikube ingress add-on doesn't support using the cluster's IP when running on Docker, so minikube tunnel --profile polar is required to expose the cluster locally via 127.0.0.1, similar to kubectl port-forward but for the entire cluster.
+>```shell
 >  minikube tunnel --profile microservice-deployment
+>```
+> Add below in your /etc/hosts
 > ```shell
-
-```
-
+>   vi /etc/hosts
+>```
+> 
+> ```
+>    127.0.0.1       grafana.local
+> 
+>    127.0.0.1       keycloak.local
+> 
+>    127.0.0.1       prometheus.local
+> ```
+ 
 
 | **Components**      | **Docker**                             | **Kubernetes on Mac**                | Note                                           |
 |---------------------|----------------------------------------|--------------------------------------|------------------------------------------------|
@@ -352,7 +364,18 @@ ingress.networking.k8s.io/prometheus-ingress   nginx   prometheus.local   192.16
 | **Prometheus**      | http://localhost:9090                  | http://prometheus.local              | Add `127.0.0.1 prometheus.local` in /etc/hosts |
 | **Keycloak**        | http://localhost:8081                  | http://keycloak.local                | Add `127.0.0.1 keycloak.local` in /etc/hosts   |
 
+> [!TIP]
+> On Linux, Minikube runs as a native process directly on the host machine, rather than inside a virtual machine or a Docker container. This allows it to acquire a real, routable IP address that can be accessed from the host system without extra configuration.
+>
+> ```
+>   $ minikube ip --profile microservice-deployment
+>   192.154.19.8 
+> ```
+> 
+> Now, all the above tabular endpoints available at http://192.154.19.8/**
+
 Also, please use **OpenAPI specs**, **bruno** or **postman** for API details. I will add Swagger/SpringDoc as when I get time!!
+
 # Keycloak
 ### Head to Keycloak using above table ```http://localhost:8081/admin``` or ```http://keycloak.local/admin```
 Create realm using `course-management-realm-realm.json` provided in the repo
@@ -364,5 +387,17 @@ Create realm using `course-management-realm-realm.json` provided in the repo
 ![Keycloak web page](notes/images/keycloak.png)
 
 # Observability
-In progress
 
+- **Prometheus**:
+    - http://prometheus.local
+![Prometheus web page](notes/images/prometheus.png)
+> [!TIP]
+> Hit - http://127.0.0.1/actuator/prometheus in your browser and check all the metrics at one place
+> ![prometheus metrics](notes/images/metrics.png)
+- **Fluent-bit**
+    - Fluent-bit
+- **Tempo**
+    - Tempo
+- **Grafana**
+    - http://grafana.local
+    - Import Dashboard json from grafana-dashboard/
