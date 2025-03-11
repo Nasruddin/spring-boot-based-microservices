@@ -333,10 +333,18 @@ ingress.networking.k8s.io/prometheus-ingress   nginx   prometheus.local   192.16
 
 # Test the endpoints
 > [!NOTE]
+> On macOS and Windows, the Minikube ingress add-on doesn't support using the cluster's IP when running on Docker, so minikube tunnel --profile polar is required to expose the cluster locally via 127.0.0.1, similar to kubectl port-forward but for the entire cluster.
 >```shell
 >  minikube tunnel --profile microservice-deployment
 >```
-
+> Add below in your /etc/hosts
+> ```shell
+>   vi /etc/hosts
+>```
+>    127.0.0.1       mysql
+>    127.0.0.1       keycloak.local
+>    127.0.0.1       prometheus.local
+ 
 
 | **Components**      | **Docker**                             | **Kubernetes on Mac**                | Note                                           |
 |---------------------|----------------------------------------|--------------------------------------|------------------------------------------------|
