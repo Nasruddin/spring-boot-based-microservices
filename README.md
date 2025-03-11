@@ -342,7 +342,9 @@ ingress.networking.k8s.io/prometheus-ingress   nginx   prometheus.local   192.16
 >   vi /etc/hosts
 >```
 >    127.0.0.1       mysql
+> 
 >    127.0.0.1       keycloak.local
+> 
 >    127.0.0.1       prometheus.local
  
 
