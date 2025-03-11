@@ -333,8 +333,8 @@ ingress.networking.k8s.io/prometheus-ingress   nginx   prometheus.local   192.16
 
 # Test the endpoints
 > [!NOTE]
-> ```shell
-minikube tunnel --profile microservice-deployment
+```shell
+  minikube tunnel --profile microservice-deployment
 ```
 
 
