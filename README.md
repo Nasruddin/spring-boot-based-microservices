@@ -366,9 +366,12 @@ ingress.networking.k8s.io/prometheus-ingress   nginx   prometheus.local   192.16
 
 > [!TIP]
 > On Linux, Minikube runs as a native process directly on the host machine, rather than inside a virtual machine or a Docker container. This allows it to acquire a real, routable IP address that can be accessed from the host system without extra configuration.
+>
 > ````
+> 
 >   $ minikube ip --profile microservice-deployment
 >   192.154.19.8
+> 
 > ```
 > 
 > Now, all the above tabular endpoints available at http://192.154.19.8/**
