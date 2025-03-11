@@ -332,8 +332,12 @@ ingress.networking.k8s.io/prometheus-ingress   nginx   prometheus.local   192.16
 ![Tilt web page](notes/images/tilt.png)
 
 # Test the endpoints
+> [!NOTE]
+>  minikube tunnel --profile microservice-deployment
+> ```shell
 
-Make sure to run minikube tunnel on Mac
+```
+
 
 | **Components**      | **Docker**                             | **Kubernetes on Mac**                | Note                                           |
 |---------------------|----------------------------------------|--------------------------------------|------------------------------------------------|
@@ -361,3 +365,4 @@ Create realm using `course-management-realm-realm.json` provided in the repo
 
 # Observability
 In progress
+
