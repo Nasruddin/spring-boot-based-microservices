@@ -389,7 +389,7 @@ Create realm using `course-management-realm-realm.json` provided in the repo
 # Observability
 
 - **Prometheus**:
-    - http://prometheus.local
+    - Open the browser - http://prometheus.local and make sure all the 4 microservices health status is listed
 ![Prometheus web page](notes/images/prometheus.png)
 > [!TIP]
 > Hit - http://127.0.0.1/actuator/prometheus in your browser and check all the metrics at one place
