@@ -341,7 +341,8 @@ ingress.networking.k8s.io/prometheus-ingress   nginx   prometheus.local   192.16
 > ```shell
 >   vi /etc/hosts
 >```
->    ```
+> 
+> ```
 >    127.0.0.1       grafana.local
 > 
 >    127.0.0.1       keycloak.local
