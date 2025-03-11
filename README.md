@@ -387,5 +387,17 @@ Create realm using `course-management-realm-realm.json` provided in the repo
 ![Keycloak web page](notes/images/keycloak.png)
 
 # Observability
-In progress
 
+- **Prometheus**:
+    - http://prometheus.local
+![Prometheus web page](notes/images/prometheus.png)
+> [!TIP]
+> Hit - http://127.0.0.1/actuator/prometheus in your browser and check all the metrics at one place
+> ![prometheus metrics](notes/images/metrics.png)
+- **Fluent-bit**
+    - Fluent-bit
+- **Tempo**
+    - Tempo
+- **Grafana**
+    - http://grafana.local
+    - Import Dashboard json from grafana-dashboard/
