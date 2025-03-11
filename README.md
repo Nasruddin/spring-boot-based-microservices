@@ -361,3 +361,10 @@ Create realm using `course-management-realm-realm.json` provided in the repo
 
 # Observability
 In progress
+
+> [!NOTE]
+> This is a note that should render with a blue icon.
+
+
+> [!TIP]
+> This is a tip that should render with a green icon.
