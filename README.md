@@ -3,7 +3,7 @@
 - [Architecture](#architecture)
 - [Prerequisites](#prerequisites)
 - [Run the application](#run-the-application)
-- [Test the endpoints](#test-the-endpoints)
+- [ endpoints](#test-the-endpoints)
 - [Keycloak](#keycloak)
 - [Observability](#Observability)
 
@@ -361,7 +361,15 @@ ingress.networking.k8s.io/prometheus-ingress   nginx   prometheus.local   192.16
 | **Prometheus**      | http://localhost:9090                  | http://prometheus.local              | Add `127.0.0.1 prometheus.local` in /etc/hosts |
 | **Keycloak**        | http://localhost:8081                  | http://keycloak.local                | Add `127.0.0.1 keycloak.local` in /etc/hosts   |
 
+> [!TIP]
+> On Linux, Minikube runs as a native process directly on the host machine, rather than inside a virtual machine or a Docker container. This allows it to acquire a real, routable IP address that can be accessed from the host system without extra configuration.
+> ````$ minikube ip --profile microservice-deployment
+>   192.154.19.8
+> ```
+> Now, all the above tabular endpoints available at http://192.154.19.8/**
+
 Also, please use **OpenAPI specs**, **bruno** or **postman** for API details. I will add Swagger/SpringDoc as when I get time!!
+
 # Keycloak
 ### Head to Keycloak using above table ```http://localhost:8081/admin``` or ```http://keycloak.local/admin```
 Create realm using `course-management-realm-realm.json` provided in the repo
