@@ -2,48 +2,59 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: loki-config
-  labels:
-    app: loki
 data:
   loki-config.yaml: |
     auth_enabled: false
-
     server:
       http_listen_port: 3100
-      grpc_listen_port: 9095
-
-    common:
-      path_prefix: /var/loki
-      storage:
-        filesystem:
-          chunks_directory: /var/loki/chunks
-          rules_directory: /var/loki/rules
-      ring:
-        instance_addr: 127.0.0.1
-        kvstore:
-          store: inmemory
-        replication_factor: 1
-
+    ingester:
+      lifecycler:
+        address: 0.0.0.0
+        ring:
+          kvstore:
+            store: inmemory
+          replication_factor: 1
+      chunk_idle_period: 5m
+      wal:
+        enabled: true
+        dir: /loki/wal
     schema_config:
       configs:
-        - from: "2025-03-01"
+        - from: 2025-03-01
           store: tsdb
           object_store: filesystem
           schema: v13
           index:
             prefix: index_
             period: 24h
-
     storage_config:
       tsdb_shipper:
-        active_index_directory: /var/loki/tsd
-
+        active_index_directory: /loki/tsdb-index
+        cache_location: /loki/tsdb-cache
+      filesystem:
+        directory: /loki/chunks
+    compactor:
+      working_directory: /loki/compactor
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
   name: loki
 spec:
+  selector:
+    app: loki
+  ports:
+    - name: http
+      protocol: TCP
+      port: 3100
+      targetPort: 3100
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: loki
+spec:
+  serviceName: loki
   replicas: 1
   selector:
     matchLabels:
@@ -55,28 +66,25 @@ spec:
     spec:
       containers:
         - name: loki
-          image: grafana/loki:latest
+          image: grafana/loki:3.0.0
           args:
             - "-config.file=/etc/loki/loki-config.yaml"
           ports:
             - containerPort: 3100
           volumeMounts:
-            - name: loki-config
+            - name: config
               mountPath: /etc/loki
+            - name: data
+              mountPath: /loki
       volumes:
-        - name: loki-config
+        - name: config
           configMap:
             name: loki-config
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: loki
-spec:
-  selector:
-    app: loki
-  ports:
-    - protocol: TCP
-      port: 3100
-      targetPort: 3100
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi

@@ -37,6 +37,7 @@ management:
         enabled: true
     tags:
       application: ${spring.application.name}
+      uri: "http_server_requests"
     endpoint:
       metrics:
         enabled: true
@@ -44,6 +45,12 @@ management:
         enabled: true
       health:
         show-details: always
+    distribution:
+      percentiles-histogram: # enable histogram for percentile
+        http.server.requests: true
+      slo:
+        http.server.requests: 10ms, 50ms, 100ms, 500ms, 1s
+
 ---
 
 spring:

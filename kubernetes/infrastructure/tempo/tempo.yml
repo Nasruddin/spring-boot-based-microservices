@@ -3,29 +3,46 @@ kind: ConfigMap
 metadata:
   name: tempo-config
 data:
-  tempo-config.yaml: |
+  tempo.yml: |
     server:
+      http_listen_address: 0.0.0.0
       http_listen_port: 3200
+
     distributor:
       receivers:
         otlp:
           protocols:
-            http:
             grpc:
+              endpoint: 0.0.0.0:4317
+            http:
+              endpoint: 0.0.0.0:4318
+
     storage:
       trace:
         backend: local
         local:
-          path: /var/tempo
-    compactor:
-      compaction:
-        block_retention: 24h
+          path: /tmp/tempo/blocks
 
+    usage_report:
+      reporting_enabled: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tempo-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tempo
+  labels:
+    app: tempo
 spec:
   replicas: 1
   selector:
@@ -36,21 +53,30 @@ spec:
       labels:
         app: tempo
     spec:
+      securityContext:
+        fsGroup: 1000  # Ensures write permission to the storage path
       containers:
         - name: tempo
           image: grafana/tempo:latest
           args:
-            - "-config.file=/etc/tempo/tempo-config.yaml"
+            - "-config.file=/etc/tempo-config.yml"
           ports:
+            - containerPort: 4317
+            - containerPort: 4318
             - containerPort: 3200
           volumeMounts:
             - name: tempo-config
-              mountPath: /etc/tempo
+              mountPath: /etc/tempo-config.yml
+              subPath: tempo.yml
+            - name: tempo-storage
+              mountPath: /tmp/tempo/blocks
       volumes:
         - name: tempo-config
           configMap:
             name: tempo-config
-
+        - name: tempo-storage
+          persistentVolumeClaim:
+            claimName: tempo-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -60,6 +86,16 @@ spec:
   selector:
     app: tempo
   ports:
-    - protocol: TCP
+    - name: grpc
+      protocol: TCP
+      port: 4317
+      targetPort: 4317
+    - name: http
+      protocol: TCP
+      port: 4318
+      targetPort: 4318
+    - name: tempo-http
+      protocol: TCP
       port: 3200
       targetPort: 3200
+  type: ClusterIP

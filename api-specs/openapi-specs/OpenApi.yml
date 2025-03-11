@@ -1,0 +1,144 @@
+openapi: 3.0.3
+info:
+  title: apis
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: http://localhost:8081
+  - url: http://localhost:9000
+paths:
+  /realms/course-management-realm/protocol/openid-connect/token:
+    post:
+      summary: AccessToken
+      description: ''
+      operationId: accesstoken
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  example: course-app
+                client_secret:
+                  type: string
+                  example: v1sCIPjANbvyJ87RsTkYeI9xHonDqZh7
+                grant_type:
+                  type: string
+                  example: password
+                password:
+                  type: string
+                  example: password
+                scope:
+                  type: string
+                  example: openid roles
+                username:
+                  type: string
+                  example: nasruddin
+            examples:
+              AccessToken:
+                value:
+                  client_id: course-app
+                  client_secret: v1sCIPjANbvyJ87RsTkYeI9xHonDqZh7
+                  grant_type: password
+                  password: password
+                  scope: openid roles
+                  username: nasruddin
+      responses:
+        '200':
+          description: ''
+      security:
+        - {}
+  /courses:
+    post:
+      summary: Add Course
+      description: ''
+      operationId: addCourse
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                  example: John Doe
+                price:
+                  type: number
+                  example: 29.79
+                publisher:
+                  type: string
+                  example: Whatsapp
+                title:
+                  type: string
+                  example: Microservices with Quarkus
+            examples:
+              Add Course:
+                value:
+                  author: John Doe
+                  price: 29.79
+                  publisher: Whatsapp
+                  title: Microservices with Quarkus
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearerAuth: []
+  /reviews:
+    post:
+      summary: Add Review
+      description: ''
+      operationId: addReview
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                  example: John Doe
+                content:
+                  type: string
+                  example: Amazing book and loved reading it
+                courseId:
+                  type: number
+                  example: 2
+                email:
+                  type: string
+                  example: abc@xyz.com
+            examples:
+              Add Review:
+                value:
+                  author: John Doe
+                  content: Amazing book and loved reading it
+                  courseId: 2
+                  email: abc@xyz.com
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearerAuth: []
+  /course-aggregate/4/with-details:
+    get:
+      summary: Course-Composite
+      description: ''
+      operationId: courseComposite
+      parameters:
+        - name: ''
+          in: header
+          schema:
+            type: string
+            example: ''
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags: []

@@ -1,11 +1,11 @@
 meta {
-  name: Add Course
+  name: Add Review
   type: http
-  seq: 4
+  seq: 3
 }
 
 post {
-  url: http://localhost:9000/courses
+  url: http://localhost:9000/reviews
   body: json
   auth: bearer
 }
@@ -16,9 +16,9 @@ auth:bearer {
 
 body:json {
   {
-    "title": "Microservices with Quarkus",
+    "courseId": 2,
     "author": "John Doe",
-    "price": 29.79,
-    "publisher": "Whatsapp"
+    "content": "Amazing book and loved reading it",
+    "email": "abc@xyz.com"
   }
 }
