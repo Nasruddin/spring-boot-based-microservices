@@ -363,6 +363,3 @@ Create realm using `course-management-realm-realm.json` provided in the repo
 In progress
 
 > [!TIP]
-
-
-> [!NOTE]
