@@ -3,15 +3,18 @@
 - [Architecture](#architecture)
 - [Prerequisites](#prerequisites)
 - [Run the application](#run-the-application)
-- [ endpoints](#test-the-endpoints)
+- [Check the endpoints](#check-the-endpoints)
 - [Keycloak](#keycloak)
-- [Observability](#Observability)
+- [Observability](#observability)
+- [Guide to grafana](#guide-to-grafana)
+- [Verify the APIs](#verify-the-apis)
 
 
 # Background
 A foundational framework for building **Spring Boot**-based microservices, designed for a **modular**, **scalable**, and **observable** system to manage **courses** and **reviews**. It incorporates **Spring Security** with **OAuth 2.0** via **Keycloak** for **authentication** and **Spring Cloud Gateway** as the **API gateway**. The architecture integrates a modern **observability stack**, including **OpenTelemetry (OTel)**, **Grafana**, **Loki**, **Tempo**, and **Prometheus**. **MongoDB** and **PostgreSQL** serve as **persistent storage** solutions. Deployment is supported through **Docker Compose** for **local environments** and **Kubernetes** for **scalable deployments**. The system utilizes **Spring Boot** and **Spring Cloud** to enable seamless **microservices communication**, **security**, and **observability**.
 
 # Architecture
+---
 ### Level 1: System Context Diagram
 **Description**: High-level view of the system and its external actors.
 
@@ -27,7 +30,7 @@ A foundational framework for building **Spring Boot**-based microservices, desig
     - User → System: HTTP requests via Gateway.
     - System → Keycloak: Authenticates users.
     - System → Grafana Stack: Sends observability data.
-
+---
 ### Level 2: Container Diagram
 **Description**: Breaks the system into deployable units.
 
@@ -60,7 +63,7 @@ A foundational framework for building **Spring Boot**-based microservices, desig
         - **Tempo**: Trace storage.
         - **Grafana**: Visualization.
         - Interactions: Microservices → Fluent-bit/OTel → Loki/Tempo → Grafana.
-
+---
 ### Level 3: Component Diagram
 **Description**: Key components within containers.
 
@@ -83,7 +86,7 @@ A foundational framework for building **Spring Boot**-based microservices, desig
     - Review Service (Logic).
     - Review Repository (MongoDB).
     - Observability Agent.
-
+---
 ### Level 4: Deployment Notes
 **Description**: Two deployment setups.
 
@@ -330,8 +333,8 @@ ingress.networking.k8s.io/keycloak-ingress     nginx   keycloak.local     192.16
 ingress.networking.k8s.io/prometheus-ingress   nginx   prometheus.local   192.168.49.2   80      2m44s
 ```
 ![Tilt web page](notes/images/tilt.png)
-
-# Test the endpoints
+---
+# Check the endpoints
 > [!NOTE]
 > On macOS and Windows, the Minikube ingress add-on doesn't support using the cluster's IP when running on Docker, so minikube tunnel --profile polar is required to expose the cluster locally via 127.0.0.1, similar to kubectl port-forward but for the entire cluster.
 >```shell
@@ -381,11 +384,47 @@ Also, please use **OpenAPI specs**, **bruno** or **postman** for API details. I 
 Create realm using `course-management-realm-realm.json` provided in the repo
 - Login to Keycloak → Go to http://localhost:8080/admin admin/admin
 - Create Realm → Click "Create Realm" in the top-left dropdown
-- Import Realm → Click "Import", select realm.json, and click "Create"
+- Import Realm → Click "Import", select couse-management-realm-realm.json, and click "Create"
 - Verify → Check Clients, Users, Roles, and Mappers in the new realm
 
 ![Keycloak web page](notes/images/keycloak.png)
 
+### Keycloak Users in `course-management-realm`
+
+We have **3** users configured in **Keycloak** with the following credentials and roles:
+
+| Username    | Password  | Assigned Roles                                      |
+|------------|----------|------------------------------------------------------|
+| `nasruddin`  | `password` | `admin`, `guest`, `course-read`, `course-write`, `review-read`, `review-write` |
+| `courseuser` | `password` | `course-read`, `course-write`                     |
+| `reviewuser` | `password` | `review-read`, `review-write`                     |
+
+> [!Notes]
+>- **`nasruddin`** has **full access** to courses and reviews, along with admin privileges.
+>- **`courseuser`** can only read and write courses.
+>- **`reviewuser`** can only read and write reviews.
+
+
+> [!TIP] Call the access token API to obtain a token, then visit jwt.io to inspect it.
+> 
+> ```shell
+>  curl -X POST http://localhost:8081/realms/course-management-realm/protocol/openid-connect/token  -d "grant_type=password"  -d "client_id=course-app"  -d "client_secret=v1sCIPjANbvyJ87RsTkYeI9xHonDqZh7"  -d "username=nasruddin"  -d "password=password" -d "scope=openid roles" | jq
+>```
+>```markdown
+>{
+>"access_token": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0T1lYQVlZUXF6T2ZibE1wRjF0dmNvLW1UY2dEODVjai1Qak4xVnhuUExzIn0.eyJleHAiOjE3NDE3NzkxODYsImlhdCI6MTc0MTc0MzE4NiwianRpIjoiMTY0NGJlOTQtOTk3Ny00OTA4LWFiNWEtMzkwMzVmYmYzZGY0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9jb3Vyc2UtbWFuYWdlbWVudC1yZWFsbSIsImF1ZCI6InJldmlldy1hcHAiLCJzdWIiOiIzNzY2NmQ1Ni1jYTJkLTRkNDQtOTRmMS1kNDk4ZTdhZmVhOTUiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjb3Vyc2UtYXBwIiwic2lkIjoiYzk3NWQ2ZTgtODliOC00ZTE1LTg2N2YtMzdmNTZmYWQ3ZGNlIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIvKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiR1VFU1QiLCJBRE1JTiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InJldmlldy1hcHAiOnsicm9sZXMiOlsiUkVWSUVXLVJFQUQiLCJSRVZJRVctV1JJVEUiXX0sImNvdXJzZS1hcHAiOnsicm9sZXMiOlsiQ09VUlNFLVdSSVRFIiwiQ09VUlNFLVJFQUQiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTmFzcnVkZGluIE5hc3J1ZGRpbiIsInByZWZlcnJlZF91c2VybmFtZSI6Im5hc3J1ZGRpbiIsImdpdmVuX25hbWUiOiJOYXNydWRkaW4iLCJmYW1pbHlfbmFtZSI6Ik5hc3J1ZGRpbiIsImVtYWlsIjoibmFzcnVkZGluQGdtYWlsLmNvbSJ9.E9k1reSQHmsidXaVYizlYs4ULMBjHE2hPzyGwDIQtM_ZszgqQzZH6CE5Y9fNdmN-ky4RLfvx3_C5DRQoDAn_PWLvlEFCsAVfWGopETHcd-NVm6rovbjuoBGrGPwZC9T49pzDEXTyudLEONnbHzXybhW88sTHbgj-8huS1tJFhjQ0rtROQHG5tK382z-bRxpo-Akzx9OP3W9YELf8V9TwW2sJ781WwOFeDP_k7EI8VbWdXJhEwKQJbE31roVk9PddK8_VUX4krCBMEUV6zzor9E3r7_OUTQ8-wnHrZrXBU8Sl2yO7SwUNb8l7zAzGf72vYS9cvF7ygIGA4_7EXIbIqw",
+>"expires_in": 36000,
+>"refresh_expires_in": 1799,
+>"refresh_token": "eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhZjM3ZGFiMi1iMTQwLTRlY2EtYTNjNi05YmFkM2JkNzY0ODcifQ.eyJleHAiOjE3NDE3NDQ5ODYsImlhdCI6MTc0MTc0MzE4NiwianRpIjoiMTU0OTRkNDMtMDJlYS00ZGZjLWJiYTQtMDFhNWJkZmRkZjcyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9jb3Vyc2UtbWFuYWdlbWVudC1yZWFsbSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MS9yZWFsbXMvY291cnNlLW1hbmFnZW1lbnQtcmVhbG0iLCJzdWIiOiIzNzY2NmQ1Ni1jYTJkLTRkNDQtOTRmMS1kNDk4ZTdhZmVhOTUiLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoiY291cnNlLWFwcCIsInNpZCI6ImM5NzVkNmU4LTg5YjgtNGUxNS04NjdmLTM3ZjU2ZmFkN2RjZSIsInNjb3BlIjoib3BlbmlkIHdlYi1vcmlnaW5zIHJvbGVzIGFjciBiYXNpYyBlbWFpbCBwcm9maWxlIn0.WkDLs8k7EEAXjJwMUHK2XurjaXXY-0-y5br1JlNSUIyGNzVBUrfmfN8Te7ysWvSvGlhrO9k6ali6oqGiqxXTBA",
+>"token_type": "Bearer",
+>"id_token": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0T1lYQVlZUXF6T2ZibE1wRjF0dmNvLW1UY2dEODVjai1Qak4xVnhuUExzIn0.eyJleHAiOjE3NDE3NzkxODYsImlhdCI6MTc0MTc0MzE4NiwianRpIjoiNWNkODRkM2UtOWY3YS00YmYxLWIzYTAtMjU4MWY4NzJmODAzIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9jb3Vyc2UtbWFuYWdlbWVudC1yZWFsbSIsImF1ZCI6ImNvdXJzZS1hcHAiLCJzdWIiOiIzNzY2NmQ1Ni1jYTJkLTRkNDQtOTRmMS1kNDk4ZTdhZmVhOTUiLCJ0eXAiOiJJRCIsImF6cCI6ImNvdXJzZS1hcHAiLCJzaWQiOiJjOTc1ZDZlOC04OWI4LTRlMTUtODY3Zi0zN2Y1NmZhZDdkY2UiLCJhdF9oYXNoIjoiTE9yZGRCcHlyTzZHTDlmU21tbkVnZyIsImFjciI6IjEiLCJyZXNvdXJjZV9hY2Nlc3MiOnsicmV2aWV3LWFwcCI6eyJyb2xlcyI6WyJSRVZJRVctUkVBRCIsIlJFVklFVy1XUklURSJdfSwiY291cnNlLWFwcCI6eyJyb2xlcyI6WyJDT1VSU0UtV1JJVEUiLCJDT1VSU0UtUkVBRCJdfX0sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkdVRVNUIiwiQURNSU4iXX0sIm5hbWUiOiJOYXNydWRkaW4gTmFzcnVkZGluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoibmFzcnVkZGluIiwiZ2l2ZW5fbmFtZSI6Ik5hc3J1ZGRpbiIsImZhbWlseV9uYW1lIjoiTmFzcnVkZGluIiwiZW1haWwiOiJuYXNydWRkaW5AZ21haWwuY29tIn0.T2QhItWJXsACMZhsQ1HJcm8GGF60upkS4fq6QyHWsKi7A1wojhOk5qrcD3LF8tiDLIbBr1QHQQOnxY4LHYa0v13bsCS-HJrs90NaT679pHYyGVRsLbpE0U3xwqxtX0o0XrQIpuP8SB_YYcQ2JtxkxaGW3k9X8BwBvgL5GDAK-_C1tO3hBlIxAD6ecEv44G_FD4f6Zrc6h4EXV_TKOnrXfjUxWTUmvIYuAnBfHFqCv3Yx_RONqKoAlwh4J349i3GuYdwbtR97Q_TBDRqGSgfkYY7d-GrGScPzM-ao3lfOGSq8VBqQh4ZXCWix8hAj1IUSiRWF5Tr9m_SIBN8WAyq07A",
+>"not-before-policy": 0,
+>"session_state": "c975d6e8-89b8-4e15-867f-37f56fad7dce",
+>"scope": "openid email profile"
+>}
+>```
+> ![Jwt web page](notes/images/jwt.png)
+---
 # Observability
 
 - **Prometheus**:
@@ -395,9 +434,322 @@ Create realm using `course-management-realm-realm.json` provided in the repo
 > Hit - http://127.0.0.1/actuator/prometheus in your browser and check all the metrics at one place
 > ![prometheus metrics](notes/images/metrics.png)
 - **Fluent-bit**
-    - Fluent-bit
+    - Make sure fluent bit is running and listening on 0.0.0.0:24224
+```shell
+    kubectl logs fluent-bit
+```
+```shell
+    docker logs fluent-bit
+```
+```markdown
+[2025/03/12 00:40:53] [ info] [input:forward:forward.0] listening on 0.0.0.0:24224
+level=info caller=out_grafana_loki.go:64 id=0 [flb-go]="Starting fluent-bit-go-loki" version="(version=, branch=, revision=94e00299ec9b36ad97c147641566b6922268c54e-modified)"
+level=info caller=out_grafana_loki.go:66 id=0 [flb-go]="provided parameter" URL=http://loki:3100/loki/api/v1/push
+level=info caller=out_grafana_loki.go:67 id=0 [flb-go]="provided parameter" TenantID=
+level=info caller=out_grafana_loki.go:68 id=0 [flb-go]="provided parameter" BatchWait=1.000s
+level=info caller=out_grafana_loki.go:69 id=0 [flb-go]="provided parameter" BatchSize=1001024
+level=info caller=out_grafana_loki.go:70 id=0 [flb-go]="provided parameter" Timeout=10.000s
+level=info caller=out_grafana_loki.go:71 id=0 [flb-go]="provided parameter" MinBackoff=0.500s
+level=info caller=out_grafana_loki.go:72 id=0 [flb-go]="provided parameter" MaxBackoff=300.000s
+level=info caller=out_grafana_loki.go:73 id=0 [flb-go]="provided parameter" MaxRetries=10
+level=info caller=out_grafana_loki.go:74 id=0 [flb-go]="provided parameter" Labels="[job=fluent-bit]"
+level=info caller=out_grafana_loki.go:75 id=0 [flb-go]="provided parameter" LogLevel=info
+level=info caller=out_grafana_loki.go:76 id=0 [flb-go]="provided parameter" AutoKubernetesLabels=false
+level=info caller=out_grafana_loki.go:77 id=0 [flb-go]="provided parameter" RemoveKeys="[source container_id]"
+level=info caller=out_grafana_loki.go:78 id=0 [flb-go]="provided parameter" LabelKeys=[container_name]
+level=info caller=out_grafana_loki.go:79 id=0 [flb-go]="provided parameter" LineFormat=0
+level=info caller=out_grafana_loki.go:80 id=0 [flb-go]="provided parameter" DropSingleKey=true
+level=info caller=out_grafana_loki.go:81 id=0 [flb-go]="provided parameter" LabelMapPath=map[]
+level=info caller=out_grafana_loki.go:82 id=0 [flb-go]="provided parameter" Buffer=false
+level=info caller=out_grafana_loki.go:83 id=0 [flb-go]="provided parameter" BufferType=dque
+level=info caller=out_grafana_loki.go:84 id=0 [flb-go]="provided parameter" DqueDir=/tmp/flb-storage/loki
+level=info caller=out_grafana_loki.go:85 id=0 [flb-go]="provided parameter" DqueSegmentSize=500
+level=info caller=out_grafana_loki.go:86 id=0 [flb-go]="provided parameter" DqueSync=false
+level=info caller=out_grafana_loki.go:87 id=0 [flb-go]="provided parameter" ca_file=
+level=info caller=out_grafana_loki.go:88 id=0 [flb-go]="provided parameter" cert_file=
+level=info caller=out_grafana_loki.go:89 id=0 [flb-go]="provided parameter" key_file=
+level=info caller=out_grafana_loki.go:90 id=0 [flb-go]="provided parameter" insecure_skip_verify=false
+[2025/03/12 00:40:53] [ info] [sp] stream processor started
+```
+
 - **Tempo**
-    - Tempo
+    - Also, check tempo logs for it's availability.
+```shell
+    kubectl logs docker-tempo-1
+```
+```shell
+    docker logs docker-tempo-1
+```
+```markdown
+ts=2025-03-12T00:15:15Z level=info msg="Starting GRPC server" component=tempo endpoint=0.0.0.0:4317
+ts=2025-03-12T00:15:15Z level=info msg="Starting HTTP server" component=tempo endpoint=0.0.0.0:4318
+level=info ts=2025-03-12T00:15:15.886518261Z caller=tempodb.go:576 msg="polling enabled" interval=5m0s blocklist_concurrency=50
+level=info ts=2025-03-12T00:15:15.893078036Z caller=wal.go:109 msg="beginning replay" file=4b37865a-8f01-4d27-ad63-f90c86ee326b+single-tenant+vParquet4 size=4096
+level=info ts=2025-03-12T00:15:15.89624768Z caller=worker.go:249 msg="total worker concurrency updated" totalConcurrency=20
+level=warn ts=2025-03-12T00:15:15.897771963Z caller=wal.go:115 msg="failed to replay block. removing." file=4b37865a-8f01-4d27-ad63-f90c86ee326b+single-tenant+vParquet4 err="error reading wal meta json: /var/tempo/wal/4b37865a-8f01-4d27-ad63-f90c86ee326b+single-tenant+vParquet4/meta.json: open /var/tempo/wal/4b37865a-8f01-4d27-ad63-f90c86ee326b+single-tenant+vParquet4/meta.json: no such file or directory"
+level=info ts=2025-03-12T00:15:15.898190804Z caller=wal.go:109 msg="beginning replay" file=724d6348-1e29-456e-920d-0bfa7b4e8bdd+single-tenant+vParquet4 size=4096
+level=info ts=2025-03-12T00:15:15.902527103Z caller=poller.go:287 msg="writing tenant index" tenant=single-tenant metas=3 compactedMetas=2
+level=info ts=2025-03-12T00:15:15.917231924Z caller=poller.go:144 msg="blocklist poll complete" seconds=0.023366227
+level=info ts=2025-03-12T00:15:15.917417761Z caller=compactor.go:159 msg="enabling compaction"
+level=info ts=2025-03-12T00:15:15.919806486Z caller=tempodb.go:540 msg="compaction and retention enabled."
+level=info ts=2025-03-12T00:15:15.920241565Z caller=compactor.go:142 msg="starting compaction cycle" tenantID=single-tenant offset=0
+level=info ts=2025-03-12T00:15:15.920400513Z caller=compactor.go:155 msg="compaction cycle complete. No more blocks to compact" tenantID=single-tenant
+level=info ts=2025-03-12T00:15:16.414958877Z caller=wal.go:136 msg="replay complete" file=724d6348-1e29-456e-920d-0bfa7b4e8bdd+single-tenant+vParquet4 duration=516.810746ms
+level=warn ts=2025-03-12T00:15:16.415046915Z caller=wal.go:99 msg="unowned file entry ignored during wal replay" file=blocks err=null
+level=info ts=2025-03-12T00:15:16.421910578Z caller=ingester.go:448 msg="wal replay complete"
+level=info ts=2025-03-12T00:15:16.422119251Z caller=ingester.go:462 msg="reloading local blocks" tenants=0
+level=info ts=2025-03-12T00:15:16.42224564Z caller=lifecycler.go:677 msg="not loading tokens from file, tokens file path is empty"
+level=info ts=2025-03-12T00:15:16.42315586Z caller=lifecycler.go:704 msg="instance not found in ring, adding with no tokens" ring=ingester
+level=info ts=2025-03-12T00:15:16.423323314Z caller=app.go:205 msg="Tempo started"
+```
 - **Grafana**
     - http://grafana.local
     - Import Dashboard json from grafana-dashboard/
+
+# Guide to Grafana
+### Accessing Loki, Tempo, Prometheus, and Dashboards in Grafana
+
+---
+
+## Step 1: Log In to Grafana
+1. Open your browser and go to your Grafana instance (e.g., `http://localhost:3000`).
+2. Log in with your credentials (default: `admin`/`admin`). Update the password if prompted.
+
+---
+
+## Step 2: Add Data Sources (Loki, Tempo, Prometheus)
+Configure Loki, Tempo, and Prometheus as data sources in Grafana.
+
+1. **Navigate to Connections**:
+    - From the left sidebar, hover over the **Connections** icon (plug symbol) and click **Data sources**.  
+      Or use the hamburger menu (☰) > **Connections** > **Data sources**.
+
+2. **Add a New Data Source**:
+    - Click **+ Add new data source** in the top-right corner.
+
+3. **Configure Prometheus**:
+    - Search for `Prometheus` and select it.
+    - Set **Name** (e.g., "Prometheus").
+    - Enter **URL** (e.g., `http://prometheus:9090`).
+    - Leave defaults unless specific settings (e.g., authentication) are needed.
+    - Click **Save & test**. Confirm "Data source is working."
+
+4. **Configure Loki**:
+    - Search for `Loki` and select it.
+    - Set **Name** (e.g., "Loki").
+    - Enter **URL** (e.g., `http://loki:3100`).
+    - Optionally, set **Max lines** (e.g., 1000) under **Additional settings**.
+    - Click **Save & test**. Verify it works.
+
+5. **Configure Tempo**:
+    - Search for `Tempo` and select it.
+    - Set **Name** (e.g., "Tempo").
+    - Enter **URL** (e.g., `http://tempo:3200`).
+    - Optionally, link to Loki for trace-to-log correlation via **Derived Field** (e.g., match `traceID=(\w+)`).
+    - Click **Save & test**. Ensure it’s operational.
+
+---
+
+## Step 3: Access via Explore
+Use the **Explore** view to query data directly from Loki, Tempo, and Prometheus.
+
+1. **Open Explore**:
+    - Click the **Explore** icon (compass) in the left sidebar, or use the hamburger menu (☰) > **Explore**.
+
+2. **Select a Data Source**:
+    - Use the dropdown at the top to choose:
+        - **Prometheus**: Metrics (e.g., `rate(http_server_requests_seconds_count[5m])`).
+        - **Loki**: Logs (e.g., `{job="fluent-bit"} |= "error"`).
+        - **Tempo**: Traces (e.g., search by trace ID or service).
+
+3. **Run Queries**:
+    - **Prometheus**: Enter a PromQL query and click **Run query**. View as graph or table.
+    - **Loki**: Use LogQL or the **Builder** tab to filter logs. Click **Run query** for logs or metrics.
+    - **Tempo**: Input a trace ID or use the **Search** tab (filter by service, duration, tags). View trace visualizations.
+
+4. **Switch Views**:
+    - Toggle between **Logs**, **Graph**, or **Traces** tabs above the results.
+
+---
+
+## Step 4: Access and Create Dashboards
+Visualize data from Loki, Tempo, and Prometheus using dashboards.
+
+1. **View Existing Dashboards**:
+    - Click the **Dashboards** icon (four-square grid) in the sidebar.
+    - Select **Browse** to see available dashboards (e.g., from `Spring Boot 3.x Statistic`).
+
+2. **Create a New Dashboard**:
+    - Go to **Dashboards** > **+ New** > **New dashboard**.
+    - Click **+ Add visualization**.
+    - Choose a data source (Prometheus, Loki, or Tempo).
+    - Add queries:
+        - **Prometheus**: Metric query (e.g., `http_server_requests_seconds_count`), visualize as Graph.
+        - **Loki**: Log query (e.g., `{job="fluent-bit"}`), use **Logs** or **Time series**.
+        - **Tempo**: Grab a Trace ID or search query, visualize as a trace timeline.
+    - Customize panels and click **Apply**.
+
+3. **Save the Dashboard**:
+    - Click the **Save** icon (floppy disk) in the top-right.
+    - Name and save the dashboard.
+
+4. **Import Pre-Built Dashboards**:
+    - Go to **Dashboards** > **+ New** > **Import**.
+    - Upload JSON files provided in the directory /grafana-dashboard.
+    - Map data sources and import.
+
+---
+# Verify the APIs
+
+## Accessing APIs with Bearer Token Authentication
+
+
+
+- `access-token`: `http://localhost:8081/realms/course-management-realm/protocol/openid-connect/token` or `http://keycloak.local/realms/course-management-realm/protocol/openid-connect/token`
+- `course-aggregate`: `http://9000/course-aggregate`
+- `courses`: `http://9000/courses`
+- `reviews`: `http://9000/reviews`
+
+---
+
+## Steps to Access APIs with Authorization
+
+## 1. Fetch Access Token
+You need to get an access token from the **Access Point API**.
+
+### Request:
+
+```shell
+    curl -X POST http://localhost:8081/realms/course-management-realm/protocol/openid-connect/token  \
+     -d "grant_type=password" \
+     -d "client_id=course-app"  \
+     -d "client_secret=v1sCIPjANbvyJ87RsTkYeI9xHonDqZh7" \
+     -d "username=nasruddin"  \
+     -d "password=password" \
+     -d "scope=openid roles" | jq
+```
+```shell
+    http -f POST http://localhost:8081/realms/course-management-realm/protocol/openid-connect/token \
+    grant_type=password \
+    client_id=course-app \
+    client_secret=v1sCIPjANbvyJ87RsTkYeI9xHonDqZh7 \
+    username=nasruddin \
+    password=password \
+    scope="openid roles" | jq
+```
+```markdown
+{
+    "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0T1lYQVlZUXF6T2ZibE1wRjF0dmNvLW1UY2dEODVjai1Qak4xVnhuUExzIn0.eyJleHAiOjE3NDE3NzcxNDMsImlhdCI6MTc0MTc0MTE0MywianRpIjoiOTFjMjU1YTEtOGY2Zi00MDk2LTg3M2EtNGU2MWJiNTI3MmZmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9jb3Vyc2UtbWFuYWdlbWVudC1yZWFsbSIsImF1ZCI6InJldmlldy1hcHAiLCJzdWIiOiIzNzY2NmQ1Ni1jYTJkLTRkNDQtOTRmMS1kNDk4ZTdhZmVhOTUiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjb3Vyc2UtYXBwIiwic2lkIjoiNDEwZjE5ZDEtZTcwNi00MzQ0LWJmMGQtYjRhZDVhYzIzMmE1IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIvKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiR1VFU1QiLCJBRE1JTiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InJldmlldy1hcHAiOnsicm9sZXMiOlsiUkVWSUVXLVJFQUQiLCJSRVZJRVctV1JJVEUiXX0sImNvdXJzZS1hcHAiOnsicm9sZXMiOlsiQ09VUlNFLVdSSVRFIiwiQ09VUlNFLVJFQUQiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTmFzcnVkZGluIE5hc3J1ZGRpbiIsInByZWZlcnJlZF91c2VybmFtZSI6Im5hc3J1ZGRpbiIsImdpdmVuX25hbWUiOiJOYXNydWRkaW4iLCJmYW1pbHlfbmFtZSI6Ik5hc3J1ZGRpbiIsImVtYWlsIjoibmFzcnVkZGluQGdtYWlsLmNvbSJ9.adXke6N_RB5bFZCet_ZoMo3Q8Xm-LP-iM2ahgSS4zGubHx4738-n0lzyG2Aa4grtLM9OXbLD_wcm7aXruckQOKzb2YbAJSUR1X3Ul63PQLngT3Qh7xkFRxKT0DK8eN9cJQ2iHndiSS17L3NUZ5lqf4NVBqhW0t2YjoZlTwNzDCQsQA1wCWRypW3AcGRuos-KSjTBLGhipJD2wo8REGf0vTnsX1kd-3HYtoRSA-P3p1p6WJmxfOxzwQyjemi-GBsRcS8R86F14MXfBPSuOc1pk2wumOlHxcE_sJLo5rVJM72YL95wSjJmuOrZ8Wx7TSk-InYSCxYOkm6_CajhTOYHaw",
+    "expires_in": 36000,
+    "refresh_expires_in": 1800,
+    "refresh_token": "eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhZjM3ZGFiMi1iMTQwLTRlY2EtYTNjNi05YmFkM2JkNzY0ODcifQ.eyJleHAiOjE3NDE3NDI5NDMsImlhdCI6MTc0MTc0MTE0MywianRpIjoiZjZlZmUwNTQtNGJkZC00MDNmLWJkNWYtYzU4MTdkNmMwM2IyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9jb3Vyc2UtbWFuYWdlbWVudC1yZWFsbSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MS9yZWFsbXMvY291cnNlLW1hbmFnZW1lbnQtcmVhbG0iLCJzdWIiOiIzNzY2NmQ1Ni1jYTJkLTRkNDQtOTRmMS1kNDk4ZTdhZmVhOTUiLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoiY291cnNlLWFwcCIsInNpZCI6IjQxMGYxOWQxLWU3MDYtNDM0NC1iZjBkLWI0YWQ1YWMyMzJhNSIsInNjb3BlIjoib3BlbmlkIHdlYi1vcmlnaW5zIHJvbGVzIGFjciBiYXNpYyBlbWFpbCBwcm9maWxlIn0.-aR1XC4o26s0nlORQV-MZas9_hXOqzevmNQjMVzIdyqWdO7r6cJC3O6jphNBXfsW1KRYa0hoojlVXuAOJVYNfg",
+    "token_type": "Bearer",
+    "id_token": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0T1lYQVlZUXF6T2ZibE1wRjF0dmNvLW1UY2dEODVjai1Qak4xVnhuUExzIn0.eyJleHAiOjE3NDE3NzcxNDMsImlhdCI6MTc0MTc0MTE0MywianRpIjoiNTA5OGU2NTMtYjgzMC00ZmVhLWE4ZDMtZDBlOWUyNDZhMzc0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9jb3Vyc2UtbWFuYWdlbWVudC1yZWFsbSIsImF1ZCI6ImNvdXJzZS1hcHAiLCJzdWIiOiIzNzY2NmQ1Ni1jYTJkLTRkNDQtOTRmMS1kNDk4ZTdhZmVhOTUiLCJ0eXAiOiJJRCIsImF6cCI6ImNvdXJzZS1hcHAiLCJzaWQiOiI0MTBmMTlkMS1lNzA2LTQzNDQtYmYwZC1iNGFkNWFjMjMyYTUiLCJhdF9oYXNoIjoiNFNWZjROYk1ldUY1bWdvWGlRd2UzdyIsImFjciI6IjEiLCJyZXNvdXJjZV9hY2Nlc3MiOnsicmV2aWV3LWFwcCI6eyJyb2xlcyI6WyJSRVZJRVctUkVBRCIsIlJFVklFVy1XUklURSJdfSwiY291cnNlLWFwcCI6eyJyb2xlcyI6WyJDT1VSU0UtV1JJVEUiLCJDT1VSU0UtUkVBRCJdfX0sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkdVRVNUIiwiQURNSU4iXX0sIm5hbWUiOiJOYXNydWRkaW4gTmFzcnVkZGluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoibmFzcnVkZGluIiwiZ2l2ZW5fbmFtZSI6Ik5hc3J1ZGRpbiIsImZhbWlseV9uYW1lIjoiTmFzcnVkZGluIiwiZW1haWwiOiJuYXNydWRkaW5AZ21haWwuY29tIn0.UrhX9BfGUgNFpxRbk85_0GVbkU8PKDC1toWVNJbTT1LlADmsEk9miC8DUR-oSAgmyWsk4qptt_w22ESihmrfK8-lnVT_92g3tocxqNNymJFzbQdBx5U-v7_UOOEUNVkWgUAssMJ20KmhCEJwFAeUdHmv4sMeBYaZgihhTbz766V_S5zNuKRGCwkMt_OIGda7nYJ4aUI8jP5F4jViMpSYjDWEg2rKKRxbwIKVN3THDJt_Z3jfxh_GXq-5pR07S6De1koAEMqiHQSvqxvg2X3hsph7EBx5R8hoTDv-5nhdOZLNGBKCU3q74UmBvhwlEuXmJgRu3iLriJEVrm5qLnh1DQ",
+    "not-before-policy": 0,
+    "session_state": "410f19d1-e706-4344-bf0d-b4ad5ac232a5",
+    "scope": "openid email profile"
+}
+```
+
+## 2. Use the Access Token in API Requests 
+Once you have the access token, include it in the Authorization header as a Bearer token when calling the other APIs. 
+
+> [!NOTE]
+> All the below APIs are being accessed via gateway. However, you can also access them using their respective endpoints but make sure you append **api** in front of context. eg. *http://9001/api/courses* or *http://9002/api/reviews*.   
+
+### Access `course-aggregate` API:
+```shell
+     http :9000/course-aggregate/1/with-details "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0T1lYQVlZUXF6T2ZibE1wRjF0dmNvLW1UY2dEODVjai1Qak4xVnhuUExzIn0.eyJleHAiOjE3NDE3NzcyMDQsImlhdCI6MTc0MTc0MTIwNCwianRpIjoiOGUyMzg3YzEtMWEzOS00Yjg0LTlhMjAtYTg3M2ZlYTIzNDYxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9jb3Vyc2UtbWFuYWdlbWVudC1yZWFsbSIsImF1ZCI6InJldmlldy1hcHAiLCJzdWIiOiIzNzY2NmQ1Ni1jYTJkLTRkNDQtOTRmMS1kNDk4ZTdhZmVhOTUiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjb3Vyc2UtYXBwIiwic2lkIjoiOTJiZDBmZTQtNjhlYi00ZDViLTliNmEtMWMyMzMzZmNiOWRkIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIvKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiR1VFU1QiLCJBRE1JTiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InJldmlldy1hcHAiOnsicm9sZXMiOlsiUkVWSUVXLVJFQUQiLCJSRVZJRVctV1JJVEUiXX0sImNvdXJzZS1hcHAiOnsicm9sZXMiOlsiQ09VUlNFLVdSSVRFIiwiQ09VUlNFLVJFQUQiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTmFzcnVkZGluIE5hc3J1ZGRpbiIsInByZWZlcnJlZF91c2VybmFtZSI6Im5hc3J1ZGRpbiIsImdpdmVuX25hbWUiOiJOYXNydWRkaW4iLCJmYW1pbHlfbmFtZSI6Ik5hc3J1ZGRpbiIsImVtYWlsIjoibmFzcnVkZGluQGdtYWlsLmNvbSJ9.DsifGnS890ljND6P4ibZnDV47K9snnbmitSYDzejt4OdR5Z4dykew2pYDAv9fOEYMAURVMQRJShs-eahNupiaIiC8QUnNWdL3cFZVX5VONS4DHhu9885yH8t6QB1RDLAjO0saK0S3kqgmR0cZIOh4Ps9kv2W4Zxq8UW25dXiRWvA-m5vozZ10x-9iT6-x_Vxr9do4oMVAT_q_S7qvIEy9EpMFPQa7RyxHToYhzpAJ2BHoJjSFZ26FaqvEtfRUTYUsH0uRgD88hEzIaMGcKLTwMox8MjD0cSe2WQVc2wzTvjJOw2086xLMGFYca8T-Wz-LlgaVYpp5AJ5OIM6gye35Q"
+```
+```markdown
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Content-Length: 2150
+Content-Type: application/json
+Expires: 0
+Pragma: no-cache
+Referrer-Policy: no-referrer
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 0
+
+{
+    "course": {
+        "author": "John Doe",
+        "id": 1,
+        "price": 29.79,
+        "publisher": "Whatsapp",
+        "title": "Microservices with Quarkus"
+    },
+    "reviews": [
+        {
+            "author": "John Doe",
+            "content": "Amazing book and loved reading it",
+            "courseId": 1,
+            "email": "abc@xyz.com",
+            "id": "67cfd9f2ab40f0347b1a3f15"
+        },
+        {
+            "author": "John Doe",
+            "content": "Amazing book and loved reading it",
+            "courseId": 1,
+            "email": "abc@xyz.com",
+            "id": "67cfd9f2ab40f0347b1a3f14"
+        }
+    ]
+}
+```
+
+### Access `courses` API:
+```shell
+    http POST :9000/courses title="Microservices with Golang" author="John Doe" price:=29.79 publisher="GitHub" "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0T1lYQVlZUXF6T2ZibE1wRjF0dmNvLW1UY2dEODVjai1Qak4xVnhuUExzIn0.eyJleHAiOjE3NDE3NzcyMDQsImlhdCI6MTc0MTc0MTIwNCwianRpIjoiOGUyMzg3YzEtMWEzOS00Yjg0LTlhMjAtYTg3M2ZlYTIzNDYxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9jb3Vyc2UtbWFuYWdlbWVudC1yZWFsbSIsImF1ZCI6InJldmlldy1hcHAiLCJzdWIiOiIzNzY2NmQ1Ni1jYTJkLTRkNDQtOTRmMS1kNDk4ZTdhZmVhOTUiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjb3Vyc2UtYXBwIiwic2lkIjoiOTJiZDBmZTQtNjhlYi00ZDViLTliNmEtMWMyMzMzZmNiOWRkIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIvKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiR1VFU1QiLCJBRE1JTiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InJldmlldy1hcHAiOnsicm9sZXMiOlsiUkVWSUVXLVJFQUQiLCJSRVZJRVctV1JJVEUiXX0sImNvdXJzZS1hcHAiOnsicm9sZXMiOlsiQ09VUlNFLVdSSVRFIiwiQ09VUlNFLVJFQUQiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTmFzcnVkZGluIE5hc3J1ZGRpbiIsInByZWZlcnJlZF91c2VybmFtZSI6Im5hc3J1ZGRpbiIsImdpdmVuX25hbWUiOiJOYXNydWRkaW4iLCJmYW1pbHlfbmFtZSI6Ik5hc3J1ZGRpbiIsImVtYWlsIjoibmFzcnVkZGluQGdtYWlsLmNvbSJ9.DsifGnS890ljND6P4ibZnDV47K9snnbmitSYDzejt4OdR5Z4dykew2pYDAv9fOEYMAURVMQRJShs-eahNupiaIiC8QUnNWdL3cFZVX5VONS4DHhu9885yH8t6QB1RDLAjO0saK0S3kqgmR0cZIOh4Ps9kv2W4Zxq8UW25dXiRWvA-m5vozZ10x-9iT6-x_Vxr9do4oMVAT_q_S7qvIEy9EpMFPQa7RyxHToYhzpAJ2BHoJjSFZ26FaqvEtfRUTYUsH0uRgD88hEzIaMGcKLTwMox8MjD0cSe2WQVc2wzTvjJOw2086xLMGFYca8T-Wz-LlgaVYpp5AJ5OIM6gye35Q"
+```
+```markdown
+HTTP/1.1 201 Created
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Content-Length: 210
+Content-Type: application/json
+Expires: 0
+Pragma: no-cache
+Referrer-Policy: no-referrer
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 0
+
+{
+    "author": "John Doe",
+    "createdDate": "2025-03-12T01:17:35.565586049Z",
+    "id": 5,
+    "lastModifiedDate": "2025-03-12T01:17:35.565586049Z",
+    "price": 29.79,
+    "publisher": "GitHub",
+    "title": "Microservices with Golang",
+    "version": 0
+}
+```
+### Access `reviews` API:
+```shell
+    http POST :9000/reviews courseId:=1 author="John Doe" content="Amazing book"  email="abc@xyz.com" "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0T1lYQVlZUXF6T2ZibE1wRjF0dmNvLW1UY2dEODVjai1Qak4xVnhuUExzIn0.eyJleHAiOjE3NDE3NzcyMDQsImlhdCI6MTc0MTc0MTIwNCwianRpIjoiOGUyMzg3YzEtMWEzOS00Yjg0LTlhMjAtYTg3M2ZlYTIzNDYxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9jb3Vyc2UtbWFuYWdlbWVudC1yZWFsbSIsImF1ZCI6InJldmlldy1hcHAiLCJzdWIiOiIzNzY2NmQ1Ni1jYTJkLTRkNDQtOTRmMS1kNDk4ZTdhZmVhOTUiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjb3Vyc2UtYXBwIiwic2lkIjoiOTJiZDBmZTQtNjhlYi00ZDViLTliNmEtMWMyMzMzZmNiOWRkIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIvKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiR1VFU1QiLCJBRE1JTiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InJldmlldy1hcHAiOnsicm9sZXMiOlsiUkVWSUVXLVJFQUQiLCJSRVZJRVctV1JJVEUiXX0sImNvdXJzZS1hcHAiOnsicm9sZXMiOlsiQ09VUlNFLVdSSVRFIiwiQ09VUlNFLVJFQUQiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTmFzcnVkZGluIE5hc3J1ZGRpbiIsInByZWZlcnJlZF91c2VybmFtZSI6Im5hc3J1ZGRpbiIsImdpdmVuX25hbWUiOiJOYXNydWRkaW4iLCJmYW1pbHlfbmFtZSI6Ik5hc3J1ZGRpbiIsImVtYWlsIjoibmFzcnVkZGluQGdtYWlsLmNvbSJ9.DsifGnS890ljND6P4ibZnDV47K9snnbmitSYDzejt4OdR5Z4dykew2pYDAv9fOEYMAURVMQRJShs-eahNupiaIiC8QUnNWdL3cFZVX5VONS4DHhu9885yH8t6QB1RDLAjO0saK0S3kqgmR0cZIOh4Ps9kv2W4Zxq8UW25dXiRWvA-m5vozZ10x-9iT6-x_Vxr9do4oMVAT_q_S7qvIEy9EpMFPQa7RyxHToYhzpAJ2BHoJjSFZ26FaqvEtfRUTYUsH0uRgD88hEzIaMGcKLTwMox8MjD0cSe2WQVc2wzTvjJOw2086xLMGFYca8T-Wz-LlgaVYpp5AJ5OIM6gye35Q"
+```
+```markdown
+HTTP/1.1 201 Created
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Content-Length: 125
+Content-Type: application/json
+Expires: 0
+Pragma: no-cache
+Referrer-Policy: no-referrer
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 0
+
+{
+    "author": "John Doe",
+    "content": "Amazing book",
+    "courseId": 1,
+    "email": "abc@xyz.com",
+    "id": "67d0e14a2bb2a161bb104cef",
+    "version": 1
+}
+
+```
