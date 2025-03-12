@@ -8,7 +8,7 @@
 - [Observability](#observability)
 - [Guide to grafana](#guide-to-grafana)
 - [Verify the APIs](#verify-the-apis)
-- [Troubleshoot & Tips](troubleshoot-and-tips)
+- [Troubleshoot & Tips](#troubleshoot-and-tips)
 
 
 # Background
@@ -755,4 +755,4 @@ X-XSS-Protection: 0
 
 ```
 ---
-# Troubleshoot & Tips
+# Troubleshoot and Tips
