@@ -548,14 +548,9 @@ level=info ts=2025-03-12T00:15:16.42224564Z caller=lifecycler.go:677 msg="not lo
 level=info ts=2025-03-12T00:15:16.42315586Z caller=lifecycler.go:704 msg="instance not found in ring, adding with no tokens" ring=ingester
 level=info ts=2025-03-12T00:15:16.423323314Z caller=app.go:205 msg="Tempo started"
 ```
-- **Grafana**
-    - http://grafana.local
-    - Import Dashboard json from grafana-dashboard/
 
 # Guide to Grafana
 ### Accessing Loki, Tempo, Prometheus, and Dashboards in Grafana
-
----
 
 ## Step 1: Log In to Grafana
 1. Open your browser and go to your Grafana instance (e.g., `http://localhost:3000`).
@@ -643,6 +638,20 @@ Visualize data from Loki, Tempo, and Prometheus using dashboards.
     - Go to **Dashboards** > **+ New** > **Import**.
     - Upload JSON files provided in the directory /grafana-dashboard.
     - Map data sources and import.
+---
+
+### Spring Boot Observability Dashboard
+![Observability Dashboard](/notes/images/observability.png)
+
+### Spring Boot Statistic Dashboard
+![Observability Dashboard](/notes/images/statistic.png)
+
+### Tempo Traces
+![Tempo trace](/notes/images/tempo1.png)
+![Tempo trace](/notes/images/tempo2.png)
+
+### Loki Logs
+![Loki Logs](/notes/images/loki.png)
 
 ---
 # Verify the APIs
