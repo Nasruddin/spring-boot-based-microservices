@@ -14,6 +14,45 @@
 # Background
 A foundational framework for building **Spring Boot**-based microservices, designed for a **modular**, **scalable**, and **observable** system to manage **courses** and **reviews**. It incorporates **Spring Security** with **OAuth 2.0** via **Keycloak** for **authentication** and **Spring Cloud Gateway** as the **API gateway**. The architecture integrates a modern **observability stack**, including **OpenTelemetry (OTel)**, **Grafana**, **Loki**, **Tempo**, and **Prometheus**. **MongoDB** and **PostgreSQL** serve as **persistent storage** solutions. Deployment is supported through **Docker Compose** for **local environments** and **Kubernetes** for **scalable deployments**. The system utilizes **Spring Boot** and **Spring Cloud** to enable seamless **microservices communication**, **security**, and **observability**.
 
+# Container Diagram
+
+## Description
+The **Course Management System** consists of multiple Spring Boot microservices, a gateway, databases, and external systems for authentication and observability, deployed via Docker Compose or Kubernetes (Tilt).
+
+## Containers
+| Container                | Technology              | Description                                      |
+|--------------------------|-------------------------|--------------------------------------------------|
+| **Gateway Service**      | Spring Cloud Gateway    | Routes requests to microservices, handles load balancing. |
+| **Course Service**       | Spring Boot             | Manages course data, interacts with Postgres.    |
+| **Review Service**       | Spring Boot             | Manages review data, interacts with MongoDB.     |
+| **Course Composite Service** | Spring Boot         | Aggregates data from Course and Review Services. |
+| **Postgres Database**    | PostgreSQL              | Stores course data for Course Service.           |
+| **MongoDB Database**     | MongoDB                 | Stores review data for Review Service.           |
+| **Keycloak**             | Keycloak                | External auth server for SSO and role-based access. |
+| **Grafana**              | Grafana                 | Visualization for metrics, logs, and traces.     |
+| **Loki**                 | Loki                    | Log aggregation system.                          |
+| **Tempo**                | Tempo                   | Distributed tracing system.                      |
+| **Fluent-bit**           | Fluent-bit              | Log forwarding agent.                            |
+| **Otel Collector**       | OpenTelemetry           | Collects and exports telemetry data.             |
+
+## Interactions
+- **Users/Admin** → **Gateway Service**: HTTP requests via browser/API client.
+- **Gateway Service** → **Keycloak**: Authenticates requests (OAuth2/JWT).
+- **Gateway Service** → **Course Service**: Routes course-related requests.
+- **Gateway Service** → **Review Service**: Routes review-related requests.
+- **Gateway Service** → **Course Composite Service**: Routes aggregate requests.
+- **Course Service** ↔ **Postgres Database**: CRUD operations for course data.
+- **Review Service** ↔ **MongoDB Database**: CRUD operations for review data.
+- **Course Composite Service** → **Course Service**: Fetches course data.
+- **Course Composite Service** → **Review Service**: Fetches review data.
+- **All Services** → **Fluent-bit**: Sends logs.
+- **All Services** → **Otel Collector**: Sends metrics and traces.
+- **Fluent-bit** → **Loki**: Forwards logs.
+- **Otel Collector** → **Tempo**: Sends traces.
+- **Otel Collector** → **Grafana**: Sends metrics.
+- **Grafana** ← **Loki**: Queries logs.
+- **Grafana** ← **Tempo**: Queries traces.
+
 # Architecture
 ---
 ### Level 1: System Context Diagram
@@ -31,6 +70,7 @@ A foundational framework for building **Spring Boot**-based microservices, desig
     - User → System: HTTP requests via Gateway.
     - System → Keycloak: Authenticates users.
     - System → Grafana Stack: Sends observability data.
+![System context](notes/images/context-level1.png)
 ---
 ### Level 2: Container Diagram
 **Description**: Breaks the system into deployable units.
@@ -64,6 +104,7 @@ A foundational framework for building **Spring Boot**-based microservices, desig
         - **Tempo**: Trace storage.
         - **Grafana**: Visualization.
         - Interactions: Microservices → Fluent-bit/OTel → Loki/Tempo → Grafana.
+![Container](notes/images/container-level2.png)
 ---
 ### Level 3: Component Diagram
 **Description**: Key components within containers.
@@ -87,6 +128,8 @@ A foundational framework for building **Spring Boot**-based microservices, desig
     - Review Service (Logic).
     - Review Repository (MongoDB).
     - Observability Agent.
+
+![Component](notes/images/component-level3.png)
 ---
 ### Level 4: Deployment Notes
 **Description**: Two deployment setups.
@@ -101,11 +144,13 @@ A foundational framework for building **Spring Boot**-based microservices, desig
     - Resources: Ingress, Services, ConfigMaps/Secrets, PVCs.
     - Tilt: Automates dev with live updates.
     - Observability: Fluent-bit DaemonSet
+![Deployment](notes/images/deployment-level4.png)
 
 ### Additional Notes
 - **Tech**: Spring Boot, Spring Cloud, JPA, MongoDB driver, OTel, Fluent-bit.
 - **Interactions**: REST/HTTP, JDBC, MongoDB protocol.
 - **Scalability**: Kubernetes supports replicas; Docker Compose for local dev.
+
 
 # Prerequisites
 
