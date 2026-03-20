@@ -2,6 +2,8 @@
 
 Spring Boot microservices sample for managing courses and reviews with:
 
+- Spring Boot `4.0.3`
+- Spring Cloud `2025.1.1`
 - Spring Cloud Gateway
 - OAuth2 resource server security via Keycloak
 - PostgreSQL for courses
@@ -30,6 +32,14 @@ The previous README is preserved as [README.backup.md](README.backup.md).
 
 ## Overview
 
+Current framework baseline:
+
+| Framework | Version |
+|---|---|
+| Spring Boot | `4.0.3` |
+| Spring Cloud | `2025.1.1` |
+| Java | `17` |
+
 This repository contains four runtime services:
 
 | Service | Purpose | Default local port |
@@ -44,6 +54,11 @@ Gateway routes:
 - `/courses/**` -> `course-service`
 - `/reviews/**` -> `review-service`
 - `/course-aggregate/**` -> `course-composite-service`
+
+Gateway implementation notes:
+
+- The gateway module uses `spring-cloud-starter-gateway-server-webflux`
+- Route definitions live under `spring.cloud.gateway.server.webflux.routes`
 
 ## Repository Layout
 
@@ -125,7 +140,7 @@ Current test behavior:
 
 - `course-service` uses H2 during tests, so local PostgreSQL is not required.
 - `review-service` smoke tests still initialize the default MongoDB client; tests pass without MongoDB running, but connection-refused log noise is expected.
-- The full reactor currently passes with `./mvnw test`.
+- The full reactor passes on Spring Boot `4.0.3` with `./mvnw test`.
 
 ## Run Locally
 
@@ -411,6 +426,8 @@ Grafana dashboards are available under:
 
 - `grafana-dashboard/Spring Boot 3.x Statistics.json`
 - `grafana-dashboard/Spring Boot Observability.json`
+
+The first dashboard filename still contains `3.x`, but the application code is now on Spring Boot `4.0.3`.
 
 ## Useful Files
 
