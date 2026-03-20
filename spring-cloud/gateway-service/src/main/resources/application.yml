@@ -14,27 +14,29 @@ spring:
 
   cloud:
     gateway:
-      routes:
-        - id: course-service-route
-          uri: ${COURSE_SERVICE_URL:http://localhost:9001}
-          predicates:
-            - Path=/courses/**
-          filters:
-            - RewritePath=/courses(?<segment>/.*|), /api/courses\${segment}
+      server:
+        webflux:
+          routes:
+            - id: course-service-route
+              uri: ${COURSE_SERVICE_URL:http://localhost:9001}
+              predicates:
+                - Path=/courses/**
+              filters:
+                - RewritePath=/courses(?<segment>/.*|), /api/courses\${segment}
 
-        - id: review-service-route
-          uri: ${REVIEW_SERVICE_URL:http://localhost:9002}
-          predicates:
-            - Path=/reviews/**
-          filters:
-            - RewritePath=/reviews(?<segment>/.*|), /api/reviews\${segment}
+            - id: review-service-route
+              uri: ${REVIEW_SERVICE_URL:http://localhost:9002}
+              predicates:
+                - Path=/reviews/**
+              filters:
+                - RewritePath=/reviews(?<segment>/.*|), /api/reviews\${segment}
 
-        - id: course-aggregate-route
-          uri: ${COURSE_AGGREGATE_SERVICE_URL:http://localhost:5000}
-          predicates:
-            - Path=/course-aggregate/**
-          filters:
-            - RewritePath=/course-aggregate(?<segment>/.*|), /api/course-aggregate\${segment}
+            - id: course-aggregate-route
+              uri: ${COURSE_AGGREGATE_SERVICE_URL:http://localhost:5000}
+              predicates:
+                - Path=/course-aggregate/**
+              filters:
+                - RewritePath=/course-aggregate(?<segment>/.*|), /api/course-aggregate\${segment}
 
 management:
   endpoints:
@@ -86,25 +88,27 @@ spring:
       on-profile: docker
   cloud:
     gateway:
-      routes:
-        - id: course-service-route
-          uri: http://course:8080
-          predicates:
-            - Path=/courses/**
-          filters:
-            - RewritePath=/courses(?<segment>/.*|), /api/courses\${segment}
-        - id: review-service-route
-          uri: http://review:8080
-          predicates:
-            - Path=/reviews/**
-          filters:
-            - RewritePath=/reviews(?<segment>/.*|), /api/reviews\${segment}
-        - id: course-aggregate-route
-          uri: http://course-composite:8080
-          predicates:
-            - Path=/course-aggregate/**
-          filters:
-            - RewritePath=/course-aggregate(?<segment>/.*|), /api/course-aggregate\${segment}
+      server:
+        webflux:
+          routes:
+            - id: course-service-route
+              uri: http://course:8080
+              predicates:
+                - Path=/courses/**
+              filters:
+                - RewritePath=/courses(?<segment>/.*|), /api/courses\${segment}
+            - id: review-service-route
+              uri: http://review:8080
+              predicates:
+                - Path=/reviews/**
+              filters:
+                - RewritePath=/reviews(?<segment>/.*|), /api/reviews\${segment}
+            - id: course-aggregate-route
+              uri: http://course-composite:8080
+              predicates:
+                - Path=/course-aggregate/**
+              filters:
+                - RewritePath=/course-aggregate(?<segment>/.*|), /api/course-aggregate\${segment}
   security:
     oauth2:
       resourceserver:
