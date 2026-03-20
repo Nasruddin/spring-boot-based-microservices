@@ -154,7 +154,7 @@ Optional check:
 tilt get uiresources
 ```
 
----
+Each service exposes actuator metrics and Prometheus output.
 
 ## Core Endpoints
 
@@ -186,7 +186,7 @@ Typical local flow:
 3. Get a bearer token from Keycloak.
 4. Call gateway APIs with `Authorization: Bearer <token>`.
 
----
+The token must contain both:
 
 ## Observability
 
