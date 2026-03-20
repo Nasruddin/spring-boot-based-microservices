@@ -1,0 +1,22 @@
+app:
+  jwk-set-uri: http://localhost/test/jwks
+server:
+  port: 0
+spring:
+  datasource:
+    url: jdbc:h2:mem:course-test-db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+  flyway:
+    enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost/test-issuer
+          jwk-set-uri: http://localhost/test/jwks

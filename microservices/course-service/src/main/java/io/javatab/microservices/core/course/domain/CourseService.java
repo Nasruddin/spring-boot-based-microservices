@@ -56,7 +56,8 @@ public class CourseService {
                     existingCourse.setPrice(course.getPrice());
                     existingCourse.setPublisher(course.getPublisher());
                     return courseRepository.save(existingCourse);
-                }).orElseGet(() -> addCourse(course));
+                })
+                .orElseThrow(() -> new CourseNotFoundException(String.valueOf(id)));
 
     }
 }

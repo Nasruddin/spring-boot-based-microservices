@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -42,7 +42,14 @@ public class SecurityConfig {
         http
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/actuator/**", "/api/metrics/**").permitAll()
-                        .pathMatchers("/api/course-aggregate/**").hasAnyRole("COURSE-READ", "REVIEW-READ")
+                        .pathMatchers("/api/course-aggregate/**").access((authentication, context) ->
+                                authentication.map(auth -> {
+                                    boolean hasCourseRead = auth.getAuthorities().stream()
+                                            .anyMatch(authority -> authority.getAuthority().equals("ROLE_COURSE-READ"));
+                                    boolean hasReviewRead = auth.getAuthorities().stream()
+                                            .anyMatch(authority -> authority.getAuthority().equals("ROLE_REVIEW-READ"));
+                                    return new AuthorizationDecision(hasCourseRead && hasReviewRead);
+                                }))
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2

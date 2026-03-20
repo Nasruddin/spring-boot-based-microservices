@@ -2,7 +2,6 @@ package io.javatab.microservices.core.course.web;
 
 import io.javatab.microservices.core.course.domain.Course;
 import io.javatab.microservices.core.course.domain.CourseService;
-import io.javatab.util.http.NetworkUtility;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +14,9 @@ public class CourseController {
 
     private final Logger logger = LoggerFactory.getLogger(CourseController.class);
 
-    private final NetworkUtility utility;
-    private CourseService courseService;
+    private final CourseService courseService;
 
-    public CourseController(NetworkUtility utility, CourseService courseService) {
-        this.utility = utility;
+    public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
 
