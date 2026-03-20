@@ -1,247 +1,118 @@
-# Course Management System
+# Spring Boot Based Microservices
 
-Spring Boot microservices sample for managing courses and reviews with:
+A modular, production-style microservices reference project for managing **courses** and **reviews** with strong focus on:
 
-- Spring Boot `4.0.3`
-- Spring Cloud `2025.1.1`
-- Spring Cloud Gateway
-- OAuth2 resource server security via Keycloak
-- PostgreSQL for courses
-- MongoDB for reviews
-- Prometheus, Grafana, Loki, Tempo, and Fluent Bit for observability
-- Docker Compose and Minikube/Tilt deployment options
+- API gateway routing
+- OAuth2/OIDC security with Keycloak
+- Observability (metrics, logs, traces)
+- Docker Compose and Kubernetes/Tilt local deployment workflows
 
-The previous README is preserved as [README.backup.md](README.backup.md).
+---
 
 ## Table of Contents
 
 - [Overview](#overview)
-- [Repository Layout](#repository-layout)
 - [Architecture](#architecture)
-- [Ports and Endpoints](#ports-and-endpoints)
+- [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
-- [Testing](#testing)
-- [Run Locally](#run-locally)
-- [Run with Docker Compose](#run-with-docker-compose)
-- [Run with Minikube and Tilt](#run-with-minikube-and-tilt)
-- [Security and Roles](#security-and-roles)
-- [API Notes](#api-notes)
+- [Quick Start (Docker Compose)](#quick-start-docker-compose)
+- [Run with Kubernetes + Tilt](#run-with-kubernetes--tilt)
+- [Core Endpoints](#core-endpoints)
+- [Keycloak](#keycloak)
 - [Observability](#observability)
-- [Useful Files](#useful-files)
 - [Troubleshooting](#troubleshooting)
+
+---
 
 ## Overview
 
-Current framework baseline:
+The system is split into domain services and platform components:
 
-| Framework | Version |
-|---|---|
-| Spring Boot | `4.0.3` |
-| Spring Cloud | `2025.1.1` |
-| Java | `17` |
+- **Gateway Service**: entry point and request routing
+- **Course Service**: manages course data in PostgreSQL
+- **Review Service**: manages review data in MongoDB
+- **Course Composite Service**: aggregates course + review responses
+- **Keycloak**: identity provider for authn/authz
+- **Observability stack**: Prometheus, Grafana, Loki, Tempo, Fluent Bit, OpenTelemetry Collector
 
-This repository contains four runtime services:
-
-| Service | Purpose | Default local port |
-|---|---|---:|
-| `gateway-service` | Public entrypoint and routing | `9000` |
-| `course-composite-service` | Aggregates course and review data | `5000` |
-| `course-service` | CRUD for courses backed by PostgreSQL | `9001` |
-| `review-service` | CRUD for reviews backed by MongoDB | `9002` |
-
-Gateway routes:
-
-- `/courses/**` -> `course-service`
-- `/reviews/**` -> `review-service`
-- `/course-aggregate/**` -> `course-composite-service`
-
-Gateway implementation notes:
-
-- The gateway module uses `spring-cloud-starter-gateway-server-webflux`
-- Route definitions live under `spring.cloud.gateway.server.webflux.routes`
-
-## Repository Layout
-
-| Path | Description |
-|---|---|
-| `microservices/course-service` | Course domain service |
-| `microservices/review-service` | Review domain service |
-| `microservices/course-composite-service` | Aggregate service |
-| `spring-cloud/gateway-service` | API gateway |
-| `util` | Shared utility module |
-| `docker` | Compose files and observability config |
-| `kubernetes` | Kubernetes manifests |
-| `api-specs` | Bruno, Postman, and OpenAPI files |
-| `grafana-dashboard` | Dashboard exports |
-| `notes` | Architecture notes and images |
+---
 
 ## Architecture
 
-### Runtime flow
+### Context Diagram
+![System context](notes/images/context-level1.png)
 
-1. A client calls the gateway.
-2. Gateway validates JWTs and forwards the request to a downstream service.
-3. `course-composite-service` fans out to `course-service` and `review-service` for aggregate responses.
-4. Core services persist data in PostgreSQL and MongoDB.
-5. Metrics, traces, and logs flow to Prometheus, Tempo, Loki, and Grafana.
+### Container Diagram
+![Container](notes/images/container-level2.png)
 
-### Diagrams
+### Component Diagram
+![Component](notes/images/component-level3.png)
 
-- Context: `notes/images/context-level1.png`
-- Container: `notes/images/container-level2.png`
-- Component: `notes/images/component-level3.png`
-- Deployment: `notes/images/deployment-level4.png`
+### Deployment View
+![Deployment](notes/images/deployment-level4.png)
 
-## Ports and Endpoints
+---
 
-### Local host-mode services
+## Tech Stack
 
-| Component | URL |
-|---|---|
-| Gateway | `http://localhost:9000` |
-| Course aggregate service | `http://localhost:5000` |
-| Course service | `http://localhost:9001` |
-| Review service | `http://localhost:9002` |
-| Keycloak | `http://localhost:8081` |
-| PostgreSQL | `localhost:5432` |
-| MongoDB | `localhost:27017` |
-| Grafana | `http://localhost:3000` |
-| Prometheus | `http://localhost:9090` |
-| Loki | `http://localhost:3100` |
-| Tempo | `http://localhost:3200` |
-| Fluent Bit | `localhost:24224` |
+- **Java 17**, **Spring Boot**, **Spring Cloud Gateway**
+- **PostgreSQL** (Course Service)
+- **MongoDB** (Review Service)
+- **Keycloak** (OAuth2/OIDC)
+- **OpenTelemetry**, **Prometheus**, **Grafana**, **Loki**, **Tempo**, **Fluent Bit**
+- **Docker Compose** and **Kubernetes (Minikube + Tilt)**
 
-### Main gateway routes
-
-| Route | Upstream behavior |
-|---|---|
-| `GET /courses/**` | Rewritten to `/api/courses/**` |
-| `GET /reviews/**` | Rewritten to `/api/reviews/**` |
-| `GET /course-aggregate/**` | Rewritten to `/api/course-aggregate/**` |
+---
 
 ## Prerequisites
 
+Install the following before running:
+
 - Java 17+
 - Maven 3.8+
-- Docker and Docker Compose
-- Minikube and Tilt if using Kubernetes
-- `curl` or `httpie`
-- `jq` is useful for token inspection
+- Docker + Docker Compose
+- (Optional) Minikube + Tilt for Kubernetes mode
+- curl or HTTPie for API validation
 
-## Testing
+---
 
-Run the full reactor test suite from the repository root:
+## Quick Start (Docker Compose)
 
-```bash
-./mvnw test
-```
+> Make sure Docker Engine is running.
 
-Current test behavior:
-
-- `course-service` uses H2 during tests, so local PostgreSQL is not required.
-- `review-service` smoke tests still initialize the default MongoDB client; tests pass without MongoDB running, but connection-refused log noise is expected.
-- The full reactor passes on Spring Boot `4.0.3` with `./mvnw test`.
-
-## Run Locally
-
-This mode runs the Spring Boot jars on the host machine instead of Docker containers.
-
-### 1. Start infrastructure
+### 1) Start databases
 
 ```bash
 cd docker
 docker compose -f docker-compose-infra.yml up --build
 ```
 
-This starts:
-
-- PostgreSQL on `5432`
-- MongoDB on `27017`
-- Keycloak on `8081`
-
-### 2. Optional: start observability
+### 2) Start observability stack
 
 ```bash
 cd docker
 docker compose -f docker-compose-observability.yml up --build
 ```
 
-This starts:
+### 3) Start microservices
 
-- Grafana
-- Prometheus
-- Loki
-- Tempo
-- Fluent Bit
-
-### 3. Start the microservices
-
-From the repository root:
-
-```bash
-sh run.sh
-```
-
-Notes about `run.sh`:
-
-- It builds the project with `mvn clean package -DskipTests`.
-- It starts `course-composite-service`, `course-service`, and `review-service`.
-- It kills processes on ports `5000`, `9000`, `9001`, and `9002` before starting.
-- It does not start the gateway in host-mode. If you want gateway routing locally, start it separately:
-
-```bash
-./mvnw -pl spring-cloud/gateway-service spring-boot:run
-```
-
-## Run with Docker Compose
-
-This mode runs the application services in Docker using the `docker` Spring profile.
-
-### 1. Start infrastructure
-
-```bash
-cd docker
-docker compose -f docker-compose-infra.yml up --build
-```
-
-### 2. Optional: start observability
-
-```bash
-cd docker
-docker compose -f docker-compose-observability.yml up --build
-```
-
-### 3. Start application services
-
-From the repository root:
+From repository root:
 
 ```bash
 sh run.sh docker
 ```
 
-This executes `docker compose -f docker-compose-base.yml up --build` and exposes:
+or
 
-- Gateway on `http://localhost:9000`
-- Course aggregate service on `http://localhost:8080`
+```bash
+sh run.sh
+```
 
-Notes:
+---
 
-- `course-service` and `review-service` are not published directly to host ports in `docker-compose-base.yml`.
-- External traffic is expected to go through the gateway on `9000`, or directly to the aggregate service on `8080` if you want to bypass the gateway.
+## Run with Kubernetes + Tilt
 
-Behind the scenes, the docker profile uses internal container names:
-
-- `course`
-- `review`
-- `course-composite`
-- `gateway-service`
-- `postgres`
-- `mongodb`
-- `keycloak`
-
-## Run with Minikube and Tilt
-
-### 1. Start Minikube
+### 1) Start Minikube
 
 ```bash
 minikube start \
@@ -253,234 +124,97 @@ minikube start \
   --driver=docker
 ```
 
-### 2. Enable ingress
+### 2) Enable ingress
 
 ```bash
 minikube addons enable ingress --profile microservice-deployment
 ```
 
-### 3. Point Docker CLI at Minikube
+### 3) Use Minikube Docker daemon
 
 ```bash
-eval "$(minikube -p microservice-deployment docker-env)"
+eval $(minikube -p microservice-deployment docker-env)
 ```
 
-### 4. Build service images
+### 4) Build images
 
 ```bash
 sh build-images.sh
 ```
 
-This builds:
-
-- `course-composite-service`
-- `course-service`
-- `review-service`
-- `gateway-service`
-
-### 5. Start Tilt
+### 5) Start platform with Tilt
 
 ```bash
 tilt up
 ```
 
-Useful commands:
+Optional check:
 
 ```bash
 tilt get uiresources
-kubectl get pods,svc,ing
 ```
-
-### 6. Access ingress
-
-On macOS and Windows with Minikube Docker driver, run:
-
-```bash
-minikube tunnel --profile microservice-deployment
-```
-
-Add host entries if needed:
-
-```text
-127.0.0.1 grafana.local
-127.0.0.1 keycloak.local
-127.0.0.1 prometheus.local
-```
-
-Kubernetes ingress endpoints:
-
-- Gateway: `http://127.0.0.1`
-- Grafana: `http://grafana.local`
-- Keycloak: `http://keycloak.local`
-- Prometheus: `http://prometheus.local`
-
-On Linux, `minikube ip --profile microservice-deployment` may be directly routable.
-
-## Security and Roles
-
-Keycloak realm import file:
-
-- `course-management-realm-realm.json`
-
-Admin console:
-
-- `http://localhost:8081/admin`
-
-Default Keycloak admin credentials:
-
-- username: `admin`
-- password: `admin`
-
-### Import the realm
-
-1. Open the Keycloak admin console.
-2. Create or import a realm.
-3. Import `course-management-realm-realm.json`.
-4. Verify clients, roles, and users.
-
-### Seeded users
-
-| Username | Password | Roles |
-|---|---|---|
-| `nasruddin` | `password` | `admin`, `guest`, `course-read`, `course-write`, `review-read`, `review-write` |
-| `courseuser` | `password` | `course-read`, `course-write` |
-| `reviewuser` | `password` | `review-read`, `review-write` |
-
-### Get an access token
-
-```bash
-curl -X POST http://localhost:8081/realms/course-management-realm/protocol/openid-connect/token \
-  -d "grant_type=password" \
-  -d "client_id=course-app" \
-  -d "client_secret=v1sCIPjANbvyJ87RsTkYeI9xHonDqZh7" \
-  -d "username=nasruddin" \
-  -d "password=password" \
-  -d "scope=openid roles" | jq
-```
-
-### Important authorization behavior
-
-- `course-service` requires `COURSE-READ` or `COURSE-WRITE` for `/api/courses/**`.
-- `review-service` requires `REVIEW-READ` or `REVIEW-WRITE` for `/api/reviews/**`.
-- `course-composite-service` now requires both `COURSE-READ` and `REVIEW-READ` for `/api/course-aggregate/**`, because every aggregate request reads from both downstream services.
-
-## API Notes
-
-### Current behavior
-
-- `PUT /api/courses/{id}` updates an existing course.
-- `PUT /api/courses/{id}` returns `404 Not Found` if the target course does not exist.
-- `GET /api/reviews/{id}` returns `404 Not Found` for a missing review.
-- `DELETE /api/reviews/{id}` returns `404 Not Found` for a missing review.
-
-### Useful starting endpoints
-
-Direct service endpoints:
-
-- `GET http://localhost:9001/api/courses`
-- `POST http://localhost:9001/api/courses`
-- `GET http://localhost:9002/api/reviews`
-- `POST http://localhost:9002/api/reviews`
-- `GET http://localhost:5000/api/course-aggregate/{id}/with-details`
-
-Gateway endpoints:
-
-- `GET http://localhost:9000/courses`
-- `GET http://localhost:9000/reviews`
-- `GET http://localhost:9000/course-aggregate/{id}/with-details`
-
-When running with Docker Compose:
-
-- Gateway entrypoint: `http://localhost:9000`
-- Aggregate service direct endpoint: `http://localhost:8080/api/course-aggregate/{id}/with-details`
-
-API spec assets:
-
-- OpenAPI: `api-specs/openapi-specs/OpenApi.yml`
-- Bruno collection: `api-specs/bruno`
-- Postman collection: `api-specs/postman/postman-apis.json`
-
-## Observability
-
-### Service metrics
 
 Each service exposes actuator metrics and Prometheus output.
 
-Examples:
+## Core Endpoints
 
-- `http://localhost:9001/actuator/prometheus`
-- `http://localhost:9002/actuator/prometheus`
-- `http://localhost:5000/actuator/prometheus`
-- `http://localhost:9000/actuator/prometheus`
+> Ports and hostnames depend on your local setup (Docker vs Kubernetes ingress).
 
-### UIs
+Typical routes exposed through the gateway:
 
-| Tool | URL |
-|---|---|
-| Grafana | `http://localhost:3000` |
-| Prometheus | `http://localhost:9090` |
-| Loki | `http://localhost:3100` |
-| Tempo | `http://localhost:3200` |
+- `GET /course`
+- `POST /course`
+- `GET /review`
+- `POST /review`
+- `GET /course-composite/{courseId}`
 
-Grafana dashboards are available under:
+Actuator/metrics examples:
 
-- `grafana-dashboard/Spring Boot 3.x Statistics.json`
-- `grafana-dashboard/Spring Boot Observability.json`
+- `GET /actuator/health`
+- `GET /actuator/prometheus`
 
-The first dashboard filename still contains `3.x`, but the application code is now on Spring Boot `4.0.3`.
+---
 
-## Useful Files
+## Keycloak
 
-| File | Purpose |
-|---|---|
-| `run.sh` | Build and run services locally or via Compose |
-| `build-images.sh` | Build service images for Minikube |
-| `docker/docker-compose-infra.yml` | PostgreSQL, MongoDB, Keycloak |
-| `docker/docker-compose-base.yml` | Core application services |
-| `docker/docker-compose-observability.yml` | Grafana, Prometheus, Loki, Tempo, Fluent Bit |
-| `course-management-realm-realm.json` | Keycloak realm export |
-| `Tiltfile` | Tilt entrypoint |
+Keycloak is used as the identity provider for user authentication and token issuance.
 
-## Troubleshooting
+Typical local flow:
 
-### Tests fail because of databases
-
-- `course-service` should no longer require PostgreSQL during tests.
-- If tests fail in another module, rerun with `./mvnw -e test` and inspect the module-specific report in `target/surefire-reports`.
-
-### Review-service logs MongoDB connection errors during tests
-
-That is currently expected for the default smoke test if MongoDB is not running locally. The test still passes because it only verifies application startup.
-
-### Aggregate endpoint returns `403`
+1. Open Keycloak admin/UI.
+2. Ensure realm, clients, and users are configured.
+3. Get a bearer token from Keycloak.
+4. Call gateway APIs with `Authorization: Bearer <token>`.
 
 The token must contain both:
 
-- `ROLE_COURSE-READ`
-- `ROLE_REVIEW-READ`
+## Observability
 
-Using `courseuser` alone or `reviewuser` alone is not sufficient for `/course-aggregate/**`.
+### Prometheus
+- Check service targets are **UP**.
+- Scrape metrics from `/actuator/prometheus`.
 
-### Local run script does not start gateway
+### Grafana
+- Use dashboards for metrics/logs/traces correlation.
 
-`sh run.sh` starts only:
+### Fluent Bit + Loki
+- Fluent Bit forwards service logs to Loki.
 
-- `course-composite-service`
-- `course-service`
-- `review-service`
+### Tempo + OpenTelemetry
+- Services export traces through OTel collector to Tempo.
 
-Start the gateway separately if you want gateway routing in host-mode.
+---
 
-### Port conflicts
+## Troubleshooting
 
-Check these common ports:
+- **Services fail to start**: verify dependent containers (PostgreSQL, MongoDB, Keycloak) are healthy.
+- **Auth issues (401/403)**: check token expiration, client config, and realm roles in Keycloak.
+- **No logs/traces/metrics**: ensure Fluent Bit, OTel collector, Prometheus, Loki, and Tempo are running.
+- **Kubernetes image pull issues**: confirm you built images in Minikube Docker context (`docker-env`).
 
-- `5000`
-- `9000`
-- `9001`
-- `9002`
-- `8081`
-- `5432`
-- `27017`
-- `3000`
-- `9090`
+---
+
+## Notes
+
+- This README focuses on readable setup and operational flow.
+- Architecture diagrams remain in `notes/images`.
