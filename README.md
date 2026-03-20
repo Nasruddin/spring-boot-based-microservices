@@ -129,7 +129,7 @@ Current test behavior:
 
 ## Run Locally
 
-This mode runs the Spring Boot jars on the host.
+This mode runs the Spring Boot jars on the host machine instead of Docker containers.
 
 ### 1. Start infrastructure
 
@@ -172,16 +172,15 @@ Notes about `run.sh`:
 - It builds the project with `mvn clean package -DskipTests`.
 - It starts `course-composite-service`, `course-service`, and `review-service`.
 - It kills processes on ports `5000`, `9000`, `9001`, and `9002` before starting.
-- It does not start the gateway in host-mode. If you want the gateway locally, start it separately:
+- It does not start the gateway in host-mode. If you want gateway routing locally, start it separately:
 
 ```bash
-cd spring-cloud/gateway-service
-../../mvnw spring-boot:run
+./mvnw -pl spring-cloud/gateway-service spring-boot:run
 ```
 
 ## Run with Docker Compose
 
-This mode runs the app using the `docker` Spring profile.
+This mode runs the application services in Docker using the `docker` Spring profile.
 
 ### 1. Start infrastructure
 
@@ -209,6 +208,11 @@ This executes `docker compose -f docker-compose-base.yml up --build` and exposes
 
 - Gateway on `http://localhost:9000`
 - Course aggregate service on `http://localhost:8080`
+
+Notes:
+
+- `course-service` and `review-service` are not published directly to host ports in `docker-compose-base.yml`.
+- External traffic is expected to go through the gateway on `9000`, or directly to the aggregate service on `8080` if you want to bypass the gateway.
 
 Behind the scenes, the docker profile uses internal container names:
 
@@ -314,7 +318,7 @@ Default Keycloak admin credentials:
 
 ### Import the realm
 
-1. Open Keycloak admin.
+1. Open the Keycloak admin console.
 2. Create or import a realm.
 3. Import `course-management-realm-realm.json`.
 4. Verify clients, roles, and users.
@@ -369,6 +373,11 @@ Gateway endpoints:
 - `GET http://localhost:9000/courses`
 - `GET http://localhost:9000/reviews`
 - `GET http://localhost:9000/course-aggregate/{id}/with-details`
+
+When running with Docker Compose:
+
+- Gateway entrypoint: `http://localhost:9000`
+- Aggregate service direct endpoint: `http://localhost:8080/api/course-aggregate/{id}/with-details`
 
 API spec assets:
 
@@ -458,4 +467,3 @@ Check these common ports:
 - `27017`
 - `3000`
 - `9090`
-
